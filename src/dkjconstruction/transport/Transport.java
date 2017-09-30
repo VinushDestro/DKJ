@@ -112,4 +112,8 @@ public class Transport {
         return result;
     }
     
+    public static void searchAdmin(String search) throws SQLException {
+        
+    }
+    
 }

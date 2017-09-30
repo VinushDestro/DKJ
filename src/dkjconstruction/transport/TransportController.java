@@ -77,14 +77,12 @@ public class TransportController {
         } catch (IOException | ClassNotFoundException | SQLException e) {
             e.printStackTrace();
         }
-        RowclickEvent();
-        
-
+        RowclickEvent();     
     }  
 
-                 private void RowclickEvent() {
-                 transTab.setOnMouseClicked((e) -> {
-            TransportDetail t1 = (TransportDetail) transTab.getItems().get(transTab.getSelectionModel().getSelectedIndex());
+    private void RowclickEvent() {
+        transTab.setOnMouseClicked((e) -> {
+        TransportDetail t1 = (TransportDetail) transTab.getItems().get(transTab.getSelectionModel().getSelectedIndex());
 
             tenderId.setText(t1.getTenderId());
             tripId.setText(t1.getTripId());
@@ -103,28 +101,28 @@ public class TransportController {
         String addRegNo = regNo.getText().trim();
         String addTenderId = tenderId.getText().trim();
         String addDestination = destination.getText().trim();
-        Double addCost = Double.parseDouble(cost.getText().trim());
-        LocalDate addDate = date.getValue();
+//        Double addCost = Double.parseDouble(cost.getText().trim());
+    //    LocalDate addDate = date.getValue();
         
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Add Transport");
         alert.setHeaderText(null);
 
-        if (addTenderId.isEmpty() || addRegNo.isEmpty() || addDestination.isEmpty() || addCost.toString().isEmpty() || addDate.toString().isEmpty()) {
+        if (addTenderId.isEmpty() || addRegNo.isEmpty() || addDestination.isEmpty() || cost.getText().trim()==null || date.getValue()==null) {
             alert.setContentText("All fields should be filled");
         }
         else {
-            if(addCost <= 0){
+            if(Double.parseDouble(cost.getText().trim()) <= 0){
                 alert.setContentText("Invalid value for cost.\nShould be greater than zero.");
                 }
             else{
                 LocalDate today = LocalDate.now();
-                if(addDate.isAfter(today)){
+                if(date.getValue().isAfter(today)){
                     alert.setContentText("Invalid value for date.\nShould be less than current date.");
                 }
                 else{
                     try{
-                        result = Transport.addTransport(addRegNo,addTenderId,addDestination,Date.valueOf(addDate),addCost);
+                        result = Transport.addTransport(addRegNo,addTenderId,addDestination,Date.valueOf(date.getValue()),Double.parseDouble(cost.getText().trim()));
                         if (result == 1) {
                             alert.setContentText("Operation Successful!");
                             tenderId.clear();
@@ -160,8 +158,8 @@ public class TransportController {
     private void doUpdateTransport(ActionEvent event) throws SQLException, ClassNotFoundException {
         int result = 0 ;
         String addTripId = tripId.getText().trim();
-        Double addCost = Double.parseDouble(cost.getText().trim());
-        LocalDate addDate = date.getValue();
+//        Double addCost = Double.parseDouble(cost.getText().trim());
+ //       LocalDate addDate = date.getValue();
         
 
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -172,16 +170,16 @@ public class TransportController {
             alert.setContentText("Trip ID field cannot be empty");
         }
         else {
-            if (addCost.toString().isEmpty() && addDate.toString().isEmpty()){
+            if (cost.getText().trim()==null && date.getValue()==null){
             alert.setContentText("Cost or date should be given for update");
             }
             else{
-                if(addCost <= 0){
-                    alert.setContentText("Invalid value for cost");
-                    }
+                if(Double.parseDouble(cost.getText().trim()) <= 0){
+                alert.setContentText("Invalid value for cost.\nShould be greater than zero.");
+                }
                 else{
                     try{
-                        result = Transport.updateTransport(addTripId,Date.valueOf(addDate),addCost);
+                        result = Transport.updateTransport(addTripId,Date.valueOf(date.getValue()),Double.parseDouble(cost.getText().trim()));
                         if (result == 1) {
                             alert.setContentText("Operation Successful!");
                             alert.show();
@@ -256,7 +254,8 @@ public class TransportController {
     }
 
     @FXML
-    private void doSearchTransport(ActionEvent event) {
+    private void doSearchTransport() {
+       
     }
-    
+            
 }
