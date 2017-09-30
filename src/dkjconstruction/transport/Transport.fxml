@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXDatePicker?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="665.0" prefWidth="840.0" style="-fx-background-color: white;" stylesheets="@../style2.css" xmlns="http://javafx.com/javafx/8.0.102" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dkjconstruction.transport.TransportController">
+  <columnConstraints>
+    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="25.0" prefWidth="100.0" />
+  </columnConstraints>
+  <rowConstraints>
+    <RowConstraints minHeight="10.0" percentHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+    <RowConstraints minHeight="10.0" percentHeight="90.0" prefHeight="30.0" vgrow="SOMETIMES" />
+  </rowConstraints>
+   <children>
+      <SplitPane dividerPositions="0.65" orientation="VERTICAL" prefHeight="598.0" prefWidth="550.0" GridPane.rowIndex="1">
+        <items>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+               <children>
+                  <TableView fx:id="transTab" layoutX="18.0" prefHeight="384.0" prefWidth="593.0" style="-fx-background-color: white;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="18.0" AnchorPane.rightAnchor="17.0" AnchorPane.topAnchor="0.0">
+                    <columns>
+                      <TableColumn fx:id="tabTripId" prefWidth="89.0" text="Trip ID" />
+                        <TableColumn fx:id="tabRegNo" prefWidth="92.0" text="Reg. No." />
+                      <TableColumn fx:id="tabTenderId" prefWidth="86.0" text="Tender ID" />
+                        <TableColumn fx:id="tabDate" prefWidth="113.0" text="Date" />
+                        <TableColumn fx:id="tabDestination" prefWidth="109.0" text="Destination" />
+                        <TableColumn fx:id="tabCost" minWidth="0.0" prefWidth="103.33334350585938" text="Cost" />
+                    </columns>
+                  </TableView>
+               </children>
+            </AnchorPane>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" style="-fx-background-color: white;">
+               <children>
+                  <GridPane layoutX="214.0" layoutY="20.0" prefHeight="155.0" prefWidth="628.0" style="-fx-background-color: white;" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="20.0">
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <JFXTextField fx:id="destination" focusColor="#1e8bc3" promptText="Destination" GridPane.columnIndex="1">
+                           <font>
+                              <Font name="Raleway-Regular" size="12.0" />
+                           </font>
+                           <GridPane.margin>
+                              <Insets bottom="10.0" left="50.0" right="50.0" />
+                           </GridPane.margin>
+                        </JFXTextField>
+                        <Label fx:id="tripId" alignment="CENTER" contentDisplay="CENTER" text="Trip ID ">
+                           <font>
+                              <Font name="Raleway-Regular" size="12.0" />
+                           </font>
+                           <GridPane.margin>
+                              <Insets bottom="10.0" left="50.0" right="50.0" />
+                           </GridPane.margin>
+                        </Label>
+                        <JFXTextField fx:id="tenderId" focusColor="#1e8bc3" promptText="Tender ID" GridPane.rowIndex="1">
+                           <font>
+                              <Font name="Raleway-Regular" size="12.0" />
+                           </font>
+                           <GridPane.margin>
+                              <Insets bottom="10.0" left="50.0" right="50.0" />
+                           </GridPane.margin>
+                        </JFXTextField>
+                        <JFXDatePicker fx:id="date" defaultColor="#1e8bc3" prefHeight="25.0" prefWidth="262.0" promptText="Date" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                           <GridPane.margin>
+                              <Insets bottom="10.0" left="50.0" right="50.0" />
+                           </GridPane.margin>
+                        </JFXDatePicker>
+                        <JFXTextField fx:id="cost" focusColor="#1e8bc3" promptText="Cost" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                           <font>
+                              <Font name="Raleway-Regular" size="12.0" />
+                           </font>
+                           <GridPane.margin>
+                              <Insets bottom="10.0" left="50.0" right="50.0" />
+                           </GridPane.margin>
+                        </JFXTextField>
+                        <JFXTextField fx:id="regNo" focusColor="#1e8bc3" promptText="Reg. No." GridPane.rowIndex="2">
+                           <font>
+                              <Font name="Raleway-Regular" size="12.0" />
+                           </font>
+                           <GridPane.margin>
+                              <Insets bottom="10.0" left="50.0" right="50.0" />
+                           </GridPane.margin>
+                        </JFXTextField>
+                     </children>
+                  </GridPane>
+               </children>
+            </AnchorPane>
+        </items>
+      </SplitPane>
+      <AnchorPane prefHeight="567.0" prefWidth="199.0" style="-fx-background-color: white;" GridPane.columnIndex="1" GridPane.rowIndex="1">
+         <children>
+            <VBox layoutX="63.0" layoutY="55.0" prefHeight="630.0" prefWidth="210.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <children>
+                  <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="40.0" prefWidth="250.0" text="ADD" textAlignment="CENTER" textFill="WHITE">
+                     <font>
+                        <Font name="Raleway-Bold" size="12.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets bottom="5.0" left="30.0" right="30.0" top="5.0" />
+                     </VBox.margin>
+                  </Button>
+                  <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="40.0" prefWidth="250.0" text="UPDATE" textAlignment="CENTER" textFill="WHITE">
+                     <font>
+                        <Font name="Raleway-Bold" size="12.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets bottom="5.0" left="30.0" right="30.0" top="5.0" />
+                     </VBox.margin>
+                  </Button>
+                  <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="40.0" prefWidth="250.0" text="DELETE" textAlignment="CENTER" textFill="WHITE">
+                     <font>
+                        <Font name="Raleway-Bold" size="12.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets bottom="5.0" left="30.0" right="30.0" top="5.0" />
+                     </VBox.margin>
+                  </Button>
+                  <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="40.0" prefWidth="250.0" text="REPORT" textAlignment="CENTER" textFill="WHITE">
+                     <font>
+                        <Font name="Raleway-Bold" size="12.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets bottom="5.0" left="40.0" right="40.0" top="350.0" />
+                     </VBox.margin>
+                  </Button>
+               </children>
+            </VBox>
+         </children>
+      </AnchorPane>
+      <AnchorPane prefHeight="67.0" prefWidth="509.0" GridPane.columnSpan="2">
+         <children>
+            <TextField fx:id="search" layoutX="12.0" layoutY="17.0" prefHeight="29.0" prefWidth="788.0" promptText="Search" styleClass="search" AnchorPane.bottomAnchor="17.0" AnchorPane.leftAnchor="12.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="17.0">
+               <font>
+                  <Font name="Raleway-Regular" size="12.0" />
+               </font>
+            </TextField>
+         </children>
+      </AnchorPane>
+   </children>
+</GridPane>
