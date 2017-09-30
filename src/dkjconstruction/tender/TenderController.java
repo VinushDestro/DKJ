@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package dkjconstruction.tendermanagement;
+package dkjconstruction.tender;
 
 import com.jfoenix.controls.*;
 import static com.sun.javafx.tk.Toolkit.getToolkit;

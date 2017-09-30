@@ -1,4 +1,4 @@
-package dkjconstruction.tendermanagement;
+package dkjconstruction.tender;
 
 
 import java.sql.*;
