@@ -23,11 +23,12 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.TreeTableColumn;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+/*
 import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
-import net.sf.jasperreports.view.JasperViewer;
+import net.sf.jasperreports.view.JasperViewer;*/
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.Optional;
@@ -502,6 +503,7 @@ public class TenderController implements Initializable {
     //report
     @FXML
     private void tender_report(ActionEvent event)  {
+        /*
         try {
             DbConnection.openConnection();
             Connection con = DbConnection.getConnection();
@@ -511,10 +513,7 @@ public class TenderController implements Initializable {
             JasperViewer.viewReport(jp);
         } catch (Exception e) {
            System.out.println("sdas" + e);
-        }
+        }*/
     }
-
-    
-    
 
 }

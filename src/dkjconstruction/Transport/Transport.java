@@ -47,12 +47,12 @@ public class Transport {
     public static int addTransport(String regNo,String tenderId,String destination,Date date,double cost) throws SQLException, ClassNotFoundException{
         DbConnection.openConnection();
         Connection con = DbConnection.getConnection();
-        PreparedStatement stmt = con.prepareStatement("insert into transport (regno,tenderid,date,destination,cost) values (?,?,?,?,?)");
+        PreparedStatement stmt = con.prepareStatement("insert into transport (regno,tenderid,destination,,date,cost) values (?,?,?,?,?)");
         
         stmt.setString(1,regNo);
         stmt.setString(2,tenderId);
-        stmt.setDate(3,date);
-        stmt.setString(4,destination);
+        stmt.setString(3,destination);
+        stmt.setDate(4,date);
         stmt.setDouble(5,cost);
         
         int result = stmt.executeUpdate();
@@ -77,7 +77,7 @@ public class Transport {
         try{
             result = stmt.executeUpdate();
         }
-        catch (Exception e){
+        catch (SQLException e){
             alert.setTitle("Error");
             alert.setHeaderText(null);
             alert.setContentText("Invalid Entry\n"+e.getMessage());
@@ -101,7 +101,7 @@ public class Transport {
         try{
             result = stmt.executeUpdate();
         }
-        catch (Exception e){
+        catch (SQLException e){
             alert.setTitle("Error");
             alert.setHeaderText(null);
             alert.setContentText("No such record found\n"+e.getMessage());

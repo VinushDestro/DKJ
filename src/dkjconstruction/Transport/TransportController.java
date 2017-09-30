@@ -20,6 +20,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 
 
 /**
@@ -30,7 +32,7 @@ import java.util.logging.Logger;
 public class TransportController {
 
     @FXML
-    private JFXTextField  tripId;
+    private Label  tripId;
     @FXML
     private JFXTextField  tenderId;
     @FXML
@@ -58,7 +60,6 @@ public class TransportController {
     @FXML
     private TableColumn  tabCost;
     
-    
     @FXML
     private TextField search;
 
@@ -76,10 +77,25 @@ public class TransportController {
         } catch (IOException | ClassNotFoundException | SQLException e) {
             e.printStackTrace();
         }
+        RowclickEvent();
         
 
     }  
 
+                 private void RowclickEvent() {
+                 transTab.setOnMouseClicked((e) -> {
+            TransportDetail t1 = (TransportDetail) transTab.getItems().get(transTab.getSelectionModel().getSelectedIndex());
+
+            tenderId.setText(t1.getTenderId());
+            tripId.setText(t1.getTripId());
+            regNo.setText(t1.getRegNo());
+            destination.setText(t1.getDestination());
+            date.setValue(LocalDate.parse(t1.getDate()));
+            cost.setText(t1.getCost());
+        
+        });
+
+    }
 
     @FXML
     private void doAddTransport(ActionEvent event) throws SQLException, ClassNotFoundException {
@@ -95,7 +111,7 @@ public class TransportController {
         alert.setHeaderText(null);
 
         if (addTenderId.isEmpty() || addRegNo.isEmpty() || addDestination.isEmpty() || addCost.toString().isEmpty() || addDate.toString().isEmpty()) {
-            alert.setContentText("All fields should be filled except Trip ID");
+            alert.setContentText("All fields should be filled");
         }
         else {
             if(addCost <= 0){
@@ -207,7 +223,7 @@ public class TransportController {
             }
             else {
                 int result = Transport.deleteTransport(addTripId);
-                tripId.clear();
+                
                 if (result == 1) {
                     Alert alert = new Alert(Alert.AlertType.INFORMATION);
                     alert.setTitle("Delete Transport");

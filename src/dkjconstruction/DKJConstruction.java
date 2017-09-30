@@ -12,7 +12,7 @@ import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
-
+import javafx.stage.StageStyle;
 /**
  *
  * @author User
@@ -35,8 +35,8 @@ public class DKJConstruction extends Application {
     @Override
     public void start(Stage primaryStage) throws IOException {
         this.primaryStage = primaryStage;
-        this.primaryStage.setTitle("DKJ Constuction Management System");
-
+        //this.primaryStage.setTitle("DKJ Constuction Management System");
+        primaryStage.initStyle(StageStyle.UNDECORATED);
         FXMLLoader root = new FXMLLoader();
 
         root.setLocation(DKJConstruction.class.getResource("Home/Login.fxml"));
@@ -44,7 +44,8 @@ public class DKJConstruction extends Application {
         Scene scene = new Scene(layout);
         stage = new Stage();
         stage.setScene(scene);
-        stage.setTitle("Login");
+        //stage.setTitle("Login");
+        stage.setResizable(false);
         stage.show();
         System.out.println("start method");
     }

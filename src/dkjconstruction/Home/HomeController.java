@@ -15,7 +15,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 
 /**
  * FXML Controller class
@@ -26,12 +29,22 @@ public class HomeController {
     private DKJConstruction main;
     
     public static String type;
-    
+//    @FXML
+//    private Button minimizeButton;
+//    @FXML
+//    private Button closeButton;
     @FXML
     private Label cUser;
+    
     public void initialize() throws SQLException, ClassNotFoundException {
-            cUser.setText(currentUser);
-            DbConnection DbConnection= new DbConnection();
+//        HBox hbox = new HBox(minimizeButton, closeButton);
+//
+//        HBox.setHgrow(minimizeButton, Priority.ALWAYS);
+//        HBox.setHgrow(closeButton, Priority.NEVER);
+//          layout.setTop(hbox);
+
+        cUser.setText(currentUser);
+        DbConnection DbConnection= new DbConnection();
         DbConnection.openConnection();
         Connection con = DbConnection.getConnection();
         PreparedStatement stmt = con.prepareStatement("select userType from user where username=?");
