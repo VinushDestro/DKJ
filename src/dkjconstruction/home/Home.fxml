@@ -27,8 +27,8 @@
          <children>
             <HBox alignment="CENTER_RIGHT" layoutX="307.0" layoutY="-22.0" prefHeight="78.0" prefWidth="840.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
-                  <Button alignment="CENTER_RIGHT" contentDisplay="RIGHT" mnemonicParsing="false" prefHeight="9.0" prefWidth="15.0" styleClass="logout" text="-" />
-                  <Button alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="821.0" layoutY="31.0" mnemonicParsing="false" prefHeight="16.0" prefWidth="0.0" styleClass="logout" text="x" />
+                  <Button fx:id="minimizeButton" alignment="CENTER_RIGHT" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#handleMinimizeBtn" prefHeight="11.0" prefWidth="24.0" styleClass="logout" text="-" />
+                  <Button fx:id="closeButton" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="821.0" layoutY="31.0" mnemonicParsing="false" onAction="#handleCloseBtn" prefHeight="10.0" prefWidth="25.0" styleClass="btn" text="x" />
                </children>
             </HBox>
          </children></AnchorPane>

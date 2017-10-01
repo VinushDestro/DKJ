@@ -13,12 +13,17 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Optional;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
+import javafx.stage.Stage;
 
 /**
  * FXML Controller class
@@ -29,19 +34,14 @@ public class HomeController {
     private DKJConstruction main;
     
     public static String type;
-//    @FXML
-//    private Button minimizeButton;
-//    @FXML
-//    private Button closeButton;
+    @FXML
+    private Button minimizeButton;
+    @FXML
+    private Button closeButton;
     @FXML
     private Label cUser;
     
     public void initialize() throws SQLException, ClassNotFoundException {
-//        HBox hbox = new HBox(minimizeButton, closeButton);
-//
-//        HBox.setHgrow(minimizeButton, Priority.ALWAYS);
-//        HBox.setHgrow(closeButton, Priority.NEVER);
-//          layout.setTop(hbox);
 
         cUser.setText(currentUser);
         DbConnection DbConnection= new DbConnection();
@@ -56,8 +56,28 @@ public class HomeController {
         }               
         DbConnection.closeConnection();
         System.out.println(type+"main");
-    }    
+    }
+    
+    @FXML
+    public void handleCloseBtn(ActionEvent event){
+        Alert alert = new Alert(AlertType.CONFIRMATION);
+        //alert.setTitle("Confirmation Dialog");
+        alert.setHeaderText("You a about to close the window");
+        alert.setContentText("Are you sure to proceed?");
 
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == ButtonType.OK){
+            Stage stage = (Stage) closeButton.getScene().getWindow();
+            stage.close();
+        }
+    }
+
+    @FXML
+    public void handleMinimizeBtn(ActionEvent event){
+            Stage stage = (Stage) minimizeButton.getScene().getWindow();
+            stage.setIconified(true);
+    }
+    
     @FXML
     private void doTransport() throws IOException {
         System.out.println("tr"+type);
