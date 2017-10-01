@@ -62,8 +62,8 @@ public class HomeController {
     public void handleCloseBtn(ActionEvent event){
         Alert alert = new Alert(AlertType.CONFIRMATION);
         //alert.setTitle("Confirmation Dialog");
-        alert.setHeaderText("You a about to close the window");
-        alert.setContentText("Are you sure to proceed?");
+        alert.setHeaderText("Do you want to close the window?");
+        alert.setContentText("Unsaved changes would be discarded. ");
 
         Optional<ButtonType> result = alert.showAndWait();
         if (result.get() == ButtonType.OK){
@@ -88,11 +88,11 @@ public class HomeController {
     }
     
     @FXML
-    private void doAdmin() throws IOException {
+    private void doSetting() throws IOException {
         if (type.equals("supervisor"))
             main.showAdmin();
         else
-            main.showErrorPage();
+            main.showChangePw();
     }
     
     @FXML

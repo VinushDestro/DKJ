@@ -3,19 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package dkjconstruction.asset;
+package dkjconstruction.vehicle;
 
 /**
  *
  * @author VINUSH
  */
-public class VehicleDetail {
-    
-      
-
-
-
-    private String regNo;
+public class AvailableVehicleDetail {
+     private String regNo;
     private String name;
     private String type;
     private double cost;
@@ -25,7 +20,7 @@ public class VehicleDetail {
     
     
 
-      VehicleDetail(String regNo, String name, String type, double cost,int lifeTime,String boughtDate,String condition) {
+     public  AvailableVehicleDetail(String regNo, String name, String type, double cost,int lifeTime,String boughtDate,String condition) {
         this.regNo = regNo;
         this.name = name;
         this.type = type;
@@ -36,6 +31,9 @@ public class VehicleDetail {
 
     }
 
+        AvailableVehicleDetail(String name, String regNo, String type, double cost, String boughtDate, int lifeTime, String condition) {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
 
     public String getRegNo() {
         return regNo;
@@ -58,15 +56,15 @@ public class VehicleDetail {
     }
 
     public double getCost() {
-        return this.cost;
+        return cost;
     }
 
     public void setCost(double contactNumber) {
         this.cost = cost;
     }
     
-    public int getLifeTime() {
-        return this.lifeTime;
+    public int getLifeTim() {
+        return lifeTime;
     }
 
     public void setLifeTime(int lifeTime) {
@@ -89,7 +87,5 @@ public class VehicleDetail {
         this.condition = condition ;
     }
 
-
-}
-   
     
+}

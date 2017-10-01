@@ -1,4 +1,4 @@
-package dkjconstruction.asset;
+package dkjconstruction.vehicle;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -19,8 +19,8 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
-import dkjconstruction.asset.DKJASSETSMANAGEMENT;
-import dkjconstruction.asset.VehicleDetail;
+import dkjconstruction.vehicle.DKJASSETSMANAGEMENT;
+import dkjconstruction.vehicle.VehicleDetail;
 //import dkj.assets.management.DKJASSETSMANAGEMENT.Vehicle;
 //import dkj.assets.management.DKJASSETSMANAGEMENT.VehicleDetail;
 import javafx.scene.control.TableColumn;

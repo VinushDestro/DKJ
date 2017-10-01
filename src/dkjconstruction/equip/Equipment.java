@@ -3,10 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package dkjconstruction.asset;
+package dkjconstruction.equip;
 
 import java.sql.Connection;
 import dkjconstruction.DbConnection;
+import dkjconstruction.vehicle.DKJASSETSMANAGEMENT;
 //import asset.management.AvailableEquipmentDetails.AvailableEquipmentDetail;
 import java.io.IOException;
 import java.sql.Connection;
@@ -144,7 +145,7 @@ public class Equipment extends Application {
       public static int deleteEquipment(String equipID,int count) throws SQLException, ClassNotFoundException {
         int result = -1;
         Alert alert= new Alert(Alert.AlertType.INFORMATION);
-        dkjconstruction.asset.DbConnection DbConnection= new dkjconstruction.asset.DbConnection();
+        DbConnection DbConnection= new DbConnection();
         DbConnection.openConnection();
         Connection con = DbConnection.getConnection();
 
@@ -171,7 +172,7 @@ public class Equipment extends Application {
        public static int deleteEquipment(String equipID) throws SQLException, ClassNotFoundException {
         int result = -1;
         Alert alert= new Alert(Alert.AlertType.INFORMATION);
-         dkjconstruction.asset.DbConnection DbConnection= new dkjconstruction.asset.DbConnection();
+        DbConnection DbConnection= new DbConnection();
         DbConnection.openConnection();
         Connection con = DbConnection.getConnection();
 

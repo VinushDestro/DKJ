@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package dkjconstruction.asset;
+package dkjconstruction.equip;
 
 import com.jfoenix.controls.JFXTextField;
 import java.net.URL;
@@ -13,7 +13,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
-import dkjconstruction.asset.Equipment;
 //import dkj.assets.management.Equipment.EquipmentDetail;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;

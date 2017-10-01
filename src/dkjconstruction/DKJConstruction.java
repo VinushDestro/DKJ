@@ -22,11 +22,6 @@ public class DKJConstruction extends Application {
     private static GridPane mainLayout;
     private static Stage stage;
     private static AnchorPane layout;
-        
-    /*@FXML
-    private static AnchorPane mainPage;*/
-
-    //private static BorderPane page;
 
     public static void main(String[] args) {
         launch(args);
@@ -132,7 +127,7 @@ public class DKJConstruction extends Application {
         mainLayout.getChildren().clear();
         showHomePage();
         FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(DKJConstruction.class.getResource("asset/FXML1.fxml"));
+        loader.setLocation(DKJConstruction.class.getResource("vehicle/FXML1.fxml"));
         GridPane Pane = loader.load();
         mainLayout.add(Pane, 1, 1);
     }
@@ -140,7 +135,7 @@ public class DKJConstruction extends Application {
         mainLayout.getChildren().clear();
         showHomePage();
         FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(DKJConstruction.class.getResource("asset/Equip.fxml"));
+        loader.setLocation(DKJConstruction.class.getResource("equip/Equip.fxml"));
         GridPane Pane = loader.load();
         mainLayout.add(Pane, 1, 1);
     }
@@ -170,6 +165,16 @@ public class DKJConstruction extends Application {
         GridPane Pane = loader.load();
         mainLayout.add(Pane, 1, 1);
     }
+    
+    public static void showChangePw() throws IOException {
+        mainLayout.getChildren().clear();
+        showHomePage();
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(DKJConstruction.class.getResource("home/ChangePw.fxml"));
+        GridPane Pane = loader.load();
+        mainLayout.add(Pane, 1, 1);
+    }
+    
 
     public static void logout() {
         primaryStage.hide();

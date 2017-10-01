@@ -43,7 +43,7 @@ public class LoginController {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Login");
         alert.setHeaderText(null);
-        
+        System.out.println("login method");
         if (username.getText().equals("") || password.getText().equals("")){
             alert.setContentText("Enter username and password");
             alert.show();
