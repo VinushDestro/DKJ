@@ -5,6 +5,8 @@
  */
 package dkjconstruction.transport;
 
+import java.sql.Date;
+
 /**
  *
  * @author User
@@ -14,10 +16,10 @@ public class TransportDetail {
     String RegNo;
     String tenderId;
     String destination;
-    String date;
-    String cost;
+    Date date;
+    Double cost;
 
-    public TransportDetail(String tripId, String RegNo, String tenderId, String destination, String date, String cost) {
+    public TransportDetail(String tripId, String RegNo, String tenderId, String destination, Date date, Double cost) {
         this.tripId = tripId;
         this.RegNo = RegNo;
         this.tenderId = tenderId;
@@ -58,21 +60,21 @@ public class TransportDetail {
         this.destination = destination;
     }
 
-    public String getDate() {
+    public Date getDate() {
         return date;
     }
 
-    public void setDate(String date) {
+    public void setDate(Date date) {
         this.date = date;
     }
 
-    public String getCost() {
+    public Double getCost() {
         return cost;
     }
 
-    public void setCost(String cost) {
+    public void setCost(Double cost) {
         this.cost = cost;
     }
-    
+
     
 }

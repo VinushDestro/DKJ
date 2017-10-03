@@ -36,14 +36,14 @@ public class Transport {
                 String RegNo=rs.getString(2);
                 String tenderId=rs.getString(3);
                 String destination=rs.getString(4);
-                String date=rs.getString(5);
-                String cost=rs.getString(6);
+                Date date=rs.getDate(5);
+                Double cost=rs.getDouble(6);
                 
                 transport.add(new TransportDetail(tripId,RegNo,tenderId,destination,date,cost));
             }
-            DbConnection.closeConnection();
                 return transport;
         }
+    
     public static int addTransport(String regNo,String tenderId,String destination,Date date,double cost) throws SQLException, ClassNotFoundException{
         DbConnection.openConnection();
         Connection con = DbConnection.getConnection();
@@ -61,7 +61,7 @@ public class Transport {
         return result;
     }
     
-    public static int updateTransport(String tripId,Date date,double cost) throws SQLException, ClassNotFoundException {
+    public static int updateTransport(Date date,double cost,String tripId) throws SQLException, ClassNotFoundException {
         int result = -1;
         Alert alert= new Alert(Alert.AlertType.INFORMATION);
         DbConnection DbConnection= new DbConnection();
@@ -111,9 +111,4 @@ public class Transport {
         DbConnection.closeConnection();
         return result;
     }
-    
-    public static void searchAdmin(String search) throws SQLException {
-        
-    }
-    
 }

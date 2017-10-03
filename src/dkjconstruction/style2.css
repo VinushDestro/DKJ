@@ -82,3 +82,10 @@ and open the template in the editor.
     -fx-border-radius: 0px;
     -fx-border-color: lightgrey;
 }
+
+.redtext{
+    -fx-font-size: 7pt;
+    -fx-font-family: "Raleway";
+    -fx-text-fill: red;
+    -fx-alignment: CENTER;
+}

@@ -26,7 +26,7 @@
     <RowConstraints minHeight="10.0" percentHeight="90.0" prefHeight="30.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
-      <SplitPane dividerPositions="0.65" orientation="VERTICAL" prefHeight="598.0" prefWidth="550.0" GridPane.rowIndex="1">
+      <SplitPane dividerPositions="0.6" orientation="VERTICAL" prefHeight="598.0" prefWidth="550.0" GridPane.rowIndex="1">
         <items>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                <children>
@@ -46,16 +46,17 @@
                <children>
                   <GridPane layoutX="214.0" layoutY="20.0" prefHeight="155.0" prefWidth="628.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="20.0">
                     <columnConstraints>
-                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="50.0" prefWidth="100.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="50.0" prefWidth="100.0" />
                     </columnConstraints>
                     <rowConstraints>
-                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" percentHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" percentHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" percentHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" percentHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
-                        <JFXTextField fx:id="destination" focusColor="#2c3e50" promptText="Destination" unFocusColor="#233140" GridPane.columnIndex="1">
+                        <JFXTextField fx:id="destination" focusColor="#2c3e50" promptText="Destination" unFocusColor="#233140" GridPane.columnIndex="1" GridPane.rowIndex="1">
                            <font>
                               <Font name="Raleway-Regular" size="12.0" />
                            </font>
@@ -63,7 +64,7 @@
                               <Insets bottom="10.0" left="50.0" right="50.0" />
                            </GridPane.margin>
                         </JFXTextField>
-                        <Label fx:id="tripId" alignment="CENTER" contentDisplay="CENTER" text=" Trip ID " textFill="#233140">
+                        <Label fx:id="tripId" alignment="CENTER" contentDisplay="CENTER" text=" Trip ID " textFill="#233140" GridPane.rowIndex="1">
                            <font>
                               <Font name="Raleway-Regular" size="12.0" />
                            </font>
@@ -71,7 +72,7 @@
                               <Insets bottom="10.0" left="50.0" right="50.0" />
                            </GridPane.margin>
                         </Label>
-                        <JFXTextField fx:id="tenderId" focusColor="#2c3e50" promptText="Tender ID" unFocusColor="#233140" GridPane.rowIndex="1">
+                        <JFXTextField fx:id="tenderId" focusColor="#2c3e50" promptText="Tender ID" unFocusColor="#233140" GridPane.rowIndex="2">
                            <font>
                               <Font name="Raleway-Regular" size="12.0" />
                            </font>
@@ -79,12 +80,12 @@
                               <Insets bottom="10.0" left="50.0" right="50.0" />
                            </GridPane.margin>
                         </JFXTextField>
-                        <JFXDatePicker fx:id="date" defaultColor="#2c3e50" prefHeight="25.0" prefWidth="233.0" promptText="Date" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                        <JFXDatePicker fx:id="date" defaultColor="#2c3e50" prefHeight="25.0" prefWidth="233.0" promptText="Date" GridPane.columnIndex="1" GridPane.rowIndex="3">
                            <GridPane.margin>
                               <Insets bottom="10.0" left="50.0" right="50.0" />
                            </GridPane.margin>
                         </JFXDatePicker>
-                        <JFXTextField fx:id="cost" focusColor="#2c3e50" promptText="Cost" unFocusColor="#233140" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                        <JFXTextField fx:id="cost" focusColor="#2c3e50" promptText="Cost" unFocusColor="#233140" GridPane.columnIndex="1" GridPane.rowIndex="2">
                            <font>
                               <Font name="Raleway-Regular" size="12.0" />
                            </font>
@@ -92,7 +93,7 @@
                               <Insets bottom="10.0" left="50.0" right="50.0" />
                            </GridPane.margin>
                         </JFXTextField>
-                        <JFXTextField fx:id="regNo" focusColor="#2c3e50" promptText="Reg. No." unFocusColor="#233140" GridPane.rowIndex="2">
+                        <JFXTextField fx:id="regNo" focusColor="#2c3e50" promptText="Reg. No." unFocusColor="#233140" GridPane.rowIndex="3">
                            <font>
                               <Font name="Raleway-Regular" size="12.0" />
                            </font>
@@ -100,6 +101,14 @@
                               <Insets bottom="10.0" left="50.0" right="50.0" />
                            </GridPane.margin>
                         </JFXTextField>
+                        <Label fx:id="text" styleClass="redtext" GridPane.columnSpan="2">
+                           <GridPane.margin>
+                              <Insets bottom="20.0" left="50.0" />
+                           </GridPane.margin>
+                           <opaqueInsets>
+                              <Insets />
+                           </opaqueInsets>
+                        </Label>
                      </children>
                   </GridPane>
                </children>
@@ -110,7 +119,7 @@
          <children>
             <VBox layoutX="63.0" layoutY="55.0" prefHeight="630.0" prefWidth="210.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
-                  <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#doAddTransport" prefHeight="40.0" prefWidth="250.0" text="ADD" textAlignment="CENTER" textFill="WHITE">
+                  <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#doAddTransport" prefHeight="40.0" prefWidth="250.0" text="ADD TRANSPORT" textAlignment="CENTER" textFill="WHITE">
                      <font>
                         <Font name="Raleway-Bold" size="12.0" />
                      </font>
@@ -118,7 +127,7 @@
                         <Insets bottom="5.0" left="30.0" right="30.0" top="5.0" />
                      </VBox.margin>
                   </Button>
-                  <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#doUpdateTransport" prefHeight="40.0" prefWidth="250.0" text="UPDATE" textAlignment="CENTER" textFill="WHITE">
+                  <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#doUpdateTransport" prefHeight="40.0" prefWidth="250.0" text="UPDATE INFO" textAlignment="CENTER" textFill="WHITE">
                      <font>
                         <Font name="Raleway-Bold" size="12.0" />
                      </font>
@@ -126,7 +135,7 @@
                         <Insets bottom="5.0" left="30.0" right="30.0" top="5.0" />
                      </VBox.margin>
                   </Button>
-                  <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#doDeleteTransport" prefHeight="40.0" prefWidth="250.0" text="DELETE" textAlignment="CENTER" textFill="WHITE">
+                  <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#doDeleteTransport" prefHeight="40.0" prefWidth="250.0" text="DELETE TRANSPORT" textAlignment="CENTER" textFill="WHITE">
                      <font>
                         <Font name="Raleway-Bold" size="12.0" />
                      </font>
@@ -134,7 +143,7 @@
                         <Insets bottom="5.0" left="30.0" right="30.0" top="5.0" />
                      </VBox.margin>
                   </Button>
-                  <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="40.0" prefWidth="250.0" text="REPORT" textAlignment="CENTER" textFill="WHITE">
+                  <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#doReport" prefHeight="40.0" prefWidth="250.0" text="REPORT" textAlignment="CENTER" textFill="WHITE">
                      <font>
                         <Font name="Raleway-Bold" size="12.0" />
                      </font>

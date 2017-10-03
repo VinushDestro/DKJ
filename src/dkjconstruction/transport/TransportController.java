@@ -5,110 +5,88 @@
  */
 package dkjconstruction.transport;
 
-import java.sql.SQLException;
-import java.time.LocalDate;
-import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
 import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXTextField;
+import dkjconstruction.DbConnection;
 import java.io.IOException;
+import java.net.URL;
+import java.sql.Connection;
 import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.time.LocalDate;
+import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-
 
 /**
  * FXML Controller class
  *
  * @author User
  */
-public class TransportController {
+public class TransportController implements Initializable {
 
     @FXML
-    private Label  tripId;
+    private TableView<TransportDetail> transTab;
     @FXML
-    private JFXTextField  tenderId;
+    private TableColumn tabTripId;
     @FXML
-    private JFXTextField  regNo;
+    private TableColumn tabRegNo;
     @FXML
-    private JFXDatePicker  date;
+    private TableColumn tabTenderId;
     @FXML
-    private JFXTextField  destination;
+    private TableColumn tabDate;
     @FXML
-    private JFXTextField  cost;
-    
+    private TableColumn tabDestination;
     @FXML
-    private TableView  transTab;
-    
+    private TableColumn tabCost;
     @FXML
-    private TableColumn  tabTripId;
+    private JFXTextField destination;
     @FXML
-    private TableColumn  tabRegNo;
+    private Label tripId;
     @FXML
-    private TableColumn  tabTenderId;
+    private JFXTextField tenderId;
     @FXML
-    private TableColumn  tabDestination;
+    private JFXDatePicker date;
     @FXML
-    private TableColumn  tabDate;
+    private JFXTextField cost;
     @FXML
-    private TableColumn  tabCost;
-    
+    private JFXTextField regNo;
     @FXML
     private TextField search;
+    @FXML
+    private Label text;
 
-    public void initialize() {
-
-        tabTripId.setCellValueFactory(new PropertyValueFactory<TransportDetail,String>("TripId"));
-        tabRegNo.setCellValueFactory(new PropertyValueFactory<TransportDetail,String>("RegNo"));
-	tabTenderId.setCellValueFactory(new PropertyValueFactory<TransportDetail,String>("TenderId"));
-	tabDestination.setCellValueFactory(new PropertyValueFactory<TransportDetail,String>("destination"));
-        tabDate.setCellValueFactory(new PropertyValueFactory<TransportDetail,Double>("date"));
-        tabCost.setCellValueFactory(new PropertyValueFactory<TransportDetail,Integer>("cost"));
-       
-        try {
-            transTab.setItems(Transport.getTransport());
-        } catch (IOException | ClassNotFoundException | SQLException e) {
-            e.printStackTrace();
-        }
-        RowclickEvent();     
-    }  
-
-    private void RowclickEvent() {
-        transTab.setOnMouseClicked((e) -> {
-        TransportDetail t1 = (TransportDetail) transTab.getItems().get(transTab.getSelectionModel().getSelectedIndex());
-
-            tenderId.setText(t1.getTenderId());
-            tripId.setText(t1.getTripId());
-            regNo.setText(t1.getRegNo());
-            destination.setText(t1.getDestination());
-            date.setValue(LocalDate.parse(t1.getDate()));
-            cost.setText(t1.getCost());
-        
-        });
-
-    }
+    
+    private ObservableList<TransportDetail> transportS;
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
+        loadTable();
+        doSearchTransport();
+        RowclickEvent();         
+    }    
 
     @FXML
     private void doAddTransport(ActionEvent event) throws SQLException, ClassNotFoundException {
         int result = 0 ;
-        String addRegNo = regNo.getText().trim();
-        String addTenderId = tenderId.getText().trim();
-        String addDestination = destination.getText().trim();
-//        Double addCost = Double.parseDouble(cost.getText().trim());
-    //    LocalDate addDate = date.getValue();
-        
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Add Transport");
         alert.setHeaderText(null);
-
-        if (addTenderId.isEmpty() || addRegNo.isEmpty() || addDestination.isEmpty() || cost.getText().trim()==null || date.getValue()==null) {
+        
+        if (regNo.getText().isEmpty() || tenderId.getText().isEmpty() || destination.getText().isEmpty() || cost.getText().trim()==null || date.getValue()==null) {
             alert.setContentText("All fields should be filled");
         }
         else {
@@ -121,93 +99,112 @@ public class TransportController {
                     alert.setContentText("Invalid value for date.\nShould be less than current date.");
                 }
                 else{
-                    try{
-                        result = Transport.addTransport(addRegNo,addTenderId,addDestination,Date.valueOf(date.getValue()),Double.parseDouble(cost.getText().trim()));
-                        if (result == 1) {
-                            alert.setContentText("Operation Successful!");
-                            tenderId.clear();
-                            regNo.clear();
-                            destination.clear();
-                            cost.clear();
-                            date.getEditor().setText(null);
-                            
-                            try {
-                                transTab.setItems(Transport.getTransport());
-                            } catch (IOException | ClassNotFoundException | SQLException e) {
-                                e.printStackTrace();
-                            }
-                        } else {
-                            alert.setContentText("Operation Failed");
+                    String addRegNo = regNo.getText().trim();
+                    String addTenderId = tenderId.getText().trim();
+                    String addDestination = destination.getText().trim();
+                    Double addCost = Double.parseDouble(cost.getText().trim());
+                    LocalDate addDate = date.getValue();
+                    result = Transport.addTransport(addRegNo,addTenderId,addDestination,Date.valueOf(addDate),addCost);
+                    if (result == 1) {
+                        tenderId.clear();
+                        regNo.clear();
+                        destination.clear();
+                        cost.clear();
+                        date.getEditor().setText(null);
+                        alert.setContentText("Operation Successful!");
+                        try {
+                            transTab.setItems(Transport.getTransport());
+                        } catch (IOException | ClassNotFoundException | SQLException e) {
+                            e.printStackTrace();
                         }
-                    }
-                    catch (SQLException e1) {
-                        Alert alert2 = new Alert(Alert.AlertType.INFORMATION);
-                        alert2.setTitle("Error");
-                        alert2.setHeaderText(null);
-                        alert2.setContentText(e1.getMessage()+"\nOperation Failed");
-                        alert2.show();
-                        
+                    } else {
+                        alert.setContentText("Operation Failed");
                     }
                 }
             }
         }
         alert.show();
-    }
-    
-    @FXML
-    private void doUpdateTransport(ActionEvent event) throws SQLException, ClassNotFoundException {
-        int result = 0 ;
-        String addTripId = tripId.getText().trim();
-//        Double addCost = Double.parseDouble(cost.getText().trim());
- //       LocalDate addDate = date.getValue();
         
+    }
+
+    @FXML
+    private void doUpdateTransport(ActionEvent event) throws ClassNotFoundException, SQLException{
+        
+        int result = 0 ;
 
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Update Transport");
         alert.setHeaderText(null);
 
-        if (addTripId.isEmpty()){
+        if (tripId.getText().isEmpty()){
             alert.setContentText("Trip ID field cannot be empty");
         }
         else {
-            if (cost.getText().trim()==null && date.getValue()==null){
-            alert.setContentText("Cost or date should be given for update");
+            if (cost.getText().isEmpty() && date.getValue()==null){
+                alert.setContentText("Cost or date should be given along with tripId for update");
             }
             else{
-                if(Double.parseDouble(cost.getText().trim()) <= 0){
-                alert.setContentText("Invalid value for cost.\nShould be greater than zero.");
+                LocalDate today = LocalDate.now();
+                LocalDate addDate;
+                Double addCost;
+                String addTripId = tripId.getText().trim();
+                if (cost.getText().isEmpty()){
+                    addDate = date.getValue();
+                    addCost = 0.0;
+                    
+                    if(date.getValue().isAfter(today)){
+                        alert.setContentText("Invalid value for date.\nShould be less than current date.");
+                    }
                 }
-                else{
-                    try{
-                        result = Transport.updateTransport(addTripId,Date.valueOf(date.getValue()),Double.parseDouble(cost.getText().trim()));
-                        if (result == 1) {
-                            alert.setContentText("Operation Successful!");
-                            alert.show();
-                            cost.clear();
-                            date.getEditor().setText(null);
-                            try {
-                                transTab.setItems(Transport.getTransport());
-                            } catch (IOException | ClassNotFoundException | SQLException e) {
-                                e.printStackTrace();
-                            }
-                        } else {
-                            alert.setContentText("Operation Failed");
+                else {
+                    if (date.getValue()==null){
+                        addCost = Double.parseDouble(cost.getText().trim());
+                        addDate = LocalDate.now();
+                        if(Double.parseDouble(cost.getText().trim()) <= 0.0){
+                            alert.setContentText("Invalid value for cost.\nShould be greater than zero.");
                         }
                     }
-                    catch (NumberFormatException e1) {
-                        Alert alert2 = new Alert(Alert.AlertType.INFORMATION);
-                        alert2.setTitle("Error");
-                        alert2.setHeaderText(null);
-                        alert2.setContentText(e1.getMessage()+"\nOperation Failed");
-                        alert2.show();
+                    else{
+                        addDate = date.getValue();
+                        addCost = Double.parseDouble(cost.getText().trim());
+                        if(date.getValue().isAfter(today)){
+                            alert.setContentText("Invalid value for date.\nShould be less than current date.");
+                            alert.show();
+                        }
+                        if(Double.parseDouble(cost.getText().trim()) <= 0.0){
+                            alert.setContentText("Invalid value for cost.\nShould be greater than zero.");
+                            alert.show();
+                        }
                     }
+                }
+                try {
+                    result = Transport.updateTransport(Date.valueOf(addDate),addCost,addTripId);
+                } catch (SQLException ex) {
+                    Logger.getLogger(TransportController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                if (result == 1) {
+                    alert.setContentText("Operation Successful!");
+                    alert.show();
+                    tripId.setText("");
+                    cost.clear();
+                    date.getEditor().setText(null);
+                    try {
+                        transTab.setItems(Transport.getTransport());
+                    } 
+                    catch (IOException | ClassNotFoundException | SQLException e) {
+                        e.printStackTrace();
+                    }
+                }
+                else {
+                    alert.setContentText("Operation Failed");
                 }
             }
         }
+        alert.show();
     }
 
     @FXML
-    private void doDeleteTransport() throws SQLException {
+    private void doDeleteTransport(ActionEvent event) throws SQLException {
         try {
             //int result = 0 ;
             String addTripId = tripId.getText().trim();
@@ -254,8 +251,85 @@ public class TransportController {
     }
 
     @FXML
-    private void doSearchTransport() {
-       
+    private void doReport(ActionEvent event) {
     }
-            
+    
+    
+    private void RowclickEvent() {
+        transTab.setOnMouseClicked((e) -> {
+            try{
+                TransportDetail t1 = (TransportDetail) transTab.getItems().get(transTab.getSelectionModel().getSelectedIndex());
+
+                tenderId.setText(t1.getTenderId());
+                tripId.setText(t1.getTripId());
+                regNo.setText(t1.getRegNo());
+                destination.setText(t1.getDestination());
+                date.setValue(t1.getDate().toLocalDate());
+                cost.setText(t1.getCost().toString());
+
+                text.setText("Only either date or cost or both could be changed");
+            }
+            catch(Exception ex){
+                Alert alert2 = new Alert(Alert.AlertType.INFORMATION);
+                alert2.setTitle("Error");
+                alert2.setHeaderText(null);
+                alert2.setContentText("No row is clicked");
+                alert2.show();
+            }
+        
+        });
+
+    }
+    private void loadTable(){
+        tabTripId.setCellValueFactory(new PropertyValueFactory<>("TripId"));
+        tabRegNo.setCellValueFactory(new PropertyValueFactory<>("RegNo"));
+	tabTenderId.setCellValueFactory(new PropertyValueFactory<>("TenderId"));
+	tabDestination.setCellValueFactory(new PropertyValueFactory<>("destination"));
+        tabDate.setCellValueFactory(new PropertyValueFactory<>("date"));
+        tabCost.setCellValueFactory(new PropertyValueFactory<>("cost"));
+       
+        try {
+            transTab.setItems(Transport.getTransport());
+        } catch (IOException | ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    private void doSearchTransport() {
+        search.setOnKeyReleased(e -> {
+            if (search.getText().equals("")) {
+                loadTable();
+
+            }
+            else{
+                try {
+                    Connection con = DbConnection.getConnection();
+                    
+                    PreparedStatement pst = con.prepareStatement
+                            ("SELECT * FROM transport where tenderId LIKE '%" + search.getText() + "%'"
+                            + "UNION SELECT * FROM transport where tripId LIKE '%" + search.getText() + "%'"
+                            + "UNION SELECT * FROM transport where regNo LIKE '%" + search.getText() + "%'"
+                            + "UNION SELECT * FROM transport where cost LIKE '%" + search.getText() + "%'"
+                            + "UNION SELECT * FROM transport where destination LIKE '%" + search.getText() + "%' ");
+                    ResultSet rs = pst.executeQuery();
+                    transportS= FXCollections.observableArrayList();
+                    while (rs.next()) {
+                        String tripIdS=rs.getString(1);
+                        String RegNoS=rs.getString(2);
+                        String tenderIdS=rs.getString(3);
+                        String destinationS=rs.getString(4);
+                        Date dateS=rs.getDate(5);
+                        Double costS=rs.getDouble(6);
+                        
+                        transportS.add(new TransportDetail(tripIdS,RegNoS,tenderIdS,destinationS,dateS,costS)); 
+                        
+                        }
+                    transTab.setItems(transportS);
+
+                } catch (SQLException ex) {
+                    System.err.println("Error loading table data " + ex);
+
+                }
+            }
+        });
+    }
 }
