@@ -21,8 +21,6 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Priority;
 import javafx.stage.Stage;
 
 /**
@@ -81,7 +79,7 @@ public class MainController {
     @FXML
     private void doHome() throws IOException {
         System.out.println("tr"+type);
-            main.showHome();
+            //main.showHome();
     }
     
     @FXML
