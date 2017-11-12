@@ -83,69 +83,69 @@ public class VehicleManagement {
 //        primaryStage.show();
 //    }
 //    
-//          public static ObservableList<VehicleDetail> getVehicle() throws IOException, ClassNotFoundException, SQLException {
-//        ObservableList<VehicleDetail>  Vehicle= FXCollections.observableArrayList();
-//
-//        DbConnection.openConnection();
-//        Connection con=DbConnection.getConnection();
-//        Statement stmt =con.createStatement();
-//
-//        ResultSet rs=stmt.executeQuery("select * from asset");
-//
-//        while(rs.next()) {
-//
-//             String regNo =rs.getString("regNo");
-//             String name=rs.getString("name");
-//             String type =rs.getString("type");
-//             String cost=rs.getString("cost");
-//             String lifeTime=rs.getString("lifeTime");
-//             String boughtDate =rs.getString("boughtDate");
-//             String condition=rs.getString("condition");
-//             String depPercent=rs.getString("depPercent");
-//             String currentDep=rs.getString("currentDep");
-//             String totalDep=rs.getString("totalDep");
-//             String currentValue=rs.getString("currentValue");
-//             Vehicle.add(new VehicleDetail(regNo,name,type,cost,lifeTime,boughtDate,condition,depPercent,currentDep,totalDep,currentValue));
-//// creating objects and load it in
-//        }
-//        return Vehicle;
-//    
-//    
-//    
-//    
-////    @Override
-////    public void start(Stage primaryStage) throws IOException {
-////        Button btn = new Button();
-////        btn.setText("Say 'DKJ Asset Management'");
-////        btn.setOnAction(new EventHandler<ActionEvent>() {
-////            
-////            @Override
-////            public void handle(ActionEvent event) {
-////                System.out.println("DKJ Asset Management");
-////            }
-////        });
-////        
-////        FXMLLoader rootLoader = new FXMLLoader();
-////        rootLoader.setLocation(DKJASSETSMANAGEMENT.class.getResource("FXML1.fxml"));
-////       
-////        GridPane root = new GridPane();
-////        root = rootLoader.load();
-////        
-////        Scene scene = new Scene(root);
-////        
-////        primaryStage.setTitle("DKJ Asset Management");
-////        primaryStage.setScene(scene);
-////        primaryStage.show();
-////   }
-////
-////    /**
-////     * @param args the command line arguments
-////     */
-////    public static void main(String[] args) {
-////        launch(args);
-////    }
-//    
-//          }
+          public static ObservableList<VehicleDetail> getVehicle() throws IOException, ClassNotFoundException, SQLException {
+        ObservableList<VehicleDetail>  Vehicle= FXCollections.observableArrayList();
+
+        DbConnection.openConnection();
+        Connection con=DbConnection.getConnection();
+        Statement stmt =con.createStatement();
+
+        ResultSet rs=stmt.executeQuery("select * from asset");
+
+        while(rs.next()) {
+
+             String regNo =rs.getString("regNo");
+             String name=rs.getString("name");
+             String type =rs.getString("type");
+             String cost=rs.getString("cost");
+             String lifeTime=rs.getString("lifeTime");
+             String boughtDate =rs.getString("boughtDate");
+             String condition=rs.getString("condition");
+             String depPercent=rs.getString("depPercent");
+             String currentDep=rs.getString("currentDep");
+             String totalDep=rs.getString("totalDep");
+             String currentValue=rs.getString("currentValue");
+             Vehicle.add(new VehicleDetail(regNo,name,type,cost,lifeTime,boughtDate,condition,depPercent,currentDep,totalDep,currentValue));
+ creating objects and load it in
+        }
+        return Vehicle;
+    
+    
+    
+    
+    @Override
+    public void start(Stage primaryStage) throws IOException {
+        Button btn = new Button();
+        btn.setText("Say 'DKJ Asset Management'");
+        btn.setOnAction(new EventHandler<ActionEvent>() {
+            
+            @Override
+            public void handle(ActionEvent event) {
+                System.out.println("DKJ Asset Management");
+            }
+        });
+        
+        FXMLLoader rootLoader = new FXMLLoader();
+        rootLoader.setLocation(DKJASSETSMANAGEMENT.class.getResource("FXML1.fxml"));
+       
+        GridPane root = new GridPane();
+        root = rootLoader.load();
+        
+        Scene scene = new Scene(root);
+        
+        primaryStage.setTitle("DKJ Asset Management");
+        primaryStage.setScene(scene);
+        primaryStage.show();
+   }
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String[] args) {
+        launch(args);
+    }
+    
+          }
     
     
   // add vehicle  

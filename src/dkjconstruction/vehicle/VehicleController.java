@@ -22,7 +22,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import dkjconstruction.vehicle.VehicleManagement;
 import dkjconstruction.vehicle.VehicleDetail;
-import static dkjconstruction.vehicle.VehicleManagement.getVehicle;
 import java.io.IOException;
 import java.sql.ResultSet;
 import javafx.collections.FXCollections;
