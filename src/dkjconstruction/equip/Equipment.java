@@ -5,10 +5,8 @@
  */
 package dkjconstruction.equip;
 
-import java.sql.Connection;
 import dkjconstruction.DbConnection;
-import dkjconstruction.vehicle.DKJASSETSMANAGEMENT;
-//import asset.management.AvailableEquipmentDetails.AvailableEquipmentDetail;
+import dkjconstruction.vehicle.VehicleManagement;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -37,9 +35,9 @@ public class Equipment extends Application {
     //-------------------------------------------------------------------------------------------------------
     // Equipments
     
-//    public static void main(String[] args) {
-//        launch(args);
-//    }
+    public static void main(String[] args) {
+        launch(args);
+    }
     @Override
     public void start(Stage primaryStage) throws IOException {
         Button btn = new Button();
@@ -53,7 +51,7 @@ public class Equipment extends Application {
         });
         
        FXMLLoader rootLoader = new FXMLLoader();
-        rootLoader.setLocation(DKJASSETSMANAGEMENT.class.getResource("Equip.fxml"));
+        rootLoader.setLocation(VehicleManagement.class.getResource("Equip.fxml"));
        
       GridPane root = new GridPane();
         root = rootLoader.load();
@@ -77,13 +75,13 @@ public class Equipment extends Application {
         while(rs.next()) {
 
             String name=rs.getString("name");
-            String equipID = rs.getString("equipID");
-            double cost=rs.getDouble("cost");
-            int count=rs.getInt("Count");
-            equipment.add(new EquipmentDetail(equipID,name,count,cost));
+            String cost=rs.getString("cost");
+            String count=rs.getString("Count");
+            double totalCost=rs.getDouble("totalCost");
+            equipment.add(new EquipmentDetail(name,count,cost,totalCost));
 // creating objects and load it in
         }
-        DbConnection.closeConnection();
+       
         return equipment;
     }
       
@@ -95,25 +93,29 @@ public class Equipment extends Application {
     
     
     
-    public static int addEquipment(String equipID,String name,int count,double cost) throws SQLException, ClassNotFoundException{
+    public static int addEquipment(String name,int count,double cost) throws SQLException, ClassNotFoundException{
         DbConnection DbConnection= new DbConnection();
         DbConnection.openConnection();
         Connection con = DbConnection.getConnection();
-        PreparedStatement stmt = con.prepareStatement("insert into equipment (`equipID`,`name`,`count`,`cost`) values (?,?,?,?)");
+        double totalCost=count*cost;
+        PreparedStatement stmt = con.prepareStatement("insert into equipment (`name`,`count`,`cost`,`totalCost`) values (?,?,?,?)");
         
-        stmt.setString(1,equipID);
-        stmt.setString(2,name);
-        stmt.setInt(3,count);
-        stmt.setDouble(4,cost);
+        
+        
+       
+        stmt.setString(1,name);
+        stmt.setInt(2,count);
+        stmt.setDouble(3,cost);
+        stmt.setDouble(4,totalCost);
                 
         int result = stmt.executeUpdate();
         DbConnection.closeConnection();
-
+  
         return result;
     }
     
     
-     public static int updateEquipment(String equipID,int count) throws SQLException, ClassNotFoundException {
+     public static int updateEquipment(String name,int count) throws SQLException, ClassNotFoundException {
         int result = -1;
         Alert alert= new Alert(Alert.AlertType.INFORMATION);
         DbConnection DbConnection = new DbConnection();
@@ -121,9 +123,9 @@ public class Equipment extends Application {
         DbConnection.openConnection();
         Connection con = DbConnection.getConnection();
 
-        PreparedStatement stmt = con.prepareStatement("update equipment set count=? where equipID=?");
+        PreparedStatement stmt = con.prepareStatement("update equipment set count=count + ?, totalCost=cost*count where name=?");
         stmt.setInt(1,count);
-        stmt.setString(2,equipID);
+        stmt.setString(2,name);
         
         
         try{
@@ -141,17 +143,17 @@ public class Equipment extends Application {
     }
     
      
-    
-      public static int deleteEquipment(String equipID,int count) throws SQLException, ClassNotFoundException {
+     
+      public static int deleteEquipment(String name,int count) throws SQLException, ClassNotFoundException {
         int result = -1;
         Alert alert= new Alert(Alert.AlertType.INFORMATION);
         DbConnection DbConnection= new DbConnection();
         DbConnection.openConnection();
         Connection con = DbConnection.getConnection();
 
-        PreparedStatement stmt = con.prepareStatement("update equipment set count=count-? where equipID=?");
+        PreparedStatement stmt = con.prepareStatement("update equipment set count=count-? ,totalCost=cost*count where name=?");
         stmt.setInt(1,count);
-        stmt.setString(2,equipID);
+        stmt.setString(2,name);
         
         try{
             result = stmt.executeUpdate();
@@ -169,16 +171,16 @@ public class Equipment extends Application {
       
       
       
-       public static int deleteEquipment(String equipID) throws SQLException, ClassNotFoundException {
+       public static int deleteEquipment(String name) throws SQLException, ClassNotFoundException {
         int result = -1;
         Alert alert= new Alert(Alert.AlertType.INFORMATION);
         DbConnection DbConnection= new DbConnection();
         DbConnection.openConnection();
         Connection con = DbConnection.getConnection();
 
-        PreparedStatement stmt = con.prepareStatement("delete from equipment where equipID=?");
+        PreparedStatement stmt = con.prepareStatement("delete from equipment where name=?");
         
-        stmt.setString(1,equipID);
+        stmt.setString(1,name);
         
         try{
             result = stmt.executeUpdate();
@@ -193,7 +195,7 @@ public class Equipment extends Application {
         DbConnection.closeConnection();
         return result;
     }
-  //--------------------------------------------------------------------------------------
+  
 
       
       
@@ -219,16 +221,16 @@ public class Equipment extends Application {
 
         while(rs.next()) {
 
-             String equipID =rs.getString("equipID");
+        
             String name=rs.getString("name");
-           int count=rs.getInt("Count");
-            double cost=rs.getDouble("cost");
-            
-           AvailableEquipmentD.add(new EquipmentDetail(equipID,name,count,cost));
+           String count=rs.getString("Count");
+            String cost=rs.getString("cost");
+            double totalCost=rs.getDouble("totalCost");
+           AvailableEquipmentD.add(new EquipmentDetail(name,count,cost,totalCost));
            
 // creating objects and load it in
         }
-        DbConnection.closeConnection();
+
         return AvailableEquipmentD;
     }
       

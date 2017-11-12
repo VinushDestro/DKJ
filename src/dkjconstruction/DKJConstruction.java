@@ -34,7 +34,7 @@ public class DKJConstruction extends Application {
         primaryStage.initStyle(StageStyle.UNDECORATED);
         FXMLLoader root = new FXMLLoader();
 
-        root.setLocation(DKJConstruction.class.getResource("home/Login.fxml"));
+        root.setLocation(DKJConstruction.class.getResource("main/Login.fxml"));
         layout = root.load();
         Scene scene = new Scene(layout);
         stage = new Stage();
@@ -45,19 +45,28 @@ public class DKJConstruction extends Application {
         System.out.println("start method");
     }
     
-    public static void showHomePage() throws IOException {
+    public static void showMainPage() throws IOException {
         FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(DKJConstruction.class.getResource("home/Home.fxml"));
+        loader.setLocation(DKJConstruction.class.getResource("main/Main.fxml"));
         mainLayout = loader.load();
         Scene scene = new Scene(mainLayout, 1200, 700);
         primaryStage.setScene(scene);
         primaryStage.show();
         System.out.println("homepage method");
     }
+    
+    public static void showHome() throws IOException {
+        mainLayout.getChildren().clear();
+        showMainPage();
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(DKJConstruction.class.getResource("home/Home.fxml"));
+        GridPane Pane = loader.load();
+        mainLayout.add(Pane, 1, 1);
+    }
 
     public static void showTransport() throws IOException {
         mainLayout.getChildren().clear();
-        showHomePage();
+        showMainPage();
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(DKJConstruction.class.getResource("transport/Transport.fxml"));
         GridPane Pane = loader.load();
@@ -66,15 +75,15 @@ public class DKJConstruction extends Application {
     
     public static void showAdmin() throws IOException {
         mainLayout.getChildren().clear();
-        showHomePage();
+        showMainPage();
         FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(DKJConstruction.class.getResource("admin/Admin.fxml"));
+        loader.setLocation(DKJConstruction.class.getResource("settings/Admin.fxml"));
         GridPane Pane = loader.load();
         mainLayout.add(Pane, 1, 1);
     }
     public static void showJobAllocation() throws IOException {
         mainLayout.getChildren().clear();
-        showHomePage();
+        showMainPage();
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(DKJConstruction.class.getResource("joballocation/JobAllocation.fxml"));
         GridPane Pane = loader.load();
@@ -83,7 +92,7 @@ public class DKJConstruction extends Application {
     
     public static void showAccounts() throws IOException {
         mainLayout.getChildren().clear();
-        showHomePage();
+        showMainPage();
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(DKJConstruction.class.getResource("accounts/AccountsFXMLDocument.fxml"));
         GridPane Pane = loader.load();
@@ -92,7 +101,7 @@ public class DKJConstruction extends Application {
     
     public static void showUtilities() throws IOException {
         mainLayout.getChildren().clear();
-        showHomePage();
+        showMainPage();
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(DKJConstruction.class.getResource("utilities/UtilitiesFXMLDocument.fxml"));
         GridPane Pane = loader.load();
@@ -101,7 +110,7 @@ public class DKJConstruction extends Application {
 
     public static void showHr() throws IOException {
         mainLayout.getChildren().clear();
-        showHomePage();
+        showMainPage();
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(DKJConstruction.class.getResource("hr/HRmanagement.fxml"));
         GridPane Pane = loader.load();
@@ -109,7 +118,7 @@ public class DKJConstruction extends Application {
     }
     public static void showPayroll() throws IOException {
         mainLayout.getChildren().clear();
-        showHomePage();
+        showMainPage();
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(DKJConstruction.class.getResource("payroll/Payroll.fxml"));
         GridPane Pane = loader.load();
@@ -117,7 +126,7 @@ public class DKJConstruction extends Application {
     }
     public static void showTender() throws IOException {
         mainLayout.getChildren().clear();
-        showHomePage();
+        showMainPage();
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(DKJConstruction.class.getResource("tender/Tender.fxml"));
         GridPane Pane = loader.load();
@@ -125,15 +134,15 @@ public class DKJConstruction extends Application {
     }
     public static void showAsset() throws IOException {
         mainLayout.getChildren().clear();
-        showHomePage();
+        showMainPage();
         FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(DKJConstruction.class.getResource("vehicle/FXML1.fxml"));
+        loader.setLocation(DKJConstruction.class.getResource("vehicle/Vehicle.fxml"));
         GridPane Pane = loader.load();
         mainLayout.add(Pane, 1, 1);
     }
     public static void showEquip() throws IOException {
         mainLayout.getChildren().clear();
-        showHomePage();
+        showMainPage();
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(DKJConstruction.class.getResource("equip/Equip.fxml"));
         GridPane Pane = loader.load();
@@ -141,7 +150,7 @@ public class DKJConstruction extends Application {
     }
     public static void showMaterial() throws IOException {
         mainLayout.getChildren().clear();
-        showHomePage();
+        showMainPage();
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(DKJConstruction.class.getResource("rawmaterial/Rawmaterial.fxml"));
         GridPane Pane = loader.load();
@@ -150,7 +159,7 @@ public class DKJConstruction extends Application {
     
     public static void showSupplier() throws IOException {
         mainLayout.getChildren().clear();
-        showHomePage();
+        showMainPage();
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(DKJConstruction.class.getResource("supplier/Supplier.fxml"));
         GridPane Pane = loader.load();
@@ -159,18 +168,18 @@ public class DKJConstruction extends Application {
     
     public static void showErrorPage() throws IOException {
         mainLayout.getChildren().clear();
-        showHomePage();
+        showMainPage();
         FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(DKJConstruction.class.getResource("home/Error.fxml"));
+        loader.setLocation(DKJConstruction.class.getResource("settings/Error.fxml"));
         GridPane Pane = loader.load();
         mainLayout.add(Pane, 1, 1);
     }
     
     public static void showChangePw() throws IOException {
         mainLayout.getChildren().clear();
-        showHomePage();
+        showMainPage();
         FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(DKJConstruction.class.getResource("home/ChangePw.fxml"));
+        loader.setLocation(DKJConstruction.class.getResource("settings/ChangePw.fxml"));
         GridPane Pane = loader.load();
         mainLayout.add(Pane, 1, 1);
     }

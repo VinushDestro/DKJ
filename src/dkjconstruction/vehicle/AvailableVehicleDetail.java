@@ -13,14 +13,18 @@ public class AvailableVehicleDetail {
      private String regNo;
     private String name;
     private String type;
-    private double cost;
-    private int lifeTime;
+    private String cost;
+    private String lifeTime;
     private String boughtDate;
     private String condition;
+    private String currentDep;
+    private String depPercent;
+    private String totalDep;
+    private String currentValue;
     
     
 
-     public  AvailableVehicleDetail(String regNo, String name, String type, double cost,int lifeTime,String boughtDate,String condition) {
+     public  AvailableVehicleDetail(String regNo, String name, String type,String cost,String lifeTime,String boughtDate,String condition,String depPercent, String currentDep,String totalDep,String currentValue) {
         this.regNo = regNo;
         this.name = name;
         this.type = type;
@@ -28,12 +32,13 @@ public class AvailableVehicleDetail {
         this.lifeTime=lifeTime;
         this.boughtDate=boughtDate;
         this.condition=condition;
-
+        this.depPercent=depPercent;
+        this.currentDep=currentDep;
+        this.totalDep=totalDep;
+        this.currentValue=currentValue;
     }
 
-        AvailableVehicleDetail(String name, String regNo, String type, double cost, String boughtDate, int lifeTime, String condition) {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        }
+       
 
     public String getRegNo() {
         return regNo;
@@ -55,19 +60,28 @@ public class AvailableVehicleDetail {
         this.type = type;
     }
 
-    public double getCost() {
+    public String getCost() {
         return cost;
     }
 
-    public void setCost(double contactNumber) {
+    public void setCost(String cost) {
         this.cost = cost;
     }
     
-    public int getLifeTim() {
+    public String getCurrentDep() {
+        return this.currentDep;
+    }
+
+    public void setCurrentDep(String currentDep) {
+        this.cost = cost;
+    }
+    
+    
+    public String getLifeTim() {
         return lifeTime;
     }
 
-    public void setLifeTime(int lifeTime) {
+    public void setLifeTime(String lifeTime) {
         this.lifeTime = lifeTime;
     }
     
@@ -85,6 +99,32 @@ public class AvailableVehicleDetail {
 
     public void setCondition(String condtion) {
         this.condition = condition ;
+    }
+//////////////////////////////////////////////////////////////////////////
+    
+    public String getDepPercent() {
+        return depPercent;
+    }
+
+    public void setDepPercent(String depPercent) {
+         this.depPercent=depPercent;
+    }
+    
+     public String getTotalDep() {
+        return totalDep;
+    }
+
+    public void setTotalDep(String totalDep) {
+        this.totalDep=totalDep;
+        
+    }
+    
+     public String getCurrentValue() {
+        return currentValue;
+    }
+
+    public void setCurrentValue(String currentValue) {
+       this.currentValue=currentValue;
     }
 
     

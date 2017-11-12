@@ -12,8 +12,13 @@ import java.sql.SQLException;
 import javafx.scene.control.Alert;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.util.Calendar;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -32,7 +37,7 @@ import javafx.stage.Stage;
  *
  * @author VINUSH
  */
-public class DKJASSETSMANAGEMENT extends Application {
+public class VehicleManagement extends Application {
     
     
     private static Stage primaryStage;
@@ -40,11 +45,11 @@ public class DKJASSETSMANAGEMENT extends Application {
     private static Stage stage;
     private static AnchorPane layout;
 
-//    public static void main(String[] args) {
-//        launch(args);
-//    }
+    public static void main(String[] args) {
+        launch(args);
+    }
 
-    
+      
 //    @Override
 //    public void start(Stage primaryStage) throws IOException  {
 //        this.primaryStage = primaryStage;
@@ -82,7 +87,7 @@ public class DKJASSETSMANAGEMENT extends Application {
         });
         
        FXMLLoader rootLoader = new FXMLLoader();
-        rootLoader.setLocation(DKJASSETSMANAGEMENT.class.getResource("FXML1.fxml"));
+        rootLoader.setLocation(VehicleManagement.class.getResource("Vehicle.fxml"));
        
       GridPane root = new GridPane();
         root = rootLoader.load();
@@ -108,14 +113,17 @@ public class DKJASSETSMANAGEMENT extends Application {
              String regNo =rs.getString("regNo");
              String name=rs.getString("name");
              String type =rs.getString("type");
-             double cost=rs.getDouble("cost");
-             int lifeTime=rs.getInt("lifeTime");
+             String cost=rs.getString("cost");
+             String lifeTime=rs.getString("lifeTime");
              String boughtDate =rs.getString("boughtDate");
              String condition=rs.getString("condition");
-             Vehicle.add(new VehicleDetail(regNo,name,type,cost,lifeTime,boughtDate,condition));
+             String depPercent=rs.getString("depPercent");
+             String currentDep=rs.getString("currentDep");
+             String totalDep=rs.getString("totalDep");
+             String currentValue=rs.getString("currentValue");
+             Vehicle.add(new VehicleDetail(regNo,name,type,cost,lifeTime,boughtDate,condition,depPercent,currentDep,totalDep,currentValue));
 // creating objects and load it in
         }
-        DbConnection.closeConnection();
         return Vehicle;
     
     
@@ -155,20 +163,31 @@ public class DKJASSETSMANAGEMENT extends Application {
     
           }
   // add vehicle  
-    public static int addVehicle(String regNo,String name,String type,double cost,String boughtDate,int lifeTime,String condition) throws SQLException, ClassNotFoundException{
+    public static int addVehicle(String regNo,String name,String type,double cost,Date boughtDate,int lifeTime,String condition,float dep) throws SQLException, ClassNotFoundException{
         DbConnection DbConnection= new DbConnection();
         DbConnection.openConnection();
         Connection con = DbConnection.getConnection();
-        PreparedStatement stmt = con.prepareStatement("insert into asset (`regNo`,`name`,`type`,`cost`,`boughtDate`,`lifeTime`,`condition`) values (?,?,?,?,?,?,?)");
+        double calcDep=Math.round((dep/100)*cost);
+        double totalDeps=lifeTime*calcDep;
+        double finalValue=cost-totalDeps;
+        
+       
+//     PreparedStatement pst = con.prepareStatement("SELECT DATEDIFF(CURDATE(),boughtDate) from asset ");
+//     System.out.println(pst);
+        
+        PreparedStatement stmt = con.prepareStatement("insert into asset (`regNo`,`name`,`type`,`cost`,`boughtDate`,`lifeTime`,`condition`,`depPercent`,`currentDep`,`totalDep`,`currentValue`) values (?,?,?,?,?,?,?,?,?,?,?)");
         
         stmt.setString(1,regNo);
         stmt.setString(2,name);
         stmt.setString(3,type);
         stmt.setDouble(4,cost);
-        stmt.setString(5,boughtDate);
+        stmt.setDate(5,boughtDate);
         stmt.setInt(6,lifeTime);
         stmt.setString(7,condition);
-        
+        stmt.setFloat(8,dep);
+        stmt.setDouble(9,calcDep);
+        stmt.setDouble(10,totalDeps);
+        stmt.setDouble(11,finalValue);
         int result = stmt.executeUpdate();
         DbConnection.closeConnection();
 
@@ -184,7 +203,7 @@ public class DKJASSETSMANAGEMENT extends Application {
         DbConnection.openConnection();
         Connection con = DbConnection.getConnection();
 
-        PreparedStatement stmt = con.prepareStatement("update asset set lifeTime=?,asset.condition=? where regNo=?");
+        PreparedStatement stmt = con.prepareStatement("update asset set lifeTime=?,totalDep=currentDep*lifeTime,currentValue=cost-totalDep,asset.condition=? where regNo=?");
        
         stmt.setInt(1,lifeTime);
         stmt.setString(2,condition);
@@ -245,8 +264,8 @@ public class DKJASSETSMANAGEMENT extends Application {
 
         DbConnection.openConnection();
         Connection con = DbConnection.getConnection();
-
-        PreparedStatement stmt = con.prepareStatement("update asset set lifeTime=? where regNo=?");
+         
+        PreparedStatement stmt = con.prepareStatement("update asset set lifeTime=?,totalDep=currentDep*lifeTime,currentValue=cost-totalDep where regNo=?");
         stmt.setInt(1,lifeTime);
         stmt.setString(2,regNo);
         
@@ -266,33 +285,7 @@ public class DKJASSETSMANAGEMENT extends Application {
         return result;
     }
     
-    public static int updateVehicle(String regNo,String condition,int lifeTime) throws SQLException, ClassNotFoundException {
-
-        int result = -1;
-        Alert alert= new Alert(Alert.AlertType.INFORMATION);
-        DbConnection DbConnection= new DbConnection();
-
-        DbConnection.openConnection();
-        Connection con = DbConnection.getConnection();
-
-        PreparedStatement stmt = con.prepareStatement("update asset asset.condition=?, lifeTime=? where regNo=?");
-        stmt.setString(1,condition);
-        stmt.setInt(2,lifeTime);
-        stmt.setString(3,regNo);
-        
-        try{
-            result = stmt.executeUpdate();
-        }
-        catch (SQLException e){
-            alert.setTitle("Error");
-            alert.setHeaderText(null);
-            alert.setContentText("Invalid Entry\n"+e.getMessage());
-            alert.show();
-
-        }
-        DbConnection.closeConnection();
-        return result;
-    }
+   
     
     //delete vehcle
     public static int deleteVehicle(String regNo) throws SQLException, ClassNotFoundException {
@@ -320,6 +313,7 @@ public class DKJASSETSMANAGEMENT extends Application {
     }
   
    
+    
        public  static ObservableList<VehicleDetail> getAvailableVehicle() throws IOException, ClassNotFoundException, SQLException {
         ObservableList<VehicleDetail>  Vehicle= FXCollections.observableArrayList();
 
@@ -334,35 +328,142 @@ public class DKJASSETSMANAGEMENT extends Application {
              String regNo =rs.getString("regNo");
              String name=rs.getString("name");
              String type =rs.getString("type");
-             double cost=rs.getDouble("cost");
-             int lifeTime=rs.getInt("lifeTime");
+             String cost=rs.getString("cost");
+             String lifeTime=rs.getString("lifeTime");
              String boughtDate =rs.getString("boughtDate");
              String condition=rs.getString("condition");
-             Vehicle.add(new VehicleDetail(regNo,name,type,cost,lifeTime,boughtDate,condition));
+             String depPercent=rs.getString("depPercent");
+             String currentDep=rs.getString("currentDep");
+             String totalDep=rs.getString("totalDep");
+             String currentValue=rs.getString("currentValue");
+             Vehicle.add(new VehicleDetail(regNo,name,type,cost,lifeTime,boughtDate,condition,depPercent,currentDep,totalDep,currentValue));
 // creating objects and load it in
         }
-        DbConnection.closeConnection();
+       // DbConnection.closeConnection();
         return Vehicle;
     }
       
-  
-      
-      
-      
+public static int updateRepair(String regNo) throws SQLException, ClassNotFoundException {
+
+        int result = -1;
+        Alert alert= new Alert(Alert.AlertType.INFORMATION);
+        DbConnection DbConnection= new DbConnection();
+
+        DbConnection.openConnection();
+        Connection con = DbConnection.getConnection();
+
+        PreparedStatement stmt = con.prepareStatement("update asset set availability='repair' where regNo=?");
+         stmt.setString(1,regNo);
+        
+        try{
+            result = stmt.executeUpdate();
+        }
+        catch (SQLException e){
+            alert.setTitle("Error");
+            alert.setHeaderText(null);
+            alert.setContentText("Invalid Entry\n"+e.getMessage());
+            alert.show();
+
+        }
+        DbConnection.closeConnection();
+        return result;
+    }
+    
+    public  static ObservableList<VehicleDetail> getRepairVehicle() throws IOException, ClassNotFoundException, SQLException {
+        ObservableList<VehicleDetail>  Vehicle= FXCollections.observableArrayList();
+
+        DbConnection.openConnection();
+        Connection con=DbConnection.getConnection();
+        Statement stmt =con.createStatement();
+
+        ResultSet rs=stmt.executeQuery("select * from asset where availability = 'repair'");
+        
+        while(rs.next()) {
+
+             String regNo =rs.getString("regNo");
+             String name=rs.getString("name");
+             String type =rs.getString("type");
+             String cost=rs.getString("cost");
+             String lifeTime=rs.getString("lifeTime");
+             String boughtDate =rs.getString("boughtDate");
+             String condition=rs.getString("condition");
+             String depPercent=rs.getString("depPercent");
+             String currentDep=rs.getString("currentDep");
+             String totalDep=rs.getString("totalDep");
+             String currentValue=rs.getString("currentValue");
+             Vehicle.add(new VehicleDetail(regNo,name,type,cost,lifeTime,boughtDate,condition,depPercent,currentDep,totalDep,currentValue));
+// creating objects and load it in
+        }
+     //   DbConnection.closeConnection();
+        return Vehicle;
+    }
 
 
-      
 
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      }
-      
-      
+    public static int updateAvailable(String regNo) throws SQLException, ClassNotFoundException {
+
+        int result = -1;
+        Alert alert= new Alert(Alert.AlertType.INFORMATION);
+        DbConnection DbConnection= new DbConnection();
+
+        DbConnection.openConnection();
+        Connection con = DbConnection.getConnection();
+
+        PreparedStatement stmt = con.prepareStatement("update asset set availability='available' where regNo=?");
+         stmt.setString(1,regNo);
+        
+        try{
+            result = stmt.executeUpdate();
+        }
+        catch (SQLException e){
+            alert.setTitle("Error");
+            alert.setHeaderText(null);
+            alert.setContentText("Invalid Entry\n"+e.getMessage());
+            alert.show();
+
+        }
+        DbConnection.closeConnection();
+        return result;
+    }
+
+    
+    public static boolean doCheckAvailble(String regNo) throws ClassNotFoundException, SQLException{
+      int result = -1;
+        Alert alert= new Alert(Alert.AlertType.INFORMATION);
+        DbConnection DbConnection= new DbConnection();
+
+        DbConnection.openConnection();
+        Connection con = DbConnection.getConnection();
+
+          boolean bool =false;
+          
+          try {
+
+            PreparedStatement stmt = con.prepareStatement("Select availability from asset where regNo =?");
+            stmt.setString(1,regNo);
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                
+                if (rs.getString("availability").equals("assigned")) {
+                     
+                   // rs.getString("availability").equals("assigned");
+                    bool = true;     
+                }
+                
+            }
+
+        } catch (Exception e) {
+            System.err.println("error " + e);
+
+        }
+        DbConnection.closeConnection();
+        return bool;
+    
+    }
+
+
+    
+
+}
 

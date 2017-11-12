@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package dkjconstruction.home;
+package dkjconstruction.main;
 
 import dkjconstruction.DKJConstruction;
 import dkjconstruction.DbConnection;
@@ -64,7 +64,7 @@ public class LoginController {
                 if (username.getText().equals(userName) &&  password.getText().equals(passWord)) {
                     currentUser=userName;
                     ((Node) (event.getSource())).getScene().getWindow().hide();
-                    main.showHomePage();
+                    DKJConstruction.showMainPage();
                 }
                 
             }

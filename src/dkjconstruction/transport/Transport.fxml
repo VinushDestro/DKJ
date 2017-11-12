@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXComboBox?>
 <?import com.jfoenix.controls.JFXDatePicker?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.geometry.Insets?>
@@ -72,28 +73,12 @@
                               <Insets bottom="10.0" left="50.0" right="50.0" />
                            </GridPane.margin>
                         </Label>
-                        <JFXTextField fx:id="tenderId" focusColor="#2c3e50" promptText="Tender ID" unFocusColor="#233140" GridPane.rowIndex="2">
-                           <font>
-                              <Font name="Raleway-Regular" size="12.0" />
-                           </font>
-                           <GridPane.margin>
-                              <Insets bottom="10.0" left="50.0" right="50.0" />
-                           </GridPane.margin>
-                        </JFXTextField>
                         <JFXDatePicker fx:id="date" defaultColor="#2c3e50" prefHeight="25.0" prefWidth="233.0" promptText="Date" GridPane.columnIndex="1" GridPane.rowIndex="3">
                            <GridPane.margin>
                               <Insets bottom="10.0" left="50.0" right="50.0" />
                            </GridPane.margin>
                         </JFXDatePicker>
                         <JFXTextField fx:id="cost" focusColor="#2c3e50" promptText="Cost" unFocusColor="#233140" GridPane.columnIndex="1" GridPane.rowIndex="2">
-                           <font>
-                              <Font name="Raleway-Regular" size="12.0" />
-                           </font>
-                           <GridPane.margin>
-                              <Insets bottom="10.0" left="50.0" right="50.0" />
-                           </GridPane.margin>
-                        </JFXTextField>
-                        <JFXTextField fx:id="regNo" focusColor="#2c3e50" promptText="Reg. No." unFocusColor="#233140" GridPane.rowIndex="3">
                            <font>
                               <Font name="Raleway-Regular" size="12.0" />
                            </font>
@@ -109,6 +94,16 @@
                               <Insets />
                            </opaqueInsets>
                         </Label>
+                        <JFXComboBox fx:id="tenderId" prefHeight="25.0" prefWidth="316.0" promptText="Tender ID" GridPane.rowIndex="2">
+                           <GridPane.margin>
+                              <Insets left="50.0" right="50.0" />
+                           </GridPane.margin>
+                        </JFXComboBox>
+                        <JFXComboBox fx:id="regNo" layoutX="60.0" layoutY="105.0" prefHeight="25.0" prefWidth="342.0" promptText="Reg. No." GridPane.rowIndex="3">
+                           <GridPane.margin>
+                              <Insets left="50.0" right="50.0" />
+                           </GridPane.margin>
+                        </JFXComboBox>
                      </children>
                   </GridPane>
                </children>
@@ -119,7 +114,7 @@
          <children>
             <VBox layoutX="63.0" layoutY="55.0" prefHeight="630.0" prefWidth="210.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
-                  <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#doAddTransport" prefHeight="40.0" prefWidth="250.0" text="ADD TRANSPORT" textAlignment="CENTER" textFill="WHITE">
+                  <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#doAddTransport" prefHeight="40.0" prefWidth="250.0" text="ADD TRIP" textAlignment="CENTER" textFill="WHITE">
                      <font>
                         <Font name="Raleway-Bold" size="12.0" />
                      </font>
@@ -135,7 +130,7 @@
                         <Insets bottom="5.0" left="30.0" right="30.0" top="5.0" />
                      </VBox.margin>
                   </Button>
-                  <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#doDeleteTransport" prefHeight="40.0" prefWidth="250.0" text="DELETE TRANSPORT" textAlignment="CENTER" textFill="WHITE">
+                  <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#doDeleteTransport" prefHeight="40.0" prefWidth="250.0" text="DELETE RECORD" textAlignment="CENTER" textFill="WHITE">
                      <font>
                         <Font name="Raleway-Bold" size="12.0" />
                      </font>

@@ -13,22 +13,26 @@ public class EquipmentDetail {
     
 
 
-    private String equipID;
+   // private String equipID;
     private String name;
-    private double cost;
-    private int count;
+    private String cost;
+    private double totalCost;
+    private String count;
    
     
 
-     public EquipmentDetail(String equipID, String name,int count, double cost) {
-        this.equipID = equipID;
+     public EquipmentDetail( String name,String count,String cost,double totalCost) {
+      //  this.equipID = equipID;
         this.name = name;
         this.count=count;
         this.cost = cost;
+        this.totalCost = totalCost;
         
         
 
     }
+
+    
 
      
 
@@ -40,35 +44,41 @@ public class EquipmentDetail {
     public void setName(String name) { this.name = name; }
 
   
-    public double getCost() {
+    public String getCost() {
         return cost;
     }
 
-    public void setCost(double contactNumber) {
+    public void setCost(String cost) {
         this.cost = cost;
     }
     
-    public int getCount() {
+     public double getTotalCost() {
+        return totalCost;
+    }
+
+    public void setTotalCost(double totalCost) {
+        this.totalCost = totalCost;
+    }
+    
+    
+    
+    public String getCount() {
         return count;
     }
 
-    public void setCount(int lifeTime) {
+    public void setCount(String lifeTime) {
         this.count = count;
     }
 
-    /**
-     * @return the equipID
-     */
-    public String getEquipID() {
-        return equipID;
-    }
-
-    /**
-     * @param equipID the equipID to set
-     */
-    public void setEquipID(String equipID) {
-        this.equipID = equipID;
-    }
+   
+//    public String getEquipID() {
+//        return equipID;
+//    }
+//
+//    
+//    public void setEquipID(String equipID) {
+//        this.equipID = equipID;
+//    }
     
     
 

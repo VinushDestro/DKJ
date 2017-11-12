@@ -13,33 +13,32 @@ public class AvailableEquipmentDetails {
     public class AvailableEquipmentDetail {
 
 
-    private String equipID;
+    //private String equipID;
     private String name;
     private double cost;
     private int count;
-   
+    private double totalCost;
     
 
-     public  AvailableEquipmentDetail(String equipID, String name, double cost,int count) {
-        this.equipID = equipID;
+     public  AvailableEquipmentDetail( String name, double cost,int count,double totalCost) {
+       // this.equipID = equipID;
         this.name = name;
         this.cost = cost;
         this.count=count;
+        this.totalCost = totalCost;
         
 
     }
 
-        private AvailableEquipmentDetail(String equipID, String name,int count, double cost) {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        }
+      
 
-    public String getequipID() {
-        return equipID;
-    }
-
-    public void setequipID(String equipID) {
-         this.equipID = equipID;
-    }
+//    public String getequipID() {
+//        return equipID;
+//    }
+//
+//    public void setequipID(String equipID) {
+//         this.equipID = equipID;
+//    }
 
     public String getName()
     {return name; }
@@ -54,6 +53,14 @@ public class AvailableEquipmentDetails {
 
     public void setCost(double cost) {
         this.cost = cost;
+    }
+    
+    public double getTotalCost() {
+        return totalCost;
+    }
+
+    public void setTotalCost(double totalCost) {
+        this.totalCost = totalCost;
     }
     
     public int getCount() {

@@ -18,14 +18,18 @@ public class VehicleDetail {
     private String regNo;
     private String name;
     private String type;
-    private double cost;
-    private int lifeTime;
+    private String cost;
+    private String lifeTime;
     private String boughtDate;
     private String condition;
+    private String currentDep;
+    private String depPercent;
+    private String totalDep;
+    private String currentValue;
     
     
 
-      VehicleDetail(String regNo, String name, String type, double cost,int lifeTime,String boughtDate,String condition) {
+      VehicleDetail(String regNo, String name, String type,String cost,String lifeTime,String boughtDate,String condition,String depPercent, String currentDep,String totalDep,String currentValue) {
         this.regNo = regNo;
         this.name = name;
         this.type = type;
@@ -33,8 +37,14 @@ public class VehicleDetail {
         this.lifeTime=lifeTime;
         this.boughtDate=boughtDate;
         this.condition=condition;
+        this.depPercent=depPercent;
+        this.currentDep=currentDep;
+        this.totalDep=totalDep;
+        this.currentValue=currentValue;
 
     }
+
+   
 
 
     public String getRegNo() {
@@ -57,7 +67,7 @@ public class VehicleDetail {
         this.type = type;
     }
 
-    public double getCost() {
+    public String getCost() {
         return this.cost;
     }
 
@@ -65,11 +75,20 @@ public class VehicleDetail {
         this.cost = cost;
     }
     
-    public int getLifeTime() {
+        public String getCurrentDep() {
+        return this.currentDep;
+    }
+
+    public void setCurrentDep(double currentDep) {
+        this.cost = cost;
+    }
+    
+    
+    public String getLifeTime() {
         return this.lifeTime;
     }
 
-    public void setLifeTime(int lifeTime) {
+    public void setLifeTime(String lifeTime) {
         this.lifeTime = lifeTime;
     }
     
@@ -87,6 +106,33 @@ public class VehicleDetail {
 
     public void setCondition(String condtion) {
         this.condition = condition ;
+    }
+    
+    //=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+    
+     public String getDepPercent() {
+        return depPercent;
+    }
+
+    public void setDepPercent(String depPercent) {
+         this.depPercent=depPercent;
+    }
+    
+     public String getTotalDep() {
+        return totalDep;
+    }
+
+    public void setTotalDep(String totalDep) {
+        this.totalDep=totalDep;
+        
+    }
+    
+     public String getCurrentValue() {
+        return currentValue;
+    }
+
+    public void setCurrentValue(String currentValue) {
+       this.currentValue=currentValue;
     }
 
 
