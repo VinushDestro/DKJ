@@ -106,47 +106,11 @@ public class VehicleManagement {
              String totalDep=rs.getString("totalDep");
              String currentValue=rs.getString("currentValue");
              Vehicle.add(new VehicleDetail(regNo,name,type,cost,lifeTime,boughtDate,condition,depPercent,currentDep,totalDep,currentValue));
- creating objects and load it in
+            //creating objects and load it in
         }
         return Vehicle;
     
-    
-    
-    
-    @Override
-    public void start(Stage primaryStage) throws IOException {
-        Button btn = new Button();
-        btn.setText("Say 'DKJ Asset Management'");
-        btn.setOnAction(new EventHandler<ActionEvent>() {
-            
-            @Override
-            public void handle(ActionEvent event) {
-                System.out.println("DKJ Asset Management");
-            }
-        });
-        
-        FXMLLoader rootLoader = new FXMLLoader();
-        rootLoader.setLocation(DKJASSETSMANAGEMENT.class.getResource("FXML1.fxml"));
-       
-        GridPane root = new GridPane();
-        root = rootLoader.load();
-        
-        Scene scene = new Scene(root);
-        
-        primaryStage.setTitle("DKJ Asset Management");
-        primaryStage.setScene(scene);
-        primaryStage.show();
-   }
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        launch(args);
-    }
-    
-          }
-    
+          }     
     
   // add vehicle  
     public static int addVehicle(String regNo,String name,String type,double cost,Date boughtDate,int lifeTime,String condition,float dep) throws SQLException, ClassNotFoundException{
