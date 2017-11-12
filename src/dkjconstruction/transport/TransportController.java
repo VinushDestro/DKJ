@@ -8,7 +8,6 @@ package dkjconstruction.transport;
 import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXTextField;
 import dkjconstruction.DbConnection;
-import dkjconstruction.tender.TenderDetails;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
@@ -16,7 +15,6 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -109,48 +107,8 @@ public class TransportController implements Initializable {
             } catch (SQLException ex) {
             Logger.getLogger(TransportController.class.getName()).log(Level.SEVERE, null, ex);
         }
-
-            
-//                    PreparedStatement pst = con.prepareStatement
-//                            ("SELECT * FROM transport where tenderId LIKE '%" + search.getText() + "%'"
-//                            + "UNION SELECT * FROM transport where tripId LIKE '%" + search.getText() + "%'"
-//                            + "UNION SELECT * FROM transport where regNo LIKE '%" + search.getText() + "%'"
-//                            + "UNION SELECT * FROM transport where cost LIKE '%" + search.getText() + "%'"
-//                            + "UNION SELECT * FROM transport where destination LIKE '%" + search.getText() + "%' ");
-//                    ResultSet rs = pst.executeQuery();
-//                    transportS= FXCollections.observableArrayList();
-//                    while (rs.next()) {
-//                        String tripIdS=rs.getString(1);
-//                        String RegNoS=rs.getString(2);
-//                        String tenderIdS=rs.getString(3);
-//                        String destinationS=rs.getString(4);
-//                        Date dateS=rs.getDate(5);
-//                        Double costS=rs.getDouble(6);
-//
-//                        transportS.add(new TransportDetail(tripIdS,RegNoS,tenderIdS,destinationS,dateS,costS)); 
-//        tenderId.setItems(myObservableList);   Connection con = DbConnection.getConnection();
-//                    
-//                    PreparedStatement pst = con.prepareStatement
-//                            ("SELECT * FROM transport where tenderId LIKE '%" + search.getText() + "%'"
-//                            + "UNION SELECT * FROM transport where tripId LIKE '%" + search.getText() + "%'"
-//                            + "UNION SELECT * FROM transport where regNo LIKE '%" + search.getText() + "%'"
-//                            + "UNION SELECT * FROM transport where cost LIKE '%" + search.getText() + "%'"
-//                            + "UNION SELECT * FROM transport where destination LIKE '%" + search.getText() + "%' ");
-//                    ResultSet rs = pst.executeQuery();
-//                    transportS= FXCollections.observableArrayList();
-//                    while (rs.next()) {
-//                        String tripIdS=rs.getString(1);
-//                        String RegNoS=rs.getString(2);
-//                        String tenderIdS=rs.getString(3);
-//                        String destinationS=rs.getString(4);
-//                        Date dateS=rs.getDate(5);
-//                        Double costS=rs.getDouble(6);
-//
-//                        transportS.add(new TransportDetail(tripIdS,RegNoS,tenderIdS,destinationS,dateS,costS)); 
-//        tenderId.setItems(myObservableList);
-loadTable();
-doSearchTransport();
-RowclickEvent();
+        doSearchTransport();
+        RowclickEvent();
     }    
 
     @FXML

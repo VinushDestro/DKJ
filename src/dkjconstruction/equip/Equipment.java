@@ -6,62 +6,53 @@
 package dkjconstruction.equip;
 
 import dkjconstruction.DbConnection;
-import dkjconstruction.vehicle.VehicleManagement;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.layout.GridPane;
-import javafx.stage.Stage;
 
 /**
  *
  * @author VINUSH
  */
-public class Equipment extends Application {
+public class Equipment {
     
     
     //-------------------------------------------------------------------------------------------------------
     // Equipments
     
-    public static void main(String[] args) {
-        launch(args);
-    }
-    @Override
-    public void start(Stage primaryStage) throws IOException {
-        Button btn = new Button();
-        btn.setText("Say 'Hello World'");
-        btn.setOnAction(new EventHandler<ActionEvent>() {
-            
-            @Override
-            public void handle(ActionEvent event) {
-                System.out.println("Hello World!");
-            }
-        });
-        
-       FXMLLoader rootLoader = new FXMLLoader();
-        rootLoader.setLocation(VehicleManagement.class.getResource("Equip.fxml"));
-       
-      GridPane root = new GridPane();
-        root = rootLoader.load();
-        
-        Scene scene = new Scene(root);
-        
-        primaryStage.setTitle("DKJ Asset Management");
-        primaryStage.setScene(scene);
-        primaryStage.show();
-    }
+//    public static void main(String[] args) {
+//        launch(args);
+//    }
+//    @Override
+//    public void start(Stage primaryStage) throws IOException {
+//        Button btn = new Button();
+//        btn.setText("Say 'Hello World'");
+//        btn.setOnAction(new EventHandler<ActionEvent>() {
+//            
+//            @Override
+//            public void handle(ActionEvent event) {
+//                System.out.println("Hello World!");
+//            }
+//        });
+//        
+//       FXMLLoader rootLoader = new FXMLLoader();
+//        rootLoader.setLocation(VehicleManagement.class.getResource("Equip.fxml"));
+//       
+//      GridPane root = new GridPane();
+//        root = rootLoader.load();
+//        
+//        Scene scene = new Scene(root);
+//        
+//        primaryStage.setTitle("DKJ Asset Management");
+//        primaryStage.setScene(scene);
+//        primaryStage.show();
+//    }
     
      public static  ObservableList<EquipmentDetail> getEquipment() throws IOException, ClassNotFoundException, SQLException {
         ObservableList<EquipmentDetail> equipment = FXCollections.observableArrayList();

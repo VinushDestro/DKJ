@@ -14,7 +14,7 @@
     <RowConstraints minHeight="10.0" percentHeight="100.0" prefHeight="30.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
-      <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="264.0" prefWidth="763.0" text=" Sorry, you dont have access to this page" textAlignment="JUSTIFY">
+      <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="264.0" prefWidth="763.0" text=" Sorry, you don't have access to this page" textAlignment="JUSTIFY">
          <font>
             <Font name="Raleway-Bold" size="36.0" />
          </font>
