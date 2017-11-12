@@ -77,7 +77,6 @@ public class TransportController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
-     //   tenderId.setItems(TenderDetails.getTenderId());
      
             Connection con = DbConnection.getConnection();
             
@@ -109,6 +108,7 @@ public class TransportController implements Initializable {
         }
         doSearchTransport();
         RowclickEvent();
+        loadTable();
     }    
 
     @FXML
@@ -117,6 +117,22 @@ public class TransportController implements Initializable {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Add Transport");
         alert.setHeaderText(null);
+        
+        String addRegNo="";
+        String addTenderId="";
+        String addDestination="";
+        Double addCost=0.0;
+        LocalDate addDate=LocalDate.now();;
+        try{
+            addRegNo = regNo.getValue().toString().trim();
+            addTenderId = tenderId.getValue().toString().trim();
+            addDestination = destination.getText().trim();
+            addCost = Double.parseDouble(cost.getText().trim());
+            addDate = date.getValue();
+        }
+        catch(NumberFormatException ee){
+            alert.setContentText("Cost cannot have characters");
+        }
         
         if (regNo.getValue()==null || tenderId.getValue()==null|| destination.getText().isEmpty() || cost.getText().trim()==null || date.getValue()==null) {
             alert.setContentText("All fields should be filled");
@@ -131,12 +147,8 @@ public class TransportController implements Initializable {
                     alert.setContentText("Invalid value for date.\nShould be less than current date.");
                 }
                 else{
-                    String addRegNo = regNo.getValue().toString().trim();
-                    String addTenderId = tenderId.getValue().toString().trim();
-                    String addDestination = destination.getText().trim();
-                    Double addCost = Double.parseDouble(cost.getText().trim());
-                    LocalDate addDate = date.getValue();
                     result = Transport.addTransport(addRegNo,addTenderId,addDestination,Date.valueOf(addDate),addCost);
+
                     if (result == 1) {
                         tenderId.getItems().clear();
                         regNo.getItems().clear();

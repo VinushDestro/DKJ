@@ -56,7 +56,6 @@ public class Transport {
         stmt.setDouble(5,cost);
         
         int result = stmt.executeUpdate();
-        DbConnection.closeConnection();
 
         return result;
     }
@@ -84,7 +83,57 @@ public class Transport {
             alert.show();
 
         }
-        DbConnection.closeConnection();
+        return result;
+    }
+    
+    public static int updateTransport(Date date,String tripId) throws SQLException, ClassNotFoundException {
+        int result = -1;
+        Alert alert= new Alert(Alert.AlertType.INFORMATION);
+        DbConnection DbConnection= new DbConnection();
+
+        DbConnection.openConnection();
+        Connection con = DbConnection.getConnection();
+
+        PreparedStatement stmt = con.prepareStatement("update transport set date=? where tripid=?");
+        stmt.setDate(1,date);
+        stmt.setString(2,tripId);
+        
+        try{
+            result = stmt.executeUpdate();
+        }
+        catch (SQLException e){
+            alert.setTitle("Error");
+            alert.setHeaderText(null);
+            alert.setContentText("Invalid Entry\n"+e.getMessage());
+            alert.show();
+
+        }
+        return result;
+    }
+    
+    public static int updateTransport(double cost,String tripId) throws SQLException, ClassNotFoundException {
+        int result = -1;
+        Alert alert= new Alert(Alert.AlertType.INFORMATION);
+        DbConnection DbConnection= new DbConnection();
+
+        DbConnection.openConnection();
+        Connection con = DbConnection.getConnection();
+
+        PreparedStatement stmt = con.prepareStatement("update transport set cost=? where tripid=?");
+      
+        stmt.setDouble(1,cost);
+        stmt.setString(2,tripId);
+        
+        try{
+            result = stmt.executeUpdate();
+        }
+        catch (SQLException e){
+            alert.setTitle("Error");
+            alert.setHeaderText(null);
+            alert.setContentText("Invalid Entry\n"+e.getMessage());
+            alert.show();
+
+        }
         return result;
     }
     
@@ -108,7 +157,6 @@ public class Transport {
             alert.show();
 
         }
-        DbConnection.closeConnection();
         return result;
     }
 }
