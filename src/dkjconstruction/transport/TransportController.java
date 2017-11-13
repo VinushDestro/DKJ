@@ -119,14 +119,14 @@ public class TransportController implements Initializable {
         alert.setHeaderText(null);
         
         try{
-            String addRegNo = regNo.getValue().toString().trim();
-            String addTenderId = tenderId.getValue().toString().trim();
+            //String addRegNo = regNo.getValue().toString().trim();
+            //String addTenderId = tenderId.getValue().toString().trim();
             String addDestination = destination.getText().trim();
             String addCost = cost.getText().trim();
-            LocalDate addDate = date.getValue();
+            //LocalDate addDate = date.getValue();
 
 
-            if (addRegNo==null || addTenderId==null|| addDestination.isEmpty() || addCost==null || addDate==null) {
+            if (regNo.getValue()==null || tenderId.getValue()==null|| addDestination.isEmpty() || addCost==null || date.getValue()==null) {
                 alert.setContentText("All fields should be filled");
             }
             else if(Double.parseDouble(addCost) <= 0){
@@ -134,10 +134,27 @@ public class TransportController implements Initializable {
                     }
             else{
                 LocalDate today = LocalDate.now();
-                if(addDate.isBefore(today))
+                if(date.getValue().isBefore(today))
                     alert.setContentText("Invalid value for date.\nShould be after current date.");
                 else{
-                        result = Transport.addTransport(addRegNo,addTenderId,addDestination,Date.valueOf(addDate),Double.parseDouble(addCost));
+                        String addRegNo = regNo.getValue().toString().trim();
+                        String addTenderId = tenderId.getValue().toString().trim();
+                        LocalDate addDate = date.getValue();
+                        Connection con = DbConnection.getConnection();
+
+                        PreparedStatement pst = con.prepareStatement("Select regno,date from transport where regno = ? and date = ?");
+
+                        pst.setString(1,addRegNo);
+                        pst.setDate(2,Date.valueOf(addDate));
+                        ResultSet rs = pst.executeQuery();
+                        if(rs.next()){
+//                            String reg = rs.getString("regno");
+//                            Date d = rs.getDate("date");
+//                            if (addRegNo.toLowerCase().equals(reg.toLowerCase()) &&  Date.valueOf(addDate).equals(d)) 
+                            alert.setContentText("A vehicle cannot be assigned for more than one job per day.");
+                        }
+                        else
+                            result = Transport.addTransport(addRegNo,addTenderId,addDestination,Date.valueOf(addDate),Double.parseDouble(addCost));
 
                         if (result == 1) {
                             clearFields();
@@ -149,7 +166,7 @@ public class TransportController implements Initializable {
                             }
                         } 
                         else 
-                            alert.setContentText("Operation Failed");
+                            alert.setHeaderText("Operation Failed");
 
                 }
             }
@@ -174,7 +191,7 @@ public class TransportController implements Initializable {
             System.out.println(regNo.getValue());
 
             if("trip id".equals(tripId.getText().trim().toLowerCase())){
-                alert.setContentText("TripId field cannot be empty.\n\nClick a row to do update.");
+                alert.setContentText("Required fields are empty.\n\nClick a row to do update.");
                 alert.show();
             }
 
@@ -182,15 +199,25 @@ public class TransportController implements Initializable {
                 alert.setContentText("Either Vehicle No, Cost or date should be given along with tripId for update");
                 alert.show();
             }
+            
             else{
-                
                 String addTripId = tripId.getText().trim();
                 String addRegNo = regNo.getValue().toString().trim();
                 String addCost = cost.getText().trim();
                 LocalDate addDate = date.getValue();
                 LocalDate today = LocalDate.now();
+                Connection con = DbConnection.getConnection();
+
+                PreparedStatement pst = con.prepareStatement("Select regno,date from transport where regno = ? and date = ?");
+
+                pst.setString(1,addRegNo);
+                pst.setDate(2,Date.valueOf(addDate));
+                ResultSet rs = pst.executeQuery();
+                if(rs.next()){
+                    alert.setContentText("A vehicle cannot be assigned for more than one job per day.");
+                }
                 
-                if (!addCost.isEmpty() && !(addDate==null) && !(addRegNo==null) && !addTripId.isEmpty()){
+                else if (!addCost.isEmpty() && !(addDate==null) && !(addRegNo==null) && !addTripId.isEmpty()){
 
                     if(date.getValue().isBefore(today)){
                         alert.setContentText("Invalid value for date.\nShould be after current date.");
@@ -435,6 +462,7 @@ public class TransportController implements Initializable {
                             + "UNION SELECT * FROM transport where tripId LIKE '%" + search.getText() + "%'"
                             + "UNION SELECT * FROM transport where regNo LIKE '%" + search.getText() + "%'"
                             + "UNION SELECT * FROM transport where cost LIKE '%" + search.getText() + "%'"
+                            + "UNION SELECT * FROM transport where date LIKE '%" + search.getText() + "%'"
                             + "UNION SELECT * FROM transport where destination LIKE '%" + search.getText() + "%' ");
                     ResultSet rs = pst.executeQuery();
                     transportS= FXCollections.observableArrayList();

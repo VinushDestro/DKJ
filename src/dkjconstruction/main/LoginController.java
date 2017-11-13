@@ -70,7 +70,8 @@ public class LoginController {
             }
             else{
                     System.out.println("error");
-                    alert.setContentText("Login Failed.\nInvalid Credentials");
+                    alert.setHeaderText("Login Failed");
+                    alert.setContentText("Invalid Credentials");
                     alert.show();
                 }
             
