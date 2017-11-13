@@ -47,7 +47,7 @@ public class Transport {
     public static int addTransport(String regNo,String tenderId,String destination,Date date,double cost) throws SQLException, ClassNotFoundException{
         DbConnection.openConnection();
         Connection con = DbConnection.getConnection();
-        PreparedStatement stmt = con.prepareStatement("insert into transport (regno,tenderid,destination,,date,cost) values (?,?,?,?,?)");
+        PreparedStatement stmt = con.prepareStatement("insert into transport (regno,tenderid,destination,date,cost) values (?,?,?,?,?)");
         
         stmt.setString(1,regNo);
         stmt.setString(2,tenderId);
@@ -60,31 +60,32 @@ public class Transport {
         return result;
     }
     
-    public static int updateTransport(Date date,double cost,String tripId) throws SQLException, ClassNotFoundException {
-        int result = -1;
-        Alert alert= new Alert(Alert.AlertType.INFORMATION);
-        DbConnection DbConnection= new DbConnection();
-
-        DbConnection.openConnection();
-        Connection con = DbConnection.getConnection();
-
-        PreparedStatement stmt = con.prepareStatement("update transport set date=?,cost=? where tripid=?");
-        stmt.setDate(1,date);
-        stmt.setDouble(2,cost);
-        stmt.setString(3,tripId);
-        
-        try{
-            result = stmt.executeUpdate();
-        }
-        catch (SQLException e){
-            alert.setTitle("Error");
-            alert.setHeaderText(null);
-            alert.setContentText("Invalid Entry\n"+e.getMessage());
-            alert.show();
-
-        }
-        return result;
-    }
+//    public static int updateTransport(String regNo,Date date,double cost,String tripId) throws SQLException, ClassNotFoundException {
+//        int result = -1;
+//        Alert alert= new Alert(Alert.AlertType.INFORMATION);
+//        DbConnection DbConnection= new DbConnection();
+//
+//        DbConnection.openConnection();
+//        Connection con = DbConnection.getConnection();
+//
+//        PreparedStatement stmt = con.prepareStatement("update transport set date=?,cost=?,regno=? where tripid=?");
+//        stmt.setDate(1,date);
+//        stmt.setDouble(2,cost);
+//        stmt.setString(3,regNo);
+//        stmt.setString(4,tripId);
+//        
+//        try{
+//            result = stmt.executeUpdate();
+//        }
+//        catch (SQLException e){
+//            alert.setTitle("Error");
+//            alert.setHeaderText(null);
+//            alert.setContentText("Invalid Entry\n"+e.getMessage());
+//            alert.show();
+//
+//        }
+//        return result;
+//    }
     
     public static int updateTransport(Date date,String tripId) throws SQLException, ClassNotFoundException {
         int result = -1;
@@ -122,6 +123,32 @@ public class Transport {
         PreparedStatement stmt = con.prepareStatement("update transport set cost=? where tripid=?");
       
         stmt.setDouble(1,cost);
+        stmt.setString(2,tripId);
+        
+        try{
+            result = stmt.executeUpdate();
+        }
+        catch (SQLException e){
+            alert.setTitle("Error");
+            alert.setHeaderText(null);
+            alert.setContentText("Invalid Entry\n"+e.getMessage());
+            alert.show();
+
+        }
+        return result;
+    }
+    
+    public static int updateTransport(String regNo,String tripId) throws SQLException, ClassNotFoundException {
+        int result = -1;
+        Alert alert= new Alert(Alert.AlertType.INFORMATION);
+        DbConnection DbConnection= new DbConnection();
+
+        DbConnection.openConnection();
+        Connection con = DbConnection.getConnection();
+
+        PreparedStatement stmt = con.prepareStatement("update transport set regno=? where tripid=?");
+      
+        stmt.setString(1,regNo);
         stmt.setString(2,tripId);
         
         try{

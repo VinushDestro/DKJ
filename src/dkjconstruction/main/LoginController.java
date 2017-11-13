@@ -35,11 +35,11 @@ public class LoginController {
 
     @FXML
     private void actionLogin(ActionEvent event) throws IOException,SQLException, ClassNotFoundException, InterruptedException{
-        String userName = null;
-        String passWord =null;
-        Connection con = null;
-        PreparedStatement stmt = null;
-        ResultSet rs = null;
+        String userName;
+        String passWord;
+        Connection con;
+        PreparedStatement stmt;
+        ResultSet rs;
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Login");
         alert.setHeaderText(null);
@@ -61,7 +61,7 @@ public class LoginController {
                 userName = rs.getString("username");
                 passWord = rs.getString("password");
 
-                if (username.getText().equals(userName) &&  password.getText().equals(passWord)) {
+                if (username.getText().toLowerCase().equals(userName.toLowerCase()) &&  password.getText().equals(passWord)) {
                     currentUser=userName;
                     ((Node) (event.getSource())).getScene().getWindow().hide();
                     DKJConstruction.showMainPage();
