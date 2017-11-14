@@ -26,6 +26,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
@@ -70,6 +71,10 @@ public class TransportController implements Initializable {
     private TextField search;
     @FXML
     private Label text;
+    @FXML
+    private Button update;
+    @FXML
+    private Button delete;
 
   
     private List myList;
@@ -208,10 +213,11 @@ public class TransportController implements Initializable {
                 LocalDate today = LocalDate.now();
                 Connection con = DbConnection.getConnection();
 
-                PreparedStatement pst = con.prepareStatement("Select regno,date from transport where regno = ? and date = ?");
+                PreparedStatement pst = con.prepareStatement("Select regno,date from transport where regno = ? and tripid <> ? and date = ?");
 
                 pst.setString(1,addRegNo);
-                pst.setDate(2,Date.valueOf(addDate));
+                pst.setString(2,addTripId);
+                pst.setDate(3,Date.valueOf(addDate));
                 ResultSet rs = pst.executeQuery();
                 if(rs.next()){
                     alert.setContentText("A vehicle cannot be assigned for more than one job per day.");
@@ -391,8 +397,12 @@ public class TransportController implements Initializable {
                     regNo.setDisable(true);
                     cost.setDisable(true);
                     date.setDisable(true);
+                    update.setVisible(false);
+                    delete.setVisible(false);
                 }
                 else{
+                    update.setVisible(true);
+                    delete.setVisible(true);
                     tenderId.setValue(t1.getTenderId());
                     tenderId.setDisable(true);
                     tripId.setText(t1.getTripId());
@@ -423,7 +433,7 @@ public class TransportController implements Initializable {
 	tabDestination.setCellValueFactory(new PropertyValueFactory<>("destination"));
         tabDate.setCellValueFactory(new PropertyValueFactory<>("date"));
         tabCost.setCellValueFactory(new PropertyValueFactory<>("cost"));
-       
+        
         try {
             transTab.setItems(Transport.getTransport());
         } catch (IOException | ClassNotFoundException | SQLException e) {
@@ -432,6 +442,7 @@ public class TransportController implements Initializable {
     }
     
     public void clearFields(){
+        search.setText(null);
         tripId.setText("Trip ID");
         tenderId.getSelectionModel().clearSelection();
         regNo.getSelectionModel().clearSelection();
@@ -445,6 +456,8 @@ public class TransportController implements Initializable {
         regNo.setDisable(false);
         cost.setDisable(false);
         date.setDisable(false);
+        update.setVisible(true);
+        delete.setVisible(true);
     }
     
     private void doSearchTransport() {

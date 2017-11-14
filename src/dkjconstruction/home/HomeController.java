@@ -5,9 +5,18 @@
  */
 package dkjconstruction.home;
 
+import dkjconstruction.DbConnection;
 import java.net.URL;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.util.List;
 import java.util.ResourceBundle;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.TextField;
 
 /**
  * FXML Controller class
@@ -19,9 +28,20 @@ public class HomeController implements Initializable {
     /**
      * Initializes the controller class.
      */
+    @FXML
+    private ComboBox category;
+    @FXML
+    private TextField search;
+    
+    private List myList;
+    
+    Connection con = DbConnection.getConnection();
+    PreparedStatement ps;
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        
+        category.getItems().addAll("Users","Tenders","Jobs","Employees","Vehicles","Equipments","Raw Material");
     }    
     
 }

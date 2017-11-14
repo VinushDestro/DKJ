@@ -37,9 +37,11 @@ public class MainController {
     @FXML
     private Button closeButton;
     @FXML
+    private Button homeBtn;
+    @FXML
     private Label cUser;
     
-    public void initialize() throws SQLException, ClassNotFoundException {
+    public void initialize() throws SQLException, ClassNotFoundException, IOException {
 
         cUser.setText(currentUser);
         DbConnection DbConnection= new DbConnection();
@@ -52,8 +54,8 @@ public class MainController {
         if(rs.next()){
             type=rs.getString(1);
         }               
-        
         System.out.println(type+"main");
+        //homeBtn.setDefaultButton(true);    fire()
     }
     
     @FXML
@@ -79,7 +81,7 @@ public class MainController {
     @FXML
     private void doHome() throws IOException {
         System.out.println("tr"+type);
-            //main.showHome();
+            main.showHome();
     }
     
     @FXML
