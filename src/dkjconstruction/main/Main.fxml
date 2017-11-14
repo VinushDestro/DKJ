@@ -49,7 +49,7 @@
                <graphic>
                   <ImageView>
                      <image>
-                        <Image url="@../../../../../../AppData/Local/Temp/Home_32px.png" />
+                        <Image url="@../images/Home_32px.png" />
                      </image>
                   </ImageView>
                </graphic>
@@ -64,7 +64,7 @@
                <graphic>
                   <ImageView>
                      <image>
-                        <Image url="@../../../../../../AppData/Local/Temp/Todo%20List_32px.png" />
+                        <Image url="@../images/Todo%20List_32px.png" />
                      </image>
                   </ImageView>
                </graphic>
@@ -79,7 +79,7 @@
                <graphic>
                   <ImageView>
                      <image>
-                        <Image url="@../../../../../../AppData/Local/Temp/Schedule_32px.png" />
+                        <Image url="@../images/Schedule_32px.png" />
                      </image>
                   </ImageView>
                </graphic>
@@ -94,7 +94,7 @@
                <graphic>
                   <ImageView>
                      <image>
-                        <Image url="@../../../../../../AppData/Local/Temp/Management_32px.png" />
+                        <Image url="@../images/Management_32px.png" />
                      </image>
                   </ImageView>
                </graphic>
@@ -109,7 +109,7 @@
                <graphic>
                   <ImageView>
                      <image>
-                        <Image url="@../../../../../../AppData/Local/Temp/Delivery_32px.png" />
+                        <Image url="@../images/Delivery_32px.png" />
                      </image>
                   </ImageView>
                </graphic>
@@ -124,7 +124,7 @@
                <graphic>
                   <ImageView>
                      <image>
-                        <Image url="@../../../../../../AppData/Local/Temp/Reseller_32px.png" />
+                        <Image url="@../images/Reseller_32px.png" />
                      </image>
                   </ImageView>
                </graphic>
@@ -139,7 +139,7 @@
                <graphic>
                   <ImageView>
                      <image>
-                        <Image url="@../../../../../../AppData/Local/Temp/New%20Product_32px.png" />
+                        <Image url="@../images/New%20Product_32px.png" />
                      </image>
                   </ImageView>
                </graphic>
@@ -154,7 +154,7 @@
                <graphic>
                   <ImageView>
                      <image>
-                        <Image url="@../../../../../../AppData/Local/Temp/Shuttle_32px.png" />
+                        <Image url="@../images/Shuttle_32px.png" />
                      </image>
                   </ImageView>
                </graphic>
@@ -169,7 +169,7 @@
                <graphic>
                   <ImageView>
                      <image>
-                        <Image url="@../../../../../../AppData/Local/Temp/Invoice_32px.png" />
+                        <Image url="@../images/Invoice_32px.png" />
                      </image>
                   </ImageView>
                </graphic>
@@ -184,7 +184,7 @@
                <graphic>
                   <ImageView>
                      <image>
-                        <Image url="@../../../../../../AppData/Local/Temp/Maintenance_32px.png" />
+                        <Image url="@../images/Maintenance_32px.png" />
                      </image>
                   </ImageView>
                </graphic>
@@ -199,7 +199,7 @@
                <graphic>
                   <ImageView>
                      <image>
-                        <Image url="@../../../../../../AppData/Local/Temp/Combo%20Chart_32px.png" />
+                        <Image url="@../images/Combo%20Chart_32px.png" />
                      </image>
                   </ImageView>
                </graphic>
@@ -214,7 +214,7 @@
                <graphic>
                   <ImageView>
                      <image>
-                        <Image url="@../../../../../../AppData/Local/Temp/Cash%20in%20Hand_32px.png" />
+                        <Image url="@../images/Cash%20in%20Hand_32px.png" />
                      </image>
                   </ImageView>
                </graphic>
@@ -229,7 +229,7 @@
                <graphic>
                   <ImageView>
                      <image>
-                        <Image url="@../../../../../../AppData/Local/Temp/Chat_32px_1.png" />
+                        <Image url="@../images/Chat_32px.png" />
                      </image>
                   </ImageView>
                </graphic>
