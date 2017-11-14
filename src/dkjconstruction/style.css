@@ -22,9 +22,20 @@ and open the template in the editor.
     -fx-text-fill: #1e8bc3;
 }
 
-.button:active {
-  -fx-background-color: #1e8bc3;
-  -fx-text-fill:  #2c3e50;
+.button:pressed {
+    -fx-background-color: #233140;
+    -fx-cursor:hand;
+    -fx-text-fill: #1e8bc3;
+}
+
+.logbtn {
+    -fx-background-color: #1e8bc3;
+    -fx-border-radius: 5,150,10;
+}
+
+.logbtn:hover {
+    -fx-cursor:hand;
+  -fx-text-fill: #2c3e50;
 }
 
 .button:selected {
