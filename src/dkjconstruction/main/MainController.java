@@ -87,42 +87,42 @@ public class MainController {
     @FXML
     private void doTransport() throws IOException {
         System.out.println("tr"+type);
-            if (type.equals("assetadmin") || type.equals("supervisor"))
+            //if (type.equals("assetadmin") || type.equals("supervisor"))
             main.showTransport();
-        else
-            main.showErrorPage();      
+        //else
+           // main.showErrorPage();      
     }
     
     @FXML
     private void doSetting() throws IOException {
-        if (type.equals("supervisor"))
+        //if (type.equals("supervisor"))
             main.showAdmin();
-        else
-            main.showChangePw();
+        //else
+            //main.showChangePw();
     }
     
     @FXML
     private void doJob() throws IOException {
-        if (type.equals("supervisor"))
+        //if (type.equals("supervisor"))
             main.showJobAllocation();
-        else
-            main.showErrorPage();
+//        else
+//            main.showErrorPage();
     }
     
     @FXML
     private void doAccounts() throws IOException {
-        if (type.equals("clerk")||type.equals("supervisor"))
+//        if (type.equals("clerk")||type.equals("supervisor"))
             main.showAccounts();
-        else
-            main.showErrorPage();
+//        else
+//            main.showErrorPage();
     }
     
     @FXML
     private void doUtilities() throws IOException {
-        if (type.equals("clerk")||type.equals("supervisor"))
+//        if (type.equals("clerk")||type.equals("supervisor"))
             main.showUtilities();
-        else
-            main.showErrorPage();
+//        else
+//            main.showErrorPage();
     }
     
     /*@FXML
@@ -135,41 +135,41 @@ public class MainController {
     
     @FXML
     private void doMaterial() throws IOException {
-        if (type.equals("materialadmin") || type.equals("supervisor"))
+//        if (type.equals("materialadmin") || type.equals("supervisor"))
             main.showMaterial();
-        else
-            main.showErrorPage();
+//        else
+//            main.showErrorPage();
     }
     
     @FXML
     private void doTender() throws IOException {
-        if (type.equals("supervisor"))
+//        if (type.equals("supervisor"))
             main.showTender();
-        else
-            main.showErrorPage();
+//        else
+//            main.showErrorPage();
     }
     @FXML
     private void doAsset() throws IOException {
-        if (type.equals("assetadmin") || type.equals("supervisor"))
+        //if (type.equals("assetadmin") || type.equals("supervisor"))
             main.showAsset();
-        else
-            main.showErrorPage();
+//        else
+//            main.showErrorPage();
     }
     
     @FXML
     private void doEquip() throws IOException {
-        if (type.equals("assetadmin") || type.equals("supervisor"))
+       // if (type.equals("assetadmin") || type.equals("supervisor"))
             main.showEquip();
-        else
-            main.showErrorPage();
+//        else
+//            main.showErrorPage();
     }
     
     @FXML
     private void doHr() throws IOException {
-        if (type.equals("hradmin") || type.equals("supervisor"))
+      //  if (type.equals("hradmin") || type.equals("supervisor"))
             main.showHr();
-        else
-            main.showErrorPage();
+//        else
+//            main.showErrorPage();
     }
     
     @FXML
@@ -187,10 +187,10 @@ public class MainController {
 
     @FXML
     private void doSupplier(ActionEvent event) throws IOException {
-        if (type.equals("materialadmin") || type.equals("supervisor"))
+     //   if (type.equals("materialadmin") || type.equals("supervisor"))
             main.showSupplier();
-        else
-            main.showErrorPage();
+     //   else
+     //       main.showErrorPage();
         
     }
 
