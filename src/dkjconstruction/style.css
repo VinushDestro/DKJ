@@ -34,8 +34,9 @@ and open the template in the editor.
 }
 
 .logbtn:hover {
+    -fx-background-color:#1e8bc3;
     -fx-cursor:hand;
-  -fx-text-fill: #2c3e50;
+    -fx-text-fill: #2c3e50;
 }
 
 .button:selected {

@@ -62,7 +62,13 @@ public class LoginController {
                 passWord = rs.getString("password");
 
                 if (username.getText().toLowerCase().equals(userName.toLowerCase()) &&  password.getText().equals(passWord)) {
-                    currentUser=userName;
+                    
+                    stmt = con.prepareStatement("Select name from employee where empid in (select userid from user where username = ?)");
+                    stmt.setString(1,username.getText());
+                    rs = stmt.executeQuery();
+                    if(rs.next()){
+                        currentUser=rs.getString("name");
+                    }
                     ((Node) (event.getSource())).getScene().getWindow().hide();
                     DKJConstruction.showMainPage();
                 }
