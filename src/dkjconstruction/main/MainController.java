@@ -124,14 +124,14 @@ public class MainController {
 //        else
 //            main.showErrorPage();
     }
-    
-    /*@FXML
+    @FXML
     private void doSupplier() throws IOException {
-        if (type.equals("materialadmin") || type.equals("supervisor"))
+     //   if (type.equals("materialadmin") || type.equals("supervisor"))
             main.showSupplier();
-        else
-            main.showErrorPage();
-    }*/
+     //   else
+     //       main.showErrorPage();
+        
+    }
     
     @FXML
     private void doMaterial() throws IOException {
@@ -184,14 +184,4 @@ public class MainController {
     private void doLogout() {
         main.logout();
     }
-
-    @FXML
-    private void doSupplier(ActionEvent event) throws IOException {
-     //   if (type.equals("materialadmin") || type.equals("supervisor"))
-            main.showSupplier();
-     //   else
-     //       main.showErrorPage();
-        
-    }
-
 }

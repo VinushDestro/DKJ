@@ -42,7 +42,6 @@ public class Admin {
                 
                 admin.add(new AdminDetail(userId,userType,date,username,password));
             }
-            DbConnection.closeConnection();
                 return admin;
         }
     public static int addAdmin(String userId,String userType,Date assignDate,String username,String password) throws SQLException, ClassNotFoundException{
@@ -58,7 +57,6 @@ public class Admin {
         stmt.setString(5,password);
         
         int result = stmt.executeUpdate();
-        DbConnection.closeConnection();
 
         return result;
     }
@@ -86,7 +84,6 @@ public class Admin {
             alert.show();
 
         }
-        DbConnection.closeConnection();
         return result;
     }
     
@@ -110,26 +107,8 @@ public class Admin {
             alert.show();
 
         }
-        DbConnection.closeConnection();
         return result;
     }
     
-    public static void searchAdmin(String search) throws SQLException {
-        ObservableList<AdminDetail>  admin= FXCollections.observableArrayList();
-        try {
-            Connection con = DbConnection.getConnection();
-
-            PreparedStatement pst = con.prepareStatement("SELECT * FROM user where userId LIKE '%" + search +"%'");
-
-            ResultSet rs = pst.executeQuery();
-
-            while (rs.next()) {
-                admin.add(new AdminDetail(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5)));
-            }
-
-            } 
-            catch (SQLException e) {
-                System.err.println("Error: " + e);
-            }
-    }
+    
 }

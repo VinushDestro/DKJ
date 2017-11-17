@@ -76,7 +76,6 @@ public class AdminController {
             e.printStackTrace();
         }
         
-        doSearchUser();
     }  
 
     @FXML
@@ -183,11 +182,6 @@ public class AdminController {
                             alert.setContentText("Operation Failed");
                             alert.show();
 
-                        /*Alert alert2 = new Alert(Alert.AlertType.INFORMATION);
-                        alert2.setTitle("Error");
-                        alert2.setHeaderText(null);
-                        alert2.setContentText(e1.getMessage());
-                        alert2.show();*/
                     }
                 }
         }catch(SQLException e){
@@ -248,30 +242,4 @@ public class AdminController {
 
     }
     
-    @FXML
-    private void doSearchUser() throws SQLException {
-        
-        search.setOnKeyReleased(new EventHandler<KeyEvent>() {
-            @Override
-            public void handle(KeyEvent event) {
-               
-                if (search.getText().equals("")) {
-                    try {
-                        adminTab.setItems(Admin.getAdmin());
-                    } catch (IOException | ClassNotFoundException | SQLException e) {
-                        e.printStackTrace();
-                    }
-                }   
-                else{
-                try {
-                   Admin.searchAdmin(search.getText());
-                } catch (SQLException ex) {
-                    Logger.getLogger(AdminController.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                }
-        }
-        }
-);
-
-    }
 }
