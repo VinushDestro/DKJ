@@ -36,7 +36,7 @@ public class Admin {
             while(rs.next()) {
                 String userId=rs.getString(1);
                 String userType=rs.getString(2);
-                String date=rs.getString(3);
+                Date date=rs.getDate(3);
                 String username=rs.getString(4);
                 String password=rs.getString(5);
                 
@@ -61,7 +61,7 @@ public class Admin {
         return result;
     }
     
-    public static int updateAdmin(String userId,String userType) throws SQLException, ClassNotFoundException {
+    public static int updateAdmin(String userId,String password) throws SQLException, ClassNotFoundException {
         int result = -1;
         Alert alert= new Alert(Alert.AlertType.INFORMATION);
         DbConnection DbConnection= new DbConnection();
@@ -69,8 +69,8 @@ public class Admin {
         DbConnection.openConnection();
         Connection con = DbConnection.getConnection();
 
-        PreparedStatement stmt = con.prepareStatement("update user set userType=? where userId=?");
-        stmt.setString(1,userType);
+        PreparedStatement stmt = con.prepareStatement("update user set password=? where userId=?");
+        stmt.setString(1,password);
         stmt.setString(2,userId);
         
         

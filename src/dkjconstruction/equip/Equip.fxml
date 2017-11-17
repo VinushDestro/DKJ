@@ -11,51 +11,85 @@
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<GridPane alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="376.0" prefWidth="725.0" styleClass="column-header-background" stylesheets="@style2.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dkjconstruction.equip.EquipController">
+<GridPane alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="665.0" prefWidth="840.0" stylesheets="@../style2.css" xmlns="http://javafx.com/javafx/8.0.102" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dkjconstruction.equip.EquipController">
    <columnConstraints>
       <ColumnConstraints hgrow="SOMETIMES" maxWidth="483.0" minWidth="10.0" percentWidth="85.0" prefWidth="483.0" />
       <ColumnConstraints hgrow="SOMETIMES" maxWidth="297.0" minWidth="10.0" percentWidth="25.0" prefWidth="117.0" />
    </columnConstraints>
    <rowConstraints>
       <RowConstraints />
-      <RowConstraints maxHeight="194.0" minHeight="10.0" prefHeight="35.0" vgrow="SOMETIMES" />
-      <RowConstraints maxHeight="369.0" minHeight="10.0" prefHeight="341.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="178.0" minHeight="10.0" percentHeight="10.0" prefHeight="33.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="632.0" minHeight="10.0" prefHeight="632.0" vgrow="SOMETIMES" />
    </rowConstraints>
    <children>
       <AnchorPane prefHeight="353.0" prefWidth="569.0" style="-fx-background-color: #ffffff;" GridPane.rowIndex="2">
          <children>
-            <TableView fx:id="equipTab" layoutX="15.0" layoutY="48.0" prefHeight="200.0" prefWidth="530.0">
+            <TableView fx:id="equipTab" layoutX="15.0" layoutY="48.0" prefHeight="373.0" prefWidth="628.0">
                <columns>
-                  <TableColumn fx:id="tabName" prefWidth="120.0" text="Equipment Name" />
-                  <TableColumn fx:id="tabCount" prefWidth="89.0" text="Quantity" />
-                  <TableColumn fx:id="tabCost" prefWidth="105.0" text="Unit Price" />
-                  <TableColumn fx:id="tabTotalCost" prefWidth="108.0" text="Total Cost" />
+                  <TableColumn fx:id="tabName" prefWidth="118.0" text="Equipment Name" />
+                  <TableColumn fx:id="tabCount" prefWidth="68.0" text="Quantity" />
+                  <TableColumn fx:id="tabCost" prefWidth="84.0" text="Unit Price" />
+                  <TableColumn fx:id="tabTotalCost" prefWidth="79.0" text="Total Cost" />
+                  <TableColumn fx:id="tabAssignedCount" prefWidth="112.0" text="Assigned Count" />
+                  <TableColumn fx:id="tabAvailableCount" prefWidth="83.0" text="Available" />
                </columns>
             </TableView>
-            <JFXTextField fx:id="equipName" alignment="CENTER" layoutX="35.0" layoutY="258.0" promptText="Equipment Name" />
-            <JFXTextField fx:id="count" alignment="CENTER" layoutX="379.0" layoutY="258.0" promptText="Count" />
-            <JFXTextField fx:id="cost" alignment="CENTER" layoutX="199.0" layoutY="258.0" promptText="Cost" />
+            <JFXTextField fx:id="equipName" alignment="CENTER" layoutX="25.0" layoutY="486.0" promptText="Equipment Name" />
+            <JFXTextField fx:id="count" alignment="CENTER" layoutX="374.0" layoutY="486.0" promptText="Count" />
+            <JFXTextField fx:id="cost" alignment="CENTER" layoutX="182.0" layoutY="486.0" promptText="Cost" />
             <JFXComboBox fx:id="view" layoutX="239.0" layoutY="14.0" onAction="#doView" prefHeight="25.0" prefWidth="115.0" promptText="View_All" />
          </children>
       </AnchorPane>
-      <AnchorPane prefHeight="365.0" prefWidth="165.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+      <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
          <children>
-            <Button layoutX="31.0" layoutY="36.0" mnemonicParsing="false" onAction="#doAddEquipment" prefHeight="27.0" prefWidth="104.0" text="ADD EQUIPMENT" textFill="WHITE">
-               <padding>
-                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-               </padding>
+            <Button mnemonicParsing="false" onAction="#doAddEquipment" prefHeight="29.0" prefWidth="128.0" text="ADD EQUIPMENT" textFill="WHITE">
+               <VBox.margin>
+                  <Insets bottom="5.0" left="30.0" right="30.0" top="5.0" />
+               </VBox.margin>
+               <font>
+                  <Font name="Raleway-Bold" size="10.0" />
+               </font>
             </Button>
-            <Button layoutX="31.0" layoutY="85.0" mnemonicParsing="false" onAction="#doUpdateEquipment" prefHeight="27.0" prefWidth="104.0" text="ADD COUNT" textFill="WHITE" />
-            <Button layoutX="31.0" layoutY="125.0" mnemonicParsing="false" onAction="#doDeleteEquipment" prefHeight="27.0" prefWidth="104.0" text="DELETE" textFill="WHITE" />
-            <Button layoutX="31.0" layoutY="300.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="104.0" text="iReport" textFill="WHITE" />
-            <Button layoutX="31.0" layoutY="259.0" mnemonicParsing="false" onAction="#doClear" prefHeight="27.0" prefWidth="104.0" text="Clear" textFill="WHITE" />
+            <Button mnemonicParsing="false" onAction="#doUpdateEquipment" prefHeight="27.0" prefWidth="128.0" text="ADD COUNT" textFill="WHITE">
+               <VBox.margin>
+                  <Insets bottom="5.0" left="30.0" right="30.0" top="5.0" />
+               </VBox.margin>
+               <font>
+                  <Font name="Raleway-Bold" size="10.0" />
+               </font>
+            </Button>
+            <Button mnemonicParsing="false" onAction="#doDeleteEquipment" prefHeight="27.0" prefWidth="128.0" text="DELETE" textFill="WHITE">
+               <VBox.margin>
+                  <Insets bottom="5.0" left="30.0" right="30.0" top="5.0" />
+               </VBox.margin>
+               <font>
+                  <Font name="Raleway-Bold" size="10.0" />
+               </font>
+            </Button>
+            <Button mnemonicParsing="false" onAction="#showReport" prefHeight="27.0" prefWidth="128.0" text="REPORT" textFill="WHITE">
+               <VBox.margin>
+                  <Insets bottom="5.0" left="30.0" right="30.0" top="400.0" />
+               </VBox.margin>
+               <font>
+                  <Font name="Raleway-Bold" size="10.0" />
+               </font>
+            </Button>
+            <Button mnemonicParsing="false" onAction="#doClear" prefHeight="27.0" prefWidth="128.0" text="CLEAR" textFill="WHITE">
+               <VBox.margin>
+                  <Insets bottom="5.0" left="30.0" right="30.0" top="5.0" />
+               </VBox.margin>
+               <font>
+                  <Font name="Raleway-Bold" size="10.0" />
+               </font>
+            </Button>
          </children>
-      </AnchorPane>
-      <AnchorPane prefHeight="43.0" prefWidth="439.0" GridPane.rowIndex="1">
+      </VBox>
+      <AnchorPane prefHeight="94.0" prefWidth="820.0" GridPane.rowIndex="1">
          <children>
-            <TextField fx:id="search" alignment="CENTER_RIGHT" layoutX="14.0" layoutY="6.0" prefHeight="27.0" prefWidth="688.0" promptText="Search">
+            <TextField fx:id="search" alignment="CENTER_RIGHT" layoutX="14.0" layoutY="6.0" prefHeight="27.0" prefWidth="806.0" promptText="Search">
                <font>
                   <Font name="Raleway Light" size="13.0" />
                </font>

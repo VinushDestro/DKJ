@@ -18,17 +18,18 @@ public class EquipmentDetail {
     private String cost;
     private double totalCost;
     private String count;
-   
+   private int assignedCount;
+   private String availableCount;
     
 
-     public EquipmentDetail( String name,String count,String cost,double totalCost) {
+     public EquipmentDetail( String name,String count,String cost,double totalCost,int assignedCount,String availableCount) {
       //  this.equipID = equipID;
         this.name = name;
         this.count=count;
         this.cost = cost;
         this.totalCost = totalCost;
-        
-        
+        this.assignedCount=assignedCount;
+        this.availableCount=availableCount;
 
     }
 
@@ -69,17 +70,26 @@ public class EquipmentDetail {
     public void setCount(String lifeTime) {
         this.count = count;
     }
-
-   
-//    public String getEquipID() {
-//        return equipID;
-//    }
-//
-//    
-//    public void setEquipID(String equipID) {
-//        this.equipID = equipID;
-//    }
     
+    
+    public int getAssignedCount() {
+        return assignedCount;
+    }
+
+    public void setAssignedCount(int assignedCount) {
+         this.assignedCount=assignedCount;
+    }
+
+    
+    public String getAvailableCount() {
+        return availableCount;
+    }
+
+    public void setAvailableCount(String availableCount) {
+       
+        this.availableCount=availableCount;
+    }
+
     
 
  }

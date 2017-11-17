@@ -79,6 +79,7 @@ public class TransportController implements Initializable {
   
     private List myList;
     private ObservableList<TransportDetail> transportS; 
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         

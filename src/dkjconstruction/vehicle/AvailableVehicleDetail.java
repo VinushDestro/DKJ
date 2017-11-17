@@ -100,7 +100,7 @@ public class AvailableVehicleDetail {
     public void setCondition(String condtion) {
         this.condition = condition ;
     }
-//////////////////////////////////////////////////////////////////////////
+
     
     public String getDepPercent() {
         return depPercent;

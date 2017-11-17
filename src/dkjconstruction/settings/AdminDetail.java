@@ -4,6 +4,9 @@
  * and open the template in the editor.
  */
 package dkjconstruction.settings;
+
+import java.sql.Date;
+
 /**
  *
  * @author User
@@ -11,11 +14,11 @@ package dkjconstruction.settings;
 public class AdminDetail {
     String userId;
     String userType;
-    String date;
+    Date date;
     String username;
     String password;
 
-    public AdminDetail(String userId, String userType, String date, String username, String password) {
+    public AdminDetail(String userId, String userType, Date date, String username, String password) {
         this.userId = userId;
         this.userType = userType;
         this.date = date;
@@ -39,11 +42,11 @@ public class AdminDetail {
         this.userType = userType;
     }
 
-    public String getDate() {
+    public Date getDate() {
         return date;
     }
 
-    public void setDate(String date) {
+    public void setDate(Date date) {
         this.date = date;
     }
 
