@@ -43,7 +43,7 @@ public class MainController {
     
     public void initialize() throws SQLException, ClassNotFoundException, IOException {
 
-        cUser.setText(currentUser);
+        cUser.setText(currentUser.toUpperCase());
         DbConnection DbConnection= new DbConnection();
         DbConnection.openConnection();
         Connection con = DbConnection.getConnection();

@@ -19,6 +19,8 @@ and open the template in the editor.
 .button:hover {
     -fx-background-color: #233140;
     -fx-cursor:hand;
+    -fx-font-family: "Raleway";
+    -fx-font-size: 11pt;
     -fx-text-fill: #1e8bc3;
 }
 
@@ -26,17 +28,6 @@ and open the template in the editor.
     -fx-background-color: #233140;
     -fx-cursor:hand;
     -fx-text-fill: #1e8bc3;
-}
-
-.logbtn {
-    -fx-background-color: #1e8bc3;
-    -fx-border-radius: 5,150,10;
-}
-
-.logbtn:hover {
-    -fx-background-color:#1e8bc3;
-    -fx-cursor:hand;
-    -fx-text-fill: #2c3e50;
 }
 
 .button:selected {
@@ -50,6 +41,17 @@ and open the template in the editor.
     -fx-cursor:hand;
     -fx-text-fill: #1e8bc3;
     -fx-font-size: 12pt;
+}
+
+.logbtn {
+    -fx-background-color: #1e8bc3;
+    -fx-border-radius: 5,150,10;
+}
+
+.logbtn:hover {
+    -fx-background-color:#1e8bc3;
+    -fx-cursor:hand;
+    -fx-text-fill: #2c3e50;
 }
 
 .user {

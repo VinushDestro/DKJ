@@ -101,7 +101,7 @@ public class TransportController implements Initializable {
         }
         
         try {
-            ps = con.prepareStatement("select regNo from asset where availability='available'");
+            ps = con.prepareStatement("select regNo from asset where availability='available' and type='transport'");
         
             ResultSet rs = ps.executeQuery();
             myList= FXCollections.observableArrayList();
