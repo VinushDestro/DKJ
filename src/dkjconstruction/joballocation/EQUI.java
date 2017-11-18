@@ -9,32 +9,61 @@ package dkjconstruction.joballocation;
  *
  * @author Ranjitha
  */
-class EQUI {
+public class EQUI {
     
-    private String eQID;
-    private String eQNAME;
+   
+    private String tenderId;
+    private String equiName;
 
-    public String geteQID() {
-        return eQID;
+    public EQUI(String equiName) {
+        this.equiName = equiName;
+    }
+    private Integer req;
+    private Integer assign;
+
+    public String getTenderId() {
+        return tenderId;
     }
 
-    public void seteQID(String eQID) {
-        this.eQID = eQID;
+    public void setTenderId(String tenderId) {
+        this.tenderId = tenderId;
     }
 
-    public String geteQNAME() {
-        return eQNAME;
+    public String getEquiName() {
+        return equiName;
     }
 
-    public void seteQNAME(String eQNAME) {
-        this.eQNAME = eQNAME;
+    public void setEquiName(String equiName) {
+        this.equiName = equiName;
     }
 
-    public EQUI(String eQID, String eQNAME) {
-        this.eQID = eQID;
-        this.eQNAME = eQNAME;
+    public Integer getReq() {
+        return req;
     }
 
+    public void setReq(Integer req) {
+        this.req = req;
+    }
+
+    public Integer getAssign() {
+        return assign;
+    }
+
+    public void setAssign(Integer assign) {
+        this.assign = assign;
+    }
+
+    public EQUI(String tenderId, String equiName, Integer req, Integer assign) {
+        this.tenderId = tenderId;
+        this.equiName = equiName;
+        this.req = req;
+        this.assign = assign;
+    }
+
+    public EQUI(Integer req) {
+        this.req = req;
+    }
+   
    
     
 }

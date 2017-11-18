@@ -21,7 +21,7 @@ public class twdet {
     this.twtype = twtype;
      this.twamount = twamount;
      this.twid=twid;
-    } ;
+    } 
     
 
     public String getTwdate() {

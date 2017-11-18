@@ -19,17 +19,17 @@ public class AvailableEquipmentDetails {
     private int count;
     private double totalCost;
     private String assignedCount;
-   private String availableCount;
+  
     
 
-     public  AvailableEquipmentDetail( String name, double cost,int count,double totalCost,String assignedCount,String availableCount) {
+     public  AvailableEquipmentDetail( String name, double cost,int count,double totalCost,String assignedCount) {
        // this.equipID = equipID;
         this.name = name;
         this.cost = cost;
         this.count=count;
         this.totalCost = totalCost;
          this.assignedCount=assignedCount;
-        this.availableCount=availableCount;
+
         
 
     }
@@ -82,18 +82,7 @@ public class AvailableEquipmentDetails {
     public void setAssignedCount(String assignedCount) {
          this.assignedCount=assignedCount;
     }
-
-    
-    public String getAvailableCount() {
-        return availableCount;
-    }
-
-    public void setAvailableCount(String availableCount) {
-       
-        this.availableCount=availableCount;
-    }
-
-    
+   
 
  }
 

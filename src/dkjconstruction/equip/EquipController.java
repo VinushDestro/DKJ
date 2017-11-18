@@ -56,8 +56,7 @@ public class EquipController implements Initializable {
     TableColumn tabCount;
     @FXML
     TableColumn tabAssignedCount;
-    @FXML
-    TableColumn tabAvailableCount;
+  
     @FXML
     TableColumn tabCost;
     @FXML
@@ -115,7 +114,7 @@ public class EquipController implements Initializable {
                 alert.setContentText("Count cannot be 0");
             } else {
                 result = Equipment.addEquipment(equipName.getText(), Integer.parseInt(count.getText()), Double.parseDouble(cost.getText()));
-
+                acc.mn();
                 if (result == 1) {
                     alert.setContentText("Operation Successful!");
                 } else {
@@ -126,7 +125,7 @@ public class EquipController implements Initializable {
         } catch (Exception e) {
             alert.setTitle("Error");
             alert.setHeaderText(null);
-            alert.setContentText("EquipID already exists");
+            alert.setContentText("Operation Failed");
             alert.show();
 
         } finally {
@@ -166,6 +165,7 @@ public class EquipController implements Initializable {
         } else {
             try {
                 result = Equipment.updateEquipment(String.valueOf(name), cut); //Integer.valueOf(cut)
+                acc.addE(equipName.getText(), Integer.parseInt(count.getText()), Double.parseDouble(cost.getText()));
                 if (result == 1) {
                     alert.setContentText("Operation Successful!");
                 } else {
@@ -297,7 +297,7 @@ public class EquipController implements Initializable {
         tabCost.setCellValueFactory(new PropertyValueFactory<EquipmentDetail, Double>("Cost"));
         tabTotalCost.setCellValueFactory(new PropertyValueFactory<EquipmentDetail, Double>("TotalCost"));
         tabAssignedCount.setCellValueFactory(new PropertyValueFactory<EquipmentDetail, Double>("AssignedCount"));
-        tabAvailableCount.setCellValueFactory(new PropertyValueFactory<EquipmentDetail, Double>("AvailableCount"));
+        
         try {
             equipTab.setItems(Equipment.getEquipment());
         } catch (Exception ex) {
@@ -369,8 +369,8 @@ public class EquipController implements Initializable {
             String count = rs.getString("Count");
             double totalCost = rs.getDouble("totalCost");
             int assignedCount=rs.getInt("assignedCount");
-            String availableCount=rs.getString("availableCount");
-                        equipmentSe.add(new EquipmentDetail(name, count, cost, totalCost,assignedCount,availableCount));
+            
+                        equipmentSe.add(new EquipmentDetail(name, count, cost, totalCost,assignedCount));
                     }
                     equipTab.setItems(equipmentSe);
                 } else if ((String) view.getValue() == "Assigned") {
@@ -388,8 +388,8 @@ public class EquipController implements Initializable {
                         String count = rs.getString("Count");
                         double totalCost = rs.getDouble("totalCost");
                         int assignedCount=rs.getInt("assignedCount");
-            String availableCount=rs.getString("availableCount");
-                        equipmentSe.add(new EquipmentDetail(name, count, cost, totalCost,assignedCount,availableCount));
+           
+                        equipmentSe.add(new EquipmentDetail(name, count, cost, totalCost,assignedCount));
                     }
                     equipTab.setItems(equipmentSe);
                 } else if (search.getText().equals("")) {
@@ -425,7 +425,7 @@ public class EquipController implements Initializable {
          if (view.getValue()=="View_All"){
              DbConnection.openConnection();
         Connection con = DbConnection.getConnection();
-        String report = "C:\\Users\\VINUSH\\Documents\\NetBeansProjects\\dkjconstruction\\DKJ ASSETS MANAGEMENT\\src\\dkj\\assets\\management\\All_Equip.jrxml";
+        String report = "C:\\Users\\Mahesh\\Documents\\NetBeansProjects\\dkjconstructions\\src\\dkjconstruction\\equip\\All_Equip.jrxml";
         JasperReport jr = JasperCompileManager.compileReport(report);
         JasperPrint jp = JasperFillManager.fillReport(jr,null,con);
         JasperViewer.viewReport(jp,false);
@@ -434,7 +434,7 @@ public class EquipController implements Initializable {
          else if(view.getValue()=="Assigned"){
              DbConnection.openConnection();
         Connection con = DbConnection.getConnection();
-        String report = "C:\\Users\\VINUSH\\Documents\\NetBeansProjects\\dkjconstruction\\DKJ ASSETS MANAGEMENT\\src\\dkj\\assets\\management\\Assigned_Equip.jrxml";
+        String report = "C:\\Users\\Mahesh\\Documents\\NetBeansProjects\\dkjconstructions\\src\\dkjconstruction\\equip\\Assigned_Equip.jrxml";
         JasperReport jr = JasperCompileManager.compileReport(report);
         JasperPrint jp = JasperFillManager.fillReport(jr,null,con);
         JasperViewer.viewReport(jp,false);

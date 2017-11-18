@@ -33,6 +33,11 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.view.JasperViewer;
 
 /**
  * FXML Controller class
@@ -83,8 +88,14 @@ public class TransportController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
-     
-            Connection con = DbConnection.getConnection();
+        setCombo();
+        doSearchTransport();
+        RowclickEvent();
+        loadTable();
+    }    
+
+    public void setCombo(){
+        Connection con = DbConnection.getConnection();
             
             PreparedStatement ps;
         try {
@@ -112,11 +123,7 @@ public class TransportController implements Initializable {
             } catch (SQLException ex) {
             Logger.getLogger(TransportController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        doSearchTransport();
-        RowclickEvent();
-        loadTable();
-    }    
-
+    }
     @FXML
     private void doAddTransport(ActionEvent event) throws SQLException, ClassNotFoundException {
         int result = 0 ;
@@ -140,30 +147,36 @@ public class TransportController implements Initializable {
                     }
             else{
                 LocalDate today = LocalDate.now();
-                if(date.getValue().isBefore(today))
-                    alert.setContentText("Invalid value for date.\nShould be after current date.");
+                if(date.getValue().isAfter(today))
+                    alert.setContentText("Invalid value for date.\nShould be a passed date.");
                 else{
                         String addRegNo = regNo.getValue().toString().trim();
                         String addTenderId = tenderId.getValue().toString().trim();
                         LocalDate addDate = date.getValue();
                         Connection con = DbConnection.getConnection();
 
-                        PreparedStatement pst = con.prepareStatement("Select regno,date from transport where regno = ? and date = ?");
+                        PreparedStatement pst = con.prepareStatement("Select regno,date from transport where regno = ? and date = ? and tenderid=?");
 
                         pst.setString(1,addRegNo);
                         pst.setDate(2,Date.valueOf(addDate));
+                        pst.setString(3,addTenderId);
                         ResultSet rs = pst.executeQuery();
                         if(rs.next()){
 //                            String reg = rs.getString("regno");
 //                            Date d = rs.getDate("date");
 //                            if (addRegNo.toLowerCase().equals(reg.toLowerCase()) &&  Date.valueOf(addDate).equals(d)) 
-                            alert.setContentText("A vehicle cannot be assigned for more than one job per day.");
+                            alert.setContentText("Duplicate Entry");
                         }
                         else
                             result = Transport.addTransport(addRegNo,addTenderId,addDestination,Date.valueOf(addDate),Double.parseDouble(addCost));
 
                         if (result == 1) {
+                            PreparedStatement stmt = con.prepareStatement("update asset set availability='assigned' where regno=?");
+                            stmt.setString(1,addRegNo);
+                            result = stmt.executeUpdate();
+
                             clearFields();
+                            setCombo();
                             alert.setContentText("Operation Successful!");
                             try {
                                 transTab.setItems(Transport.getTransport());
@@ -201,119 +214,38 @@ public class TransportController implements Initializable {
                 alert.show();
             }
 
-            else if (cost.getText().isEmpty() && date.getValue()==null && regNo.getValue()==null){
-                alert.setContentText("Either Vehicle No, Cost or date should be given along with tripId for update");
+            else if (cost.getText().isEmpty() || date.getValue()==null || regNo.getValue()==null){
+                alert.setContentText("Destination, Cost and date should be given along with tripId.");
                 alert.show();
             }
             
             else{
                 String addTripId = tripId.getText().trim();
-                String addRegNo = regNo.getValue().toString().trim();
+                String addRegNo = regNo.getValue().toString();
+                String addDestination = destination.getText().trim();
                 String addCost = cost.getText().trim();
                 LocalDate addDate = date.getValue();
                 LocalDate today = LocalDate.now();
                 Connection con = DbConnection.getConnection();
 
-                PreparedStatement pst = con.prepareStatement("Select regno,date from transport where regno = ? and tripid <> ? and date = ?");
-
-                pst.setString(1,addRegNo);
-                pst.setString(2,addTripId);
-                pst.setDate(3,Date.valueOf(addDate));
-                ResultSet rs = pst.executeQuery();
-                if(rs.next()){
-                    alert.setContentText("A vehicle cannot be assigned for more than one job per day.");
-                }
+                    if(date.getValue().isAfter(today)){
+                        alert.setContentText("Invalid value for date.\nShould be passed date of a completed transport.");
+                    }
+                    else if(Double.parseDouble(cost.getText().trim()) <= 0.0){
+                            alert.setContentText("Invalid value for cost.\nShould be greater than zero.");
+                    }
+                    else{
+                        result = Transport.updateTransport(addDestination,Date.valueOf(addDate),Double.parseDouble(addCost),addTripId);          //Date.valueOf(addDate),Double.parseDouble(addCost)
+                        
+                    }
                 
-                else if (!addCost.isEmpty() && !(addDate==null) && !(addRegNo==null) && !addTripId.isEmpty()){
-
-                    if(date.getValue().isBefore(today)){
-                        alert.setContentText("Invalid value for date.\nShould be after current date.");
-                    }
-                    else if(Double.parseDouble(cost.getText().trim()) <= 0.0){
-                            alert.setContentText("Invalid value for cost.\nShould be greater than zero.");
-                    }
-                    else{
-                        int x1 = Transport.updateTransport(Date.valueOf(addDate),addTripId);          //Date.valueOf(addDate),Double.parseDouble(addCost)
-                        int x2 = Transport.updateTransport(Double.parseDouble(addCost),addTripId);  
-                        int x3 = Transport.updateTransport(addRegNo,addTripId);  
-
-                        if (x1==1 && x2==1 && x3==1)
-                            result=1;
-                    }
-                }
-
-                else if (addCost.isEmpty() && !(addDate==null) && !(addRegNo==null) && !addTripId.isEmpty()){
-
-                    if(date.getValue().isBefore(today)){
-                        alert.setContentText("Invalid value for date.\nShould be after current date.");
-                    }
-                    else{
-                        int x1 = Transport.updateTransport(Date.valueOf(addDate),addTripId);          //Date.valueOf(addDate),Double.parseDouble(addCost)
-                        int x3 = Transport.updateTransport(addRegNo,addTripId);  
-
-                        if (x1==1 && x3==1)
-                            result=1;
-                    }
-                }
-
-                else if (!addCost.isEmpty() && (addDate==null) && !(addRegNo==null) && !addTripId.isEmpty()){
-
-                    if(Double.parseDouble(cost.getText().trim()) <= 0.0){
-                            alert.setContentText("Invalid value for cost.\nShould be greater than zero.");
-                    }
-                    else{
-                        int x2 = Transport.updateTransport(Double.parseDouble(addCost),addTripId);  
-                        int x3 = Transport.updateTransport(addRegNo,addTripId);  
-
-                        if (x2==1 && x3==1)
-                            result=1;
-                    }
-                }
-
-                else if (!addCost.isEmpty() && !(addDate==null) && (addRegNo==null) && !addTripId.isEmpty()){
-
-                    if(date.getValue().isBefore(today)){
-                        alert.setContentText("Invalid value for date.\nShould be after current date.");
-                    }
-                    else if(Double.parseDouble(cost.getText().trim()) <= 0.0){
-                            alert.setContentText("Invalid value for cost.\nShould be greater than zero.");
-                    }
-                    else{
-                        int x1 = Transport.updateTransport(Date.valueOf(addDate),addTripId);  
-                        int x2 = Transport.updateTransport(Double.parseDouble(addCost),addTripId);  
-
-                        if (x1==1 && x2==1)
-                            result=1;
-                    }
-                }
-
-                else if (!addCost.isEmpty() && (addDate==null) && (addRegNo==null) && !addTripId.isEmpty()){
-
-                    if(Double.parseDouble(cost.getText().trim()) <= 0.0){
-                            alert.setContentText("Invalid value for cost.\nShould be greater than zero.");
-                    }
-                    else{
-                        result = Transport.updateTransport(Double.parseDouble(addCost),addTripId);
-                    }
-                }
-
-                else if (addCost.isEmpty() && !(addDate==null) && (addRegNo==null) && !addTripId.isEmpty()){
-
-                    if(date.getValue().isBefore(today)){
-                        alert.setContentText("Invalid value for date.\nShould be after current date.");
-                    }
-                    else{
-                        result = Transport.updateTransport(Date.valueOf(addDate),addTripId); 
-                    }
-                }
-
-                else if (addCost.isEmpty() && (addDate==null) && !(addRegNo==null) && !addTripId.isEmpty()){
-                        result = Transport.updateTransport(addRegNo,addTripId);  
-
-                }
 
                 if (result == 1) {
+                    PreparedStatement stmt = con.prepareStatement("update asset set availability='available' where regno=?");
+                            stmt.setString(1,addRegNo);
+                            result = stmt.executeUpdate();
                     clearFields();
+                    setCombo();
                     alert.setContentText("Operation Successful!");
                     alert.show();
                     try {
@@ -349,8 +281,15 @@ public class TransportController implements Initializable {
                 int result = Transport.deleteTransport(tripId.getText().trim());
                 
                 if (result == 1) {
+                    Connection con = DbConnection.getConnection();
+
+                    PreparedStatement stmt = con.prepareStatement("update asset set availability='available' where regno=?");
+                            stmt.setString(1,regNo.getValue().toString());
+                            result = stmt.executeUpdate();
+                    setCombo();
                     clearFields();
                     alert.setContentText("Deleted Successfully!");
+                    
                     alert.show();
                     try {
                         transTab.setItems(Transport.getTransport());
@@ -378,7 +317,18 @@ public class TransportController implements Initializable {
     }
 
     @FXML
-    private void doReport(ActionEvent event) {
+    private void doReport(){
+        try{DbConnection.openConnection();
+        Connection con = DbConnection.getConnection();
+        String report = "C:\\Users\\Mahesh\\Documents\\NetBeansProjects\\dkjconstructions\\src\\dkjconstruction\\transport\\transport.jrxml";
+        JasperReport jr = JasperCompileManager.compileReport(report);
+        JasperPrint jp = JasperFillManager.fillReport(jr,null,con);
+        JasperViewer.viewReport(jp,false);
+        }
+        catch(Exception e){
+            System.out.println(e);
+        }
+            
     }
     
     
@@ -409,11 +359,11 @@ public class TransportController implements Initializable {
                     tripId.setText(t1.getTripId());
                     regNo.setValue(t1.getRegNo());
                     destination.setText(t1.getDestination());
-                    destination.setDisable(true);
+                    regNo.setDisable(true);
                     date.setValue(t1.getDate().toLocalDate());
                     cost.setText(t1.getCost().toString());
 
-                    text.setText("Only date, Reg No and cost can be updated");
+                    text.setText("Only date,Destination and cost can be updated");
                 }
             }
             catch(Exception ex){

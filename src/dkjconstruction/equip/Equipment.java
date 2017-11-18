@@ -89,9 +89,9 @@ public class Equipment extends Application {
             String count = rs.getString("Count");
             double totalCost = rs.getDouble("totalCost");
             int assignedCount=rs.getInt("assignedCount");
-            String availableCount=rs.getString("availableCount");
             
-            equipment.add(new EquipmentDetail(name, count, cost, totalCost,assignedCount,availableCount));
+            
+            equipment.add(new EquipmentDetail(name, count, cost, totalCost,assignedCount));
 // creating objects and load it in
         }
 
@@ -104,14 +104,14 @@ public class Equipment extends Application {
         Connection con = DbConnection.getConnection();
         double totalCost = count * cost;
         int emt=0;
-        PreparedStatement stmt = con.prepareStatement("insert into equipment (`name`,`count`,`cost`,`totalCost`,`assignedCount`,`availableCount`) values (?,?,?,?,?,?)");
+        PreparedStatement stmt = con.prepareStatement("insert into equipment (`name`,`count`,`cost`,`totalCost`,`assignedCount`) values (?,?,?,?,?)");
 
         stmt.setString(1, name);
         stmt.setInt(2, count);
         stmt.setDouble(3, cost);
         stmt.setDouble(4, totalCost);
         stmt.setInt(5, emt);
-        stmt.setInt(6, count);
+        
 
         int result = stmt.executeUpdate();
         DbConnection.closeConnection();
@@ -128,10 +128,9 @@ public class Equipment extends Application {
         Connection con = DbConnection.getConnection();
 
          int s=Integer.parseInt(count);
-        PreparedStatement stmt = con.prepareStatement("update equipment set count=count + ?, totalCost=cost*count , availableCount=availableCount+? where name=?");
+        PreparedStatement stmt = con.prepareStatement("update equipment set count=count + ?, totalCost=cost*count where name=?");
         stmt.setInt(1, s);
-        stmt.setString(2, count);
-        stmt.setString(3, name);
+        stmt.setString(2, name);
 
         try {
             result = stmt.executeUpdate();
@@ -153,9 +152,8 @@ public class Equipment extends Application {
         Connection con = DbConnection.getConnection();
         
          int s=Integer.parseInt(count);
-        PreparedStatement stmt = con.prepareStatement("update equipment set count=count-? ,totalCost=cost*count, availableCount=availableCount-count where name=?");
+        PreparedStatement stmt = con.prepareStatement("update equipment set count=count-? ,totalCost=cost*count where name=?");
         stmt.setInt(1, s);
-        stmt.setString(2, count);
         stmt.setString(2,name);
 
         try {
@@ -212,8 +210,8 @@ public class Equipment extends Application {
             String count = rs.getString("Count");
             double totalCost = rs.getDouble("totalCost");
             int assignedCount=rs.getInt("assignedCount");
-            String availableCount=rs.getString("availableCount");
-            AssignedEquipmentD.add(new EquipmentDetail(name, count, cost, totalCost,assignedCount,availableCount));
+            
+            AssignedEquipmentD.add(new EquipmentDetail(name, count, cost, totalCost,assignedCount));
 
 // creating objects and load it in
         }

@@ -28,6 +28,11 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.view.JasperViewer;
 
 
 /**
@@ -234,6 +239,20 @@ public class AdminController {
 
     }
     
+    @FXML
+    private void doReport(){
+        try{DbConnection.openConnection();
+        Connection con = DbConnection.getConnection();
+        String report = "C:\\Users\\Mahesh\\Documents\\NetBeansProjects\\dkjconstructions\\src\\dkjconstruction\\settings\\user.jrxml";
+        JasperReport jr = JasperCompileManager.compileReport(report);
+        JasperPrint jp = JasperFillManager.fillReport(jr,null,con);
+        JasperViewer.viewReport(jp,false);
+        }
+        catch(Exception e){
+            System.out.println(e);
+        }
+            
+    }
     
     private void RowclickEvent() {
         adminTab.setOnMouseClicked((MouseEvent e) -> {

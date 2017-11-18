@@ -99,6 +99,84 @@ public class DKJConstruction extends Application {
         mainLayout.add(Pane, 1, 1);
     }
     
+    public static void showCAccounts() throws IOException {
+        mainLayout.getChildren().clear();
+        showMainPage();
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(DKJConstruction.class.getResource("accounts/ten.fxml"));
+        GridPane Pane = loader.load();
+        mainLayout.add(Pane, 1, 1);
+    }
+    
+    public static void showPendingEmployee() throws IOException {
+        mainLayout.getChildren().clear();
+        showMainPage();
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(DKJConstruction.class.getResource("joballocation/pendingEmployee.fxml"));
+        GridPane Pane = loader.load();
+        mainLayout.add(Pane, 1, 1);
+    }
+    public static void showPendingAsset() throws IOException {
+        mainLayout.getChildren().clear();
+        showMainPage();
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(DKJConstruction.class.getResource("joballocation/pendingAsset.fxml"));
+        GridPane Pane = loader.load();
+        mainLayout.add(Pane, 1, 1);
+    }
+    public static void showPendingEquipment() throws IOException {
+        mainLayout.getChildren().clear();
+        showMainPage();
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(DKJConstruction.class.getResource("joballocation/pendingEquipment.fxml"));
+        GridPane Pane = loader.load();
+        mainLayout.add(Pane, 1, 1);
+    }
+    public static void showPendingMaterial() throws IOException {
+        mainLayout.getChildren().clear();
+        showMainPage();
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(DKJConstruction.class.getResource("joballocation/pendingMaterial.fxml"));
+        GridPane Pane = loader.load();
+        mainLayout.add(Pane, 1, 1);
+    }
+    public static void showEmployee() throws IOException {
+        mainLayout.getChildren().clear();
+        showMainPage();
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(DKJConstruction.class.getResource("joballocation/employee.fxml"));
+        GridPane Pane = loader.load();
+        mainLayout.add(Pane, 1, 1);
+    }
+    
+     public static void showJobAsset() throws IOException {
+        mainLayout.getChildren().clear();
+        showMainPage();
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(DKJConstruction.class.getResource("joballocation/assetAllocation.fxml"));
+        GridPane Pane = loader.load();
+        mainLayout.add(Pane, 1, 1);
+    }
+     
+      public static void showJobMaterial() throws IOException {
+        mainLayout.getChildren().clear();
+        showMainPage();
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(DKJConstruction.class.getResource("joballocation/materialAllocation.fxml"));
+        GridPane Pane = loader.load();
+        mainLayout.add(Pane, 1, 1);
+    }
+      
+       public static void showEquipment() throws IOException {
+        mainLayout.getChildren().clear();
+        showMainPage();
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(DKJConstruction.class.getResource("joballocation/equipmentAllocation.fxml"));
+        GridPane Pane = loader.load();
+        mainLayout.add(Pane, 1, 1);
+    }
+       
+    
     public static void showUtilities() throws IOException {
         mainLayout.getChildren().clear();
         showMainPage();

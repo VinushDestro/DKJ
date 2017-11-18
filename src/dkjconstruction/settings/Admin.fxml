@@ -101,7 +101,7 @@
       </SplitPane>
       <AnchorPane prefHeight="567.0" prefWidth="199.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
          <children>
-            <VBox layoutX="63.0" layoutY="55.0" prefHeight="630.0" prefWidth="210.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <VBox layoutX="6.0" prefHeight="630.0" prefWidth="210.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="6.0" AnchorPane.rightAnchor="-6.0" AnchorPane.topAnchor="0.0">
                <children>
                   <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#doAddUser" prefHeight="40.0" prefWidth="250.0" text="ADD USER" textAlignment="CENTER" textFill="WHITE">
                      <font>
@@ -127,7 +127,7 @@
                         <Insets bottom="5.0" left="30.0" right="30.0" top="5.0" />
                      </VBox.margin>
                   </Button>
-                  <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="40.0" prefWidth="250.0" text="REPORT" textAlignment="CENTER" textFill="WHITE">
+                  <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#doReport" prefHeight="40.0" prefWidth="250.0" text="REPORT" textAlignment="CENTER" textFill="WHITE">
                      <font>
                         <Font name="Raleway-Bold" size="10.0" />
                      </font>

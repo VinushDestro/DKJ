@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="665.0" prefWidth="840.0" xmlns="http://javafx.com/javafx/8.0.102" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dkjconstruction.joballocation.AssetAllocationController">
+  <columnConstraints>
+    <ColumnConstraints hgrow="SOMETIMES" maxWidth="840.0" minWidth="10.0" prefWidth="840.0" />
+    <ColumnConstraints hgrow="SOMETIMES" maxWidth="410.6666564941406" minWidth="0.0" prefWidth="0.0" />
+  </columnConstraints>
+  <rowConstraints>
+    <RowConstraints maxHeight="664.0" minHeight="10.0" prefHeight="664.0" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="215.3333282470703" minHeight="0.0" prefHeight="0.0" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="70.33331298828125" minHeight="1.0" prefHeight="1.0" vgrow="SOMETIMES" />
+  </rowConstraints>
+   <children>
+      <AnchorPane prefHeight="200.0" prefWidth="200.0">
+         <children>
+            <JFXTextField fx:id="vRegNo" layoutX="433.0" layoutY="479.0" promptText="Vehicle Number">
+               <font>
+                  <Font name="Raleway-Regular" size="14.0" />
+               </font>
+            </JFXTextField>
+            <AnchorPane layoutX="626.0" prefHeight="609.0" prefWidth="217.0" style="-fx-background-color: #2c3e50;">
+               <children>
+                  <Button layoutX="26.0" layoutY="257.0" mnemonicParsing="false" onAction="#addTenderAsset" prefHeight="43.0" prefWidth="166.0" style="-fx-border-color: #1e8bc3; -fx-background-color: #2c3e50; -fx-border-width: 2; -fx-border-radius: 150,10,10;" text="Assign tender Asset" textFill="#1e8bc3">
+                     <font>
+                        <Font name="Raleway-Bold" size="14.0" />
+                     </font>
+                  </Button>
+                  <Button layoutX="32.0" layoutY="412.0" mnemonicParsing="false" onAction="#tender_reportAsset" prefHeight="43.0" prefWidth="135.0" style="-fx-border-color: #1e8bc3; -fx-background-color: #2c3e50; -fx-border-width: 2; -fx-border-radius: 150,10,10;" text="iReport" textFill="#1e8bc3">
+                     <font>
+                        <Font name="Raleway-Bold" size="14.0" />
+                     </font>
+                  </Button>
+               </children>
+            </AnchorPane>
+            <JFXTextField fx:id="aTenderId" layoutX="50.0" layoutY="479.0" prefHeight="26.0" prefWidth="162.0" promptText="Tender ID">
+               <font>
+                  <Font name="Raleway-Regular" size="14.0" />
+               </font>
+            </JFXTextField>
+            <TableView fx:id="transTable" layoutX="76.0" layoutY="24.0" prefHeight="164.0" prefWidth="500.0">
+               <columns>
+                  <TableColumn fx:id="assetTender" prefWidth="119.0" text="TenderID" />
+                  <TableColumn fx:id="assettype" prefWidth="130.0" text="Asset Type" />
+                  <TableColumn fx:id="assetReqCount" prefWidth="107.0" text="Asset Count" />
+                  <TableColumn fx:id="assetAssignCount" prefWidth="130.0" text="Assigned Count" />
+               </columns>
+            </TableView>
+            <TableView fx:id="assetTable" layoutX="78.0" layoutY="209.0" prefHeight="200.0" prefWidth="498.0">
+               <columns>
+                  <TableColumn fx:id="regNo" prefWidth="136.0" text="REG Number" />
+                  <TableColumn fx:id="assName" prefWidth="155.0" text="Name" />
+                  <TableColumn fx:id="assType" prefWidth="172.0" text="Type" />
+               </columns>
+            </TableView>
+            <JFXTextField fx:id="assetType" layoutX="248.0" layoutY="480.0" promptText="Type" />
+            <JFXTextField fx:id="searchfield" layoutX="41.0" layoutY="2.0" prefHeight="25.0" prefWidth="531.0" />
+         </children>
+      </AnchorPane>
+   </children>
+</GridPane>

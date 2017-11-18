@@ -37,7 +37,11 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.TreeTableColumn;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
-
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.view.JasperViewer;
 
 /**
  *
@@ -78,15 +82,10 @@ public class UtilitiesFXMLDocumentController implements Initializable {
     @FXML
     private TextField tsearch;
 
-    
-    
-    
-
-        
     // private DbConnection dc;
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        utype.getItems().addAll("Electricity", "Water", "Phone", "Internet");
+        utype.getItems().addAll("Electricity", "Water", "Phone", "Internet", "Repair", "Refreshment", "Other");
         umethod.getItems().addAll("Cash", "Card");
         try {
             // TODO
@@ -104,12 +103,9 @@ public class UtilitiesFXMLDocumentController implements Initializable {
         ldtblutil();
         RowclickEvent();
         searchUtil();
-        
+
     }
 
-    
-    
-    
     private void tableld() {
 
         try {
@@ -151,25 +147,36 @@ public class UtilitiesFXMLDocumentController implements Initializable {
     }
 
     private void RowclickEvent() {
-        utiltab.setOnMouseClicked((e) -> {
-            UtilityDetail t1 = utiltab.getItems().get(utiltab.getSelectionModel().getSelectedIndex());
+        try {
+            utiltab.setOnMouseClicked((e) -> {
+                UtilityDetail t1 = utiltab.getItems().get(utiltab.getSelectionModel().getSelectedIndex());
 
-            uid.setText(t1.getID());
-            utype.setValue(t1.getType());
-            uamount.setText(t1.getAmount());
-             udate.setValue(LocalDate.parse(t1.getBillDate()));
-            upddate.setValue(LocalDate.parse(t1.getPaidDate()));
-            umethod.setValue(t1.getPaymentMethod());
+                uid.setText(t1.getID());
+                utype.setValue(t1.getType());
+                uamount.setText(t1.getAmount());
+                udate.setValue(LocalDate.parse(t1.getBillDate()));
+                upddate.setValue(LocalDate.parse(t1.getPaidDate()));
+                umethod.setValue(t1.getPaymentMethod());
 
-        });
+            });
+        } catch (Exception e) {
+            System.out.println("row click event " + e);
+        }
 
     }
-    
-    
-    
-     @FXML
+
+    @FXML
     private void ReportClicked() throws SQLException, ClassNotFoundException {
-        
+        Connection con = DbConnection.getConnection();
+        try {
+            String report = "C:\\Users\\h3\\Desktop\\dkjconstruction fin\\src\\dkjconstruction\\utilities\\report1.jrxml";
+            JasperReport jr = JasperCompileManager.compileReport(report);
+            JasperPrint jp = JasperFillManager.fillReport(jr, null, con);
+            JasperViewer.viewReport(jp);
+        } catch (Exception e) {
+            System.out.println("report" + e);
+        }
+
     }
 
     @FXML
@@ -179,7 +186,7 @@ public class UtilitiesFXMLDocumentController implements Initializable {
             try {
                 String addUtype = utype.getValue().toString();
                 String addUid = uid.getText();
-                //String addUdate = udate.getValue().toString();
+                // String addUdate = udate.getValue().toString();
                 Double addUamount = Double.parseDouble(uamount.getText()); //er
                 // LocalDate addUpdate = upddate.getValue();
                 String addUmethod = umethod.getValue().toString();
@@ -199,6 +206,10 @@ public class UtilitiesFXMLDocumentController implements Initializable {
 
                 stmt.executeUpdate();
                 System.out.println("sucess");
+                Alert a = new Alert(Alert.AlertType.INFORMATION);
+                a.setContentText("ADDED SUCESSFULLY!");
+                a.show();
+
             } catch (SQLIntegrityConstraintViolationException r) {
 
                 alertboxWarn("Add Utilities", "This Utility record had been already has been taken");
@@ -211,41 +222,40 @@ public class UtilitiesFXMLDocumentController implements Initializable {
         }//if-else
         tableld();
         ldtblutil();
+
     }
 
     @FXML
-    private void updateClicked(ActionEvent event) throws SQLException{
-       if (validatef()) {
+    private void updateClicked(ActionEvent event) throws SQLException {
+
+        if (validatef()) {
 
             if (alertboxConfirm("Update utility details !", "Do you really want to update")) {
 
                 try {
                     DbConnection.openConnection();
                     Connection con = DbConnection.getConnection();
-                 PreparedStatement stmt = con.prepareStatement  ("UPDATE utilities set billType= '" + utype.getValue()+ "',paidAmount= '" + Double.parseDouble(uamount.getText()) + "',billDate = '" + udate.getValue() + "',paidDate = '" + upddate.getValue() + "',paymentMethod= '" + umethod.getValue()+ "' where billNo = '" + uid.getText() + "' ");
-                   
-                 stmt.executeUpdate();
-                    
-                    
+                    PreparedStatement stmt = con.prepareStatement("UPDATE utilities set billType= '" + utype.getValue() + "',paidAmount= '" + Double.parseDouble(uamount.getText()) + "',billDate = '" + udate.getValue() + "',paidDate = '" + upddate.getValue() + "',paymentMethod= '" + umethod.getValue() + "' where billNo = '" + uid.getText() + "' ");
+
+                    stmt.executeUpdate();
+
                     System.out.println("sucessfully updated");
+                    Alert a = new Alert(Alert.AlertType.INFORMATION);
+                    a.setContentText("UPDATED SUCESSFULLY!");
+                    a.show();
 
                 } catch (Exception e) {
-                     // handle your exception
-                        
+                    // handle your exception
 
                     System.out.println("Update  error " + e);
 
                 }
 
-               
-            tableld();
+                tableld();
                 ldtblutil();
-   }
             }
         }
-        
-         
-    
+    }
 
     @FXML
     private void deleteClicked(ActionEvent event) {
@@ -271,13 +281,13 @@ public class UtilitiesFXMLDocumentController implements Initializable {
     }
 
     private void searchUtil() {
-        
+
         tsearch.setOnKeyReleased(e -> {
-        
-        if (tsearch.getText().equals("")) {
-            
-            tableld();
-        ldtblutil();
+
+            if (tsearch.getText().equals("")) {
+
+                tableld();
+                ldtblutil();
             } else {
                 data.clear();
                 try {
@@ -287,7 +297,7 @@ public class UtilitiesFXMLDocumentController implements Initializable {
                     ResultSet rs = con.createStatement().executeQuery(
                             "SELECT * FROM utilities where billNo LIKE '%" + tsearch.getText() + "%'"
                             + "UNION SELECT * FROM utilities where billType LIKE '%" + tsearch.getText() + "%'"
-                            + "UNION SELECT * FROM utilities where paymentMethod LIKE '%"+tsearch.getText() +"%'"
+                            + "UNION SELECT * FROM utilities where paymentMethod LIKE '%" + tsearch.getText() + "%'"
                     );
 
                     while (rs.next()) {
@@ -304,31 +314,47 @@ public class UtilitiesFXMLDocumentController implements Initializable {
                 utiltab.setItems(data);
 
             }
-            
-            
+
         });
-    
-    
-        
-        
+
     }
 
     private boolean validatef() {
-        if (utype.getValue() == null || uid.getText().isEmpty() || umethod.getValue() == null || udate.getValue() == null ||umethod.getValue() == null ||uamount.getText().isEmpty()) {
+        try {
+
+            LocalDate today = LocalDate.now();
+            if (utype.getValue() == null || uid.getText().isEmpty() || umethod.getValue() == null || udate.getValue() == null || umethod.getValue() == null || uamount.getText().isEmpty()) {
+                Alert a = new Alert(Alert.AlertType.ERROR);
+                a.setContentText("All fields shoud be filled");
+                a.show();
+                return false;
+            } else if ((Double.parseDouble((uamount.getText())) <= 0)) {
+                Alert a = new Alert(Alert.AlertType.ERROR);
+                a.setContentText("Amount must be more than zero");
+                a.show();
+                return false;
+            } else if (upddate.getValue().isAfter(today) || udate.getValue().isAfter(today)) {
+                Alert a = new Alert(Alert.AlertType.ERROR);
+                a.setContentText("Invalid value for date.");
+                a.show();
+                return false;
+            }
+            else if (udate.getValue().isAfter( upddate.getValue()) ) {
+                Alert a = new Alert(Alert.AlertType.ERROR);
+                a.setContentText("Invalid value for date.\npaid date cannot be Should be less than bill date.");
+                a.show();
+                return false;
+            }
+            
+            
+        } catch (NumberFormatException e) {
             Alert a = new Alert(Alert.AlertType.ERROR);
-            a.setContentText("All fields shoud be filled");
+            a.setContentText("Invalid input for amount");
             a.show();
-            return false;
-        }else if (!(Double.parseDouble(uamount.getText()) >= 0  ) )
-        {
-            Alert a = new Alert(Alert.AlertType.ERROR);
-            a.setContentText("All");
-            a.show();
-        return false;
-        
-        
         }
+
         return true;
+
     }
 
     public void alerboxInfo(String title, String message) {
@@ -377,10 +403,25 @@ public class UtilitiesFXMLDocumentController implements Initializable {
 
     @FXML
     private void p(MouseEvent event) {
-        
-        
+
     }
 
+    @FXML
+    private void clear(ActionEvent event) {
+        try {
+            uamount.clear();
+            uid.clear();
+            udate.setValue(null);
+            upddate.setValue(null);
+            utype.getSelectionModel().clearSelection();
+            umethod.getSelectionModel().clearSelection();
+            tsearch.clear();
+            tableld();
+            ldtblutil();
+        } catch (Exception e) {
+            System.err.println("eror when clering" + e);
+        }
 
+    }
 
 }

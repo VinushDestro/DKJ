@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="009c3312-bc34-457d-9651-2a25952d01b6">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="MONTH" class="java.lang.String"/>
+	<parameter name="YEAR" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[select u.billType , u.paidAmount , u.paidDate 
+from utilities u 
+where  MONTH(u.paidDate)=$P{MONTH} AND YEAR(u.paidDate) =$P{YEAR} UNION
+select a.regNo , a.cost , a.boughtDate 
+from vehicleaccounts a 
+where MONTH(a.boughtDate)= $P{MONTH} AND YEAR(a.boughtDate) = $P{YEAR} UNION
+select e.name ,(e.cost*e.count),DATE_FORMAT(e.date,'%Y-%m-%d') 
+from eqaccounts e 
+WHERE  MONTH(DATE_FORMAT(e.date,'%Y-%m-%d'))= $P{MONTH} AND YEAR(DATE_FORMAT(e.date,'%Y-%m-%d')) =$P{YEAR}  UNION 
+select type,(r.price*r.quantity),r.date 
+from rawaccounts r
+where MONTH(r.date)= $P{MONTH} AND YEAR(r.date) = $P{YEAR} UNION
+select e.empId,p.finalSalary,p.date 
+from employee e , payroll p
+where e.empId= p.empId AND e.availability =\"available\" AND MONTH(p.date) =$P{MONTH} AND YEAR(p.date) = $P{YEAR} ]]>
+	</queryString>
+	<field name="utilities_paidAmount" class="java.lang.Double"/>
+	<field name="utilities_paidDate" class="java.sql.Date"/>
+	<field name="utilities_billType" class="java.lang.String"/>
+	<background>
+		<band/>
+	</background>
+	<title>
+		<band height="72">
+			<frame>
+				<reportElement mode="Opaque" x="-20" y="-20" width="595" height="92" backcolor="#006699" uuid="f23034eb-2e1e-4171-b0d2-8eea42b50d99"/>
+				<staticText>
+					<reportElement x="20" y="20" width="234" height="43" forecolor="#FFFFFF" uuid="19f3b196-8214-462c-bfdd-705e31454292"/>
+					<textElement>
+						<font size="34" isBold="true"/>
+					</textElement>
+					<text><![CDATA[TITLE]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="395" y="43" width="180" height="20" forecolor="#FFFFFF" uuid="3f3c7640-04b2-4b23-b6fa-cf0c76384dc0"/>
+					<textElement textAlignment="Right">
+						<font size="14" isBold="false"/>
+					</textElement>
+					<text><![CDATA[Add a description here]]></text>
+				</staticText>
+			</frame>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="13"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="21">
+			<line>
+				<reportElement x="-20" y="20" width="595" height="1" forecolor="#666666" uuid="cf3faa39-405f-4fff-a891-f0f2cf42ee26"/>
+			</line>
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="0" width="185" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="3e5c0985-ae4f-4964-91ef-cb3a97e18103"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[utilities_paidAmount]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="185" y="0" width="185" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="b0078fd1-7744-44f2-ad33-2cc0efa1ef83"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[utilities_paidDate]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="370" y="0" width="185" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="7dd7a106-2e5c-49dd-b038-3f30e8adf30a"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[utilities_billType]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="19" width="555" height="1" uuid="f6e963b2-c174-4b72-97f2-a59b9238b36c"/>
+			</line>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="0" y="0" width="185" height="20" uuid="eaa7cab3-52c0-405e-9a0e-156b7a2e07e8"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{utilities_paidAmount}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="185" y="0" width="185" height="20" uuid="027c6edd-2f4c-4c8b-821a-262f8cd1d4bf"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{utilities_paidDate}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="370" y="0" width="185" height="20" uuid="353fa120-6acd-47f2-8493-604563608e18"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{utilities_billType}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band/>
+	</columnFooter>
+	<pageFooter>
+		<band height="17">
+			<textField>
+				<reportElement mode="Opaque" x="0" y="4" width="515" height="13" backcolor="#E6E6E6" uuid="050bd520-3ffa-4206-aeb2-2156050899a8"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement mode="Opaque" x="515" y="4" width="40" height="13" backcolor="#E6E6E6" uuid="5d912e8a-af37-466a-93b1-8a739288eb1f"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="0" y="4" width="100" height="13" uuid="1dd4946c-d5ca-46e0-925a-4b6e7eff219a"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band/>
+	</summary>
+</jasperReport>

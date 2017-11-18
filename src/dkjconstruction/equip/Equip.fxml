@@ -34,7 +34,6 @@
                   <TableColumn fx:id="tabCost" prefWidth="84.0" text="Unit Price" />
                   <TableColumn fx:id="tabTotalCost" prefWidth="79.0" text="Total Cost" />
                   <TableColumn fx:id="tabAssignedCount" prefWidth="112.0" text="Assigned Count" />
-                  <TableColumn fx:id="tabAvailableCount" prefWidth="83.0" text="Available" />
                </columns>
             </TableView>
             <JFXTextField fx:id="equipName" alignment="CENTER" layoutX="25.0" layoutY="486.0" promptText="Equipment Name" />
@@ -47,7 +46,7 @@
          <children>
             <Button mnemonicParsing="false" onAction="#doAddEquipment" prefHeight="29.0" prefWidth="128.0" text="ADD EQUIPMENT" textFill="WHITE">
                <VBox.margin>
-                  <Insets bottom="5.0" left="30.0" right="30.0" top="5.0" />
+                  <Insets bottom="5.0" left="20.0" right="20.0" top="5.0" />
                </VBox.margin>
                <font>
                   <Font name="Raleway-Bold" size="10.0" />
@@ -55,7 +54,7 @@
             </Button>
             <Button mnemonicParsing="false" onAction="#doUpdateEquipment" prefHeight="27.0" prefWidth="128.0" text="ADD COUNT" textFill="WHITE">
                <VBox.margin>
-                  <Insets bottom="5.0" left="30.0" right="30.0" top="5.0" />
+                  <Insets bottom="5.0" left="20.0" right="20.0" top="5.0" />
                </VBox.margin>
                <font>
                   <Font name="Raleway-Bold" size="10.0" />
@@ -63,15 +62,7 @@
             </Button>
             <Button mnemonicParsing="false" onAction="#doDeleteEquipment" prefHeight="27.0" prefWidth="128.0" text="DELETE" textFill="WHITE">
                <VBox.margin>
-                  <Insets bottom="5.0" left="30.0" right="30.0" top="5.0" />
-               </VBox.margin>
-               <font>
-                  <Font name="Raleway-Bold" size="10.0" />
-               </font>
-            </Button>
-            <Button mnemonicParsing="false" onAction="#showReport" prefHeight="27.0" prefWidth="128.0" text="REPORT" textFill="WHITE">
-               <VBox.margin>
-                  <Insets bottom="5.0" left="30.0" right="30.0" top="400.0" />
+                  <Insets bottom="5.0" left="20.0" right="20.0" top="5.0" />
                </VBox.margin>
                <font>
                   <Font name="Raleway-Bold" size="10.0" />
@@ -79,7 +70,15 @@
             </Button>
             <Button mnemonicParsing="false" onAction="#doClear" prefHeight="27.0" prefWidth="128.0" text="CLEAR" textFill="WHITE">
                <VBox.margin>
-                  <Insets bottom="5.0" left="30.0" right="30.0" top="5.0" />
+                  <Insets bottom="5.0" left="20.0" right="20.0" top="350.0" />
+               </VBox.margin>
+               <font>
+                  <Font name="Raleway-Bold" size="10.0" />
+               </font>
+            </Button>
+            <Button mnemonicParsing="false" onAction="#showReport" prefHeight="27.0" prefWidth="128.0" text="REPORT" textFill="WHITE">
+               <VBox.margin>
+                  <Insets bottom="5.0" left="20.0" right="20.0" top="5.0" />
                </VBox.margin>
                <font>
                   <Font name="Raleway-Bold" size="10.0" />
@@ -89,7 +88,7 @@
       </VBox>
       <AnchorPane prefHeight="94.0" prefWidth="820.0" GridPane.rowIndex="1">
          <children>
-            <TextField fx:id="search" alignment="CENTER_RIGHT" layoutX="14.0" layoutY="6.0" prefHeight="27.0" prefWidth="806.0" promptText="Search">
+            <TextField fx:id="search" layoutX="14.0" layoutY="6.0" prefHeight="27.0" prefWidth="806.0" promptText="Search">
                <font>
                   <Font name="Raleway Light" size="13.0" />
                </font>

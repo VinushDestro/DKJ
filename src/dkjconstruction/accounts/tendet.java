@@ -17,9 +17,6 @@ public class tendet {
         this.tenid = tenid;
     }
 
-    ;
-
-
     public String getTenid() {
         return tenid;
     }

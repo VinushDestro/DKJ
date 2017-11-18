@@ -10,58 +10,55 @@ package dkjconstruction.joballocation;
  * @author Ranjitha
  */
 public class VINU {
-    private String RegNo;
-    private String Name;
-    private String Type;
+    private String tenderId;
+    private String type;
+    private Integer req;
+    private Integer assign;
 
-    public VINU(String RegNo, String Name, String Type) {
-        this.RegNo = RegNo;
-        this.Name = Name;
-        this.Type = Type;
+    public VINU(Integer req, Integer assign) {
+        this.req = req;
+        this.assign = assign;
     }
 
-    /**
-     * @return the RegNo
-     */
-    public String getRegNo() {
-        return RegNo;
+    public String getTenderId() {
+        return tenderId;
     }
 
-    /**
-     * @param RegNo the RegNo to set
-     */
-    public void setRegNo(String RegNo) {
-        this.RegNo = RegNo;
+    public void setTenderId(String tenderId) {
+        this.tenderId = tenderId;
     }
 
-    /**
-     * @return the Name
-     */
-    public String getName() {
-        return Name;
-    }
-
-    /**
-     * @param Name the Name to set
-     */
-    public void setName(String Name) {
-        this.Name = Name;
-    }
-
-    /**
-     * @return the Type
-     */
     public String getType() {
-        return Type;
+        return type;
     }
 
-    /**
-     * @param Type the Type to set
-     */
-    public void setType(String Type) {
-        this.Type = Type;
+    public void setType(String type) {
+        this.type = type;
     }
+
+    public Integer getReq() {
+        return req;
+    }
+
+    public void setReq(Integer req) {
+        this.req = req;
+    }
+
+    public Integer getAssign() {
+        return assign;
+    }
+
+    public void setAssign(Integer assign) {
+        this.assign = assign;
+    }
+
+    public VINU(String tenderId, String type, Integer req, Integer assign) {
+        this.tenderId = tenderId;
+        this.type = type;
+        this.req = req;
+        this.assign = assign;
+    }
+
    
-    
-    
+   
 }

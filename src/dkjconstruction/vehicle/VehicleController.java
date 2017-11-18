@@ -153,7 +153,7 @@ public class VehicleController implements Initializable {
             String typ = type.getPromptText().trim();
             //  Double cst = Double.parseDouble(cost.getText().trim());
             String cst = cost.getText().trim();
-
+             LocalDate today = LocalDate.now();
             LocalDate bDate = bouDate.getValue();
             //  int lifT=Integer.parseInt(liTime.getText().trim());
             String lifT = liTime.getText().trim();
@@ -166,21 +166,26 @@ public class VehicleController implements Initializable {
                 alert.setContentText("Cost cannot be 0");
             } else if (Integer.valueOf(lifT) <= 0) {
                 alert.setContentText("Life Time cannot be 0");
-            } else {
-                LocalDate today = LocalDate.now();
-                if (bDate.isAfter(today)) {
+            } else if (bDate.isAfter(today)) {
                     alert.setContentText("Invalid value for date.\nShould be less than current date.");
-                } else {
+                }
+            else if(!(rNo.matches("[A-Z]{2}[-][A-Z]{3}[0-9]{4}") || rNo.matches("[A-Z]{2}[-][A-Z]{2}[0-9]{4}")) ){
+                alert.setContentText("Invalid RegNo");
+                System.out.println("3");
+            }
+
+                
+            else {
                     result = VehicleManagement.addVehicle(regNo.getText(), vehName.getText(), type.getValue().toString(), Double.parseDouble(cost.getText()), Date.valueOf(bDate), Integer.parseInt(liTime.getText()), (String) condi.getValue(), Float.parseFloat(dep.getText()));
                     // regno,name,type,cost,boughtDate,lifeTime,condition
-
+                    vehicleaccounts.addEE(regNo.getText(),Double.parseDouble(cost.getText()),Date.valueOf(bDate));
                     if (result == 1) {
                         alert.setContentText("Operation Successful!");
                     } else {
                         alert.setContentText("Operation Failed");
                     }
                 }
-            }
+            
         } catch (ClassNotFoundException | NumberFormatException | SQLException e) {
             alert.setTitle("Error");
             alert.setHeaderText(null);
@@ -213,18 +218,21 @@ public class VehicleController implements Initializable {
     private void doUpdateVehicle(ActionEvent event) throws SQLException, ClassNotFoundException {
 
         int result = 0;
-
+        
+        String cond=(String) condi.getValue();
         String rNo = regNo.getText().trim();
         String lifT = liTime.getText().trim();
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Update Vehicle");
         alert.setHeaderText(null);
 
+
+        
         try {
             if (!rNo.isEmpty() && lifT.isEmpty() && ((String) condi.getValue() == null)) {
                 alert.setContentText("You have to enter at least one field to update details!");
                 System.out.println("step 1 regno only");
-            } //  try{
+            } 
             else if (rNo.isEmpty()) {
                 alert.setContentText("Registration Number field cannot be empty");
                 System.out.println("Step 2 regno empty");
@@ -233,29 +241,51 @@ public class VehicleController implements Initializable {
                 if (result == 1) {
                     alert.setContentText("lifetime Successful!");
                 } else if (result == 0) {
-                    alert.setContentText("Operation Failed22222");
+                    alert.setContentText("Operation Failed");
                 }
-            } else if (!rNo.isEmpty() && lifT.isEmpty() && !((String) condi.getValue() == null)) {
-                result = VehicleManagement.updateVehicle(String.valueOf(rNo), (String) condi.getValue());
-                if (result == 1) {
+            } 
+            else if (!rNo.isEmpty() && lifT.isEmpty() && !((String) condi.getValue() == null)) {
+               try{
+                if (cond.equals("Brand New")){
+                alert.setContentText("You cant Change as Brand New!");
+                  }
+                else{
+                     result = VehicleManagement.updateVehicle(String.valueOf(rNo), (String) condi.getValue());
+                     if (result == 1) {
                     alert.setContentText("Condition Successful!");
                 } else if (result == 0) {
                     alert.setContentText("Operation Failed33333");
                 }
+                }
+               }
+               catch(Exception e){
+                   System.out.println("e");
+               }
+             
             } else if (!rNo.isEmpty() && !lifT.isEmpty() && !((String) condi.getValue() == null)) {
+                
+                try{
+                if (cond.equals("Brand New")){
+                alert.setContentText("You cant Change as Brand New!");
+                  }
+                else{
                 result = VehicleManagement.updateVehicle(String.valueOf(rNo), Integer.valueOf(lifT), (String) condi.getValue());
                 if (result == 1) {
                     alert.setContentText("Both Successful now edit!");
                 } else if (result == 0) {
-                    alert.setContentText("Operation Failed11111");
+                    alert.setContentText("Operation Failed");
                 }
+                }}
+                catch(Exception e){
+                   System.out.println("e");
+            }
             }
 
             alert.show();
             regNo.clear();
             liTime.clear();
             condi.valueProperty().set(null);
-            doClear();
+           doClear();
 
             updateLoad();
         } catch (Exception e) {
@@ -368,6 +398,7 @@ public class VehicleController implements Initializable {
     public void doClear() {
         try {
             regNo.clear();
+            regNo.setDisable(false);
             vehName.clear();
             vehName.setDisable(false);
             type.valueProperty().set(null);
@@ -479,6 +510,7 @@ public class VehicleController implements Initializable {
                     vehName.setDisable(true);
 
                     regNo.setText(tab.getRegNo());
+                    regNo.setDisable(true);
 
                     type.setValue(tab.getType());
                     //type.setVisible(false);
@@ -615,7 +647,7 @@ public class VehicleController implements Initializable {
          {
           DbConnection.openConnection();
         Connection con = DbConnection.getConnection();
-        String report = "C:\\Users\\VINUSH\\Documents\\NetBeansProjects\\dkjconstruction\\DKJ ASSETS MANAGEMENT\\src\\dkj\\assets\\management\\All_Vehi.jrxml";
+        String report = "C:\\Users\\Mahesh\\Documents\\NetBeansProjects\\dkjconstructions\\src\\dkjconstruction\\vehicle\\All_Vehi.jrxml";
         JasperReport jr = JasperCompileManager.compileReport(report);
         JasperPrint jp = JasperFillManager.fillReport(jr,null,con);
         JasperViewer.viewReport(jp,false);
@@ -624,7 +656,7 @@ public class VehicleController implements Initializable {
          else if(view.getValue()=="Available"){
              DbConnection.openConnection();
         Connection con = DbConnection.getConnection();
-        String report = "C:\\Users\\VINUSH\\Documents\\NetBeansProjects\\dkjconstruction\\DKJ ASSETS MANAGEMENT\\src\\dkj\\assets\\management\\Avai_Vehi.jrxml";
+        String report = "C:\\Users\\Mahesh\\Documents\\NetBeansProjects\\dkjconstructions\\src\\dkjconstruction\\vehicle\\Avai_Vehi.jrxml";
         JasperReport jr = JasperCompileManager.compileReport(report);
         JasperPrint jp = JasperFillManager.fillReport(jr,null,con);
         JasperViewer.viewReport(jp,false);
@@ -632,7 +664,7 @@ public class VehicleController implements Initializable {
          else if(view.getValue()=="Assigned"){
               DbConnection.openConnection();
         Connection con = DbConnection.getConnection();
-        String report = "C:\\Users\\VINUSH\\Documents\\NetBeansProjects\\dkjconstruction\\DKJ ASSETS MANAGEMENT\\src\\dkj\\assets\\management\\Assigned.jrxml";
+        String report = "C:\\Users\\Mahesh\\Documents\\NetBeansProjects\\dkjconstructions\\src\\dkjconstruction\\vehicle\\Assigned.jrxml";
         JasperReport jr = JasperCompileManager.compileReport(report);
         JasperPrint jp = JasperFillManager.fillReport(jr,null,con);
         JasperViewer.viewReport(jp,false);
@@ -640,7 +672,7 @@ public class VehicleController implements Initializable {
          else if(view.getValue()=="Repair"){
              DbConnection.openConnection();
         Connection con = DbConnection.getConnection();
-        String report = "C:\\Users\\VINUSH\\Documents\\NetBeansProjects\\dkjconstruction\\DKJ ASSETS MANAGEMENT\\src\\dkj\\assets\\management\\Repair_Vehi.jrxml";
+        String report = "C:\\Users\\Mahesh\\Documents\\NetBeansProjects\\dkjconstructions\\src\\dkjconstruction\\vehicle\\Repair_Vehi.jrxml";
         JasperReport jr = JasperCompileManager.compileReport(report);
         JasperPrint jp = JasperFillManager.fillReport(jr,null,con);
         JasperViewer.viewReport(jp,false);

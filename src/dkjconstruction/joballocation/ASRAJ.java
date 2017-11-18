@@ -46,10 +46,4 @@ public class ASRAJ {
         return type;
     }
 
-   
-    
-    
-    
-    
-
-}
+ }
