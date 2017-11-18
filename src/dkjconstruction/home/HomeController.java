@@ -49,13 +49,13 @@ public class HomeController implements Initializable {
     private TableColumn c4;
     @FXML
     private TableColumn c5;
-
-    private ObservableList<Detail> tableS; 
-    
-    
-    /**
-     * Initializes the controller class.
-     */
+//
+//    private ObservableList<Detail> tableS; 
+//    
+//    
+//    /**
+//     * Initializes the controller class.
+//     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
@@ -63,28 +63,28 @@ public class HomeController implements Initializable {
         
         setTable();
         System.out.println("main");
-        doSearch();
+        //doSearch();
     }    
-    public static ObservableList<Detail> getTable(String tname,String c1,String c2,String c3,String c4,String c5) throws IOException, ClassNotFoundException, SQLException {
-            ObservableList<Detail>  table= FXCollections.observableArrayList();
-
-            DbConnection.openConnection();
-            Connection con=DbConnection.getConnection();
-            PreparedStatement pst = con.prepareStatement("select ?,?,?,?,? from ?");
-            pst.setString(1,c1);
-            pst.setString(2,c2);
-            pst.setString(3,c3);
-            pst.setString(4,c4);
-            pst.setString(5,c5);
-            pst.setString(6,tname);
-            ResultSet rs = pst.executeQuery();
-            while(rs.next()) {
-                
-                table.add(new Detail(rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5)));
-            }
-                return table;
-        }
-    
+//    public static ObservableList<Detail> getTable(String tname,String c1,String c2,String c3,String c4,String c5) throws IOException, ClassNotFoundException, SQLException {
+//            ObservableList<Detail>  table= FXCollections.observableArrayList();
+//
+//            DbConnection.openConnection();
+//            Connection con=DbConnection.getConnection();
+//            PreparedStatement pst = con.prepareStatement("select ?,?,?,?,? from ?");
+//            pst.setString(1,c1);
+//            pst.setString(2,c2);
+//            pst.setString(3,c3);
+//            pst.setString(4,c4);
+//            pst.setString(5,c5);
+//            pst.setString(6,tname);
+//            ResultSet rs = pst.executeQuery();
+//            while(rs.next()) {
+//                
+//                table.add(new Detail(rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5)));
+//            }
+//                return table;
+//        }
+//    
     public void setTable(){
         System.out.println("set");
 
@@ -113,7 +113,7 @@ public class HomeController implements Initializable {
                 c3.setText("Type");
                 c4.setText("Condition");
                 c5.setText("Current Value");
-                loadTable();
+                //loadTable();
                 break;
                 
                 case "Equipment":
@@ -142,71 +142,71 @@ public class HomeController implements Initializable {
         });
         
     }
-    private void loadTable(){
-                //String n = c1.getText().replaceAll("\\s","");
-                //System.out.println(n);
-                c1.setCellValueFactory(new PropertyValueFactory<>(c1.getText().replaceAll("\\s","")));
-                c2.setCellValueFactory(new PropertyValueFactory<>(c2.getText().replaceAll("\\s","")));
-                c3.setCellValueFactory(new PropertyValueFactory<>(c3.getText().replaceAll("\\s","")));
-                c4.setCellValueFactory(new PropertyValueFactory<>(c4.getText().replaceAll("\\s","")));
-                c5.setCellValueFactory(new PropertyValueFactory<>(c5.getText().replaceAll("\\s","")));
-                
-                String val1=c1.getText().replaceAll("\\s","");
-                String val2=c2.getText().replaceAll("\\s","");
-                String val3=c3.getText().replaceAll("\\s","");
-                String val4=c4.getText().replaceAll("\\s","");
-                String val5=c5.getText().replaceAll("\\s","");
-                String cat=category.getValue().toString().replaceAll("\\s","");
-                
-                try {
-                    homeTab.setItems(getTable(cat,val1,val2,val3,val4,val5));
-                    
-                } catch (IOException | ClassNotFoundException | SQLException ex) {
-                    Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
-                }
-    }
-    private void doSearch() {
-        search.setOnKeyReleased(e -> {
-            if (search.getText().equals("")) {
-                loadTable();
-        
-
-            }
-            else{
-                String val1=c1.getText().replaceAll("\\s","");
-                String val2=c2.getText().replaceAll("\\s","");
-                String val3=c3.getText().replaceAll("\\s","");
-                String val4=c4.getText().replaceAll("\\s","");
-                String val5=c5.getText().replaceAll("\\s","");
-                Connection con = DbConnection.getConnection();
-                PreparedStatement pst;
-                try {
-                    pst = con.prepareStatement
-                                   ("SELECT ?,?,?,?,? FROM ? where ? LIKE '%" + search.getText() + "%' or ? LIKE '%" + search.getText() + "%' or ? LIKE '%" + search.getText() + "%' or ? LIKE '%" + search.getText() + "%' or ? LIKE '%" + search.getText() + "%'");
-                    pst.setString(1,val1);
-                    pst.setString(2,val2);
-                    pst.setString(3,val3);
-                    pst.setString(4,val4);
-                    pst.setString(5,val5);
-                    pst.setString(6,category.getValue().toString());
-                    pst.setString(7,val1);
-                    pst.setString(8,val2);
-                    pst.setString(9,val3);
-                    pst.setString(10,val4);
-                    pst.setString(11,val5);
-                    
-                    ResultSet rs = pst.executeQuery();
-                    tableS= FXCollections.observableArrayList();
-                    while (rs.next()) {
-                        
-                        tableS.add(new Detail(rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5))); 
-                        
-                    }
-                    homeTab.setItems(tableS);
-                } catch (SQLException ex) {
-                    Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-        });
-    }
+//    private void loadTable(){
+//                //String n = c1.getText().replaceAll("\\s","");
+//                //System.out.println(n);
+//                c1.setCellValueFactory(new PropertyValueFactory<>(c1.getText().replaceAll("\\s","")));
+//                c2.setCellValueFactory(new PropertyValueFactory<>(c2.getText().replaceAll("\\s","")));
+//                c3.setCellValueFactory(new PropertyValueFactory<>(c3.getText().replaceAll("\\s","")));
+//                c4.setCellValueFactory(new PropertyValueFactory<>(c4.getText().replaceAll("\\s","")));
+//                c5.setCellValueFactory(new PropertyValueFactory<>(c5.getText().replaceAll("\\s","")));
+//                
+//                String val1=c1.getText().replaceAll("\\s","");
+//                String val2=c2.getText().replaceAll("\\s","");
+//                String val3=c3.getText().replaceAll("\\s","");
+//                String val4=c4.getText().replaceAll("\\s","");
+//                String val5=c5.getText().replaceAll("\\s","");
+//                String cat=category.getValue().toString().replaceAll("\\s","");
+//                
+//                try {
+//                    homeTab.setItems(getTable(cat,val1,val2,val3,val4,val5));
+//                    
+//                } catch (IOException | ClassNotFoundException | SQLException ex) {
+//                    Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
+//                }
+//    }
+//    private void doSearch() {
+//        search.setOnKeyReleased(e -> {
+//            if (search.getText().equals("")) {
+//                loadTable();
+//        
+//
+//            }
+//            else{
+//                String val1=c1.getText().replaceAll("\\s","");
+//                String val2=c2.getText().replaceAll("\\s","");
+//                String val3=c3.getText().replaceAll("\\s","");
+//                String val4=c4.getText().replaceAll("\\s","");
+//                String val5=c5.getText().replaceAll("\\s","");
+//                Connection con = DbConnection.getConnection();
+//                PreparedStatement pst;
+//                try {
+//                    pst = con.prepareStatement
+//                                   ("SELECT ?,?,?,?,? FROM ? where ? LIKE '%" + search.getText() + "%' or ? LIKE '%" + search.getText() + "%' or ? LIKE '%" + search.getText() + "%' or ? LIKE '%" + search.getText() + "%' or ? LIKE '%" + search.getText() + "%'");
+//                    pst.setString(1,val1);
+//                    pst.setString(2,val2);
+//                    pst.setString(3,val3);
+//                    pst.setString(4,val4);
+//                    pst.setString(5,val5);
+//                    pst.setString(6,category.getValue().toString());
+//                    pst.setString(7,val1);
+//                    pst.setString(8,val2);
+//                    pst.setString(9,val3);
+//                    pst.setString(10,val4);
+//                    pst.setString(11,val5);
+//                    
+//                    ResultSet rs = pst.executeQuery();
+//                    tableS= FXCollections.observableArrayList();
+//                    while (rs.next()) {
+//                        
+//                        tableS.add(new Detail(rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5))); 
+//                        
+//                    }
+//                    homeTab.setItems(tableS);
+//                } catch (SQLException ex) {
+//                    Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
+//                }
+//            }
+//        });
+//    }
 }
