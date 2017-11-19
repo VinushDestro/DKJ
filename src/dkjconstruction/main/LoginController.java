@@ -69,6 +69,7 @@ public class LoginController {
                     if(rs.next()){
                         currentUser=rs.getString("name");
                     }
+                    
                     ((Node) (event.getSource())).getScene().getWindow().hide();
                     DKJConstruction.showMainPage();
                 }
@@ -94,5 +95,7 @@ public class LoginController {
                 }
             
         } 
+        username.clear();
+        password.clear();  
     }
 }
