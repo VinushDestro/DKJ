@@ -178,7 +178,7 @@ public class HomeController implements Initializable {
     }
     
     public void loadTenTable() throws IOException {
-        c1.setCellValueFactory(new PropertyValueFactory<>("co11"));
+        c1.setCellValueFactory(new PropertyValueFactory<>("col1"));
         c2.setCellValueFactory(new PropertyValueFactory<>("col2"));
         c3.setCellValueFactory(new PropertyValueFactory<>("col3"));
         c4.setCellValueFactory(new PropertyValueFactory<>("col4"));
