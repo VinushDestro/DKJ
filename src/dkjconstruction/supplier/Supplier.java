@@ -6,7 +6,7 @@
 package dkjconstruction.supplier;
 
 import dkjconstruction.DbConnection;
-import dkjconstruction.rawmaterial.RawMaterialDetail;
+
 import java.io.IOException;
 import java.sql.*;
 
@@ -43,20 +43,20 @@ public class Supplier extends Application {
 
 
  // add supplier  
-    public static int addsupplier(String supplierid,String name,String nic,String contact) throws SQLException, ClassNotFoundException{
+    public static int addsupplier(String name,String nic,String contact) throws SQLException, ClassNotFoundException{
         DbConnection DbConnection= new DbConnection();
         DbConnection.openConnection();
         Connection con = DbConnection.getConnection();
-        PreparedStatement stmt = con.prepareStatement("insert into supplier (supplierid,name,nic,contact) values (?,?,?,?)");
+        PreparedStatement stmt = con.prepareStatement("insert into supplier (name,nic,contact) values (?,?,?)");
         
-        stmt.setString(1,supplierid);
-        stmt.setString(2,name);
-        stmt.setString(3,nic);
-        stmt.setString(4,contact);
+      
+        stmt.setString(1,name);
+        stmt.setString(2,nic);
+        stmt.setString(3,contact);
         
         
         int result = stmt.executeUpdate();
-        DbConnection.closeConnection();
+     //   DbConnection.closeConnection();
 
         return result;
     }
@@ -64,7 +64,7 @@ public class Supplier extends Application {
 
 
  //update supplier
-    public static int updatesupplier(String supplierid,String name,String nic,String contact) throws SQLException, ClassNotFoundException {
+    public static int updatesupplier(int supplierid,String name,String nic,String contact) throws SQLException, ClassNotFoundException {
         int result = -1;
         Alert alert= new Alert(Alert.AlertType.INFORMATION);
         DbConnection DbConnection= new DbConnection();
@@ -72,8 +72,8 @@ public class Supplier extends Application {
         DbConnection.openConnection();
         Connection con = DbConnection.getConnection();
 
-        PreparedStatement stmt = con.prepareStatement("update supplier set name=?,nic=?,contact=? where supplierId=?");
-        stmt.setString(4,supplierid);
+        PreparedStatement stmt = con.prepareStatement("update supplier set name=?,nic=?,contact=? where supplierid=?");
+        stmt.setInt(4,supplierid);
         stmt.setString(1,name);
         stmt.setString(2,nic);
         stmt.setString(3,contact);
@@ -89,7 +89,7 @@ public class Supplier extends Application {
             alert.show();
 
         }
-        DbConnection.closeConnection();
+   //     DbConnection.closeConnection();
         return result;
     }
     
@@ -98,7 +98,7 @@ public class Supplier extends Application {
 
 
 //delete supplier
-    public static int deleteSupplier(String supplierid) throws SQLException, ClassNotFoundException {
+    public static int deleteSupplier(int supplierid) throws SQLException, ClassNotFoundException {
         int result = -1;
         Alert alert= new Alert(Alert.AlertType.INFORMATION);
         DbConnection DbConnection= new DbConnection();
@@ -106,7 +106,7 @@ public class Supplier extends Application {
         Connection con = DbConnection.getConnection();
 
         PreparedStatement stmt = con.prepareStatement("delete from supplier where supplierid=?");
-        stmt.setString(1,supplierid);
+        stmt.setInt(1,supplierid);
         
         try{
             result = stmt.executeUpdate();
@@ -118,7 +118,7 @@ public class Supplier extends Application {
             alert.show();
 
         }
-        DbConnection.closeConnection();
+  //      DbConnection.closeConnection();
         return result;
     }
   
@@ -133,7 +133,7 @@ public class Supplier extends Application {
 
         while(rs.next()) {
 
-            String supplierid=rs.getString("supplierid");
+            int  supplierid=rs.getInt("supplierid");
             String name =rs.getString("name");
             String  nic =rs.getString("nic");
             String contact=rs.getString("contact");
@@ -141,7 +141,7 @@ public class Supplier extends Application {
             supplier.add(new SupplierDetail(supplierid,name,nic,contact));
 // creating objects and load it in
         }
-        DbConnection.closeConnection();
+   //     DbConnection.closeConnection();
         return supplier;
     }
       

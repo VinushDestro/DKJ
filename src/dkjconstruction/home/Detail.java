@@ -10,11 +10,11 @@ package dkjconstruction.home;
  * @author User
  */
 public class Detail {
-    String col1;
-    String col2;
-    String col3;
-    String col4;
-    String col5;
+    private String col1;
+    private String col2;
+    private String col3;
+    private String col4;
+    private String col5;
 
     public Detail(String col1, String col2, String col3, String col4, String col5) {
         this.col1 = col1;

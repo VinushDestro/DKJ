@@ -14,12 +14,14 @@ public class RawMaterialDetail {
     private String type;
     private int quantity;
     private double price;
-    private String supplier;
+    private String measurement;
+    private int supplier;
    
-    public RawMaterialDetail(String type,int quantity,double price,String supplier) {
+    public RawMaterialDetail(String type,int quantity,double price,String measurement,int supplier) {
         this.type = type;
         this.quantity = quantity;
         this.price = price;
+        this.measurement = measurement;
         this.supplier = supplier;
        
     }
@@ -67,20 +69,30 @@ public class RawMaterialDetail {
     }
 
     /**
+     * @return the measurement
+     */
+    public String getMeasurement() {
+        return measurement;
+    }
+
+    /**
+     * @param measurement the measurement to set
+     */
+    public void setMeasurement(String measurement) {
+        this.measurement = measurement;
+    }
+
+    /**
      * @return the supplier
      */
-    public String getSupplier() {
+    public int getSupplier() {
         return supplier;
     }
 
     /**
      * @param supplier the supplier to set
      */
-    public void setSupplier(String supplier) {
+    public void setSupplier(int supplier) {
         this.supplier = supplier;
     }
-
-    
-    
-    
 }

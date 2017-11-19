@@ -23,12 +23,6 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.TreeTableColumn;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-/*
-import net.sf.jasperreports.engine.JasperCompileManager;
-import net.sf.jasperreports.engine.JasperFillManager;
-import net.sf.jasperreports.engine.JasperPrint;
-import net.sf.jasperreports.engine.JasperReport;
-import net.sf.jasperreports.view.JasperViewer;*/
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.Optional;
@@ -41,6 +35,8 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import javax.swing.JOptionPane;
+import dkjconstruction.tendermanagement.TenderReport.Report;
 
 /**
  *
@@ -55,14 +51,10 @@ public class TenderController implements Initializable {
     private ObservableList<TenderDetails> data;
 
     @FXML
-    private Label cssLabel;
-    @FXML
     private AnchorPane centerpane;
 
     @FXML
     public JFXTextField tenderId, tenderName, companyName, period, bidValidity, tsearch;
-    @FXML
-    private JFXTextField estimatedCost;
 
     @FXML
     private JFXComboBox category, workType, place, grade;
@@ -98,11 +90,11 @@ public class TenderController implements Initializable {
     private DatePicker tdate;
 
     @FXML
-    JFXButton esti_btn;
+    private javafx.scene.control.Button previousButton;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        esti_btn.setVisible(false);
+
         //   category_opt.getItems().removeAll(category.getItems());
         category.getItems().addAll("Asphalt", "Gravel", "Concrete");
         //   category_opt.getSelectionModel().select("Option B");
@@ -111,7 +103,7 @@ public class TenderController implements Initializable {
 
         place.getItems().addAll("Batticaloa", "Trincomalee", "Kandy");
 
-        grade.getItems().addAll("C6", "C7", "C7");
+        grade.getItems().addAll("C6", "C7", "C8");
 
         data = FXCollections.observableArrayList();
         assignTableValues();
@@ -124,48 +116,32 @@ public class TenderController implements Initializable {
     @FXML
     private void addClicked(ActionEvent event) throws SQLException {
 
+        System.out.println(tenderId.getText().length());
+
         if (validatefields()) {
 
             try {
-                String tId = tenderId.getText();
-                String tName = tenderName.getText();
-                String tgrade = grade.getValue().toString();
-                String tcategory = category.getValue().toString();
-                String twtype = workType.getValue().toString();
-                String tplace = place.getValue().toString();
-                String tcompName = companyName.getText();
-                // LocalDate date = 
-                int tperiod = Integer.parseInt(period.getText());
-                int tbValidity = Integer.parseInt(bidValidity.getText());
-                double estimated_cost = Double.parseDouble(estimatedCost.getText());
 
                 DbConnection.openConnection();
                 con = DbConnection.getConnection();
-                pst = con.prepareStatement("insert into tender (tenderId,tenderName,grade,category,workType,workingPlace,companyName,period,bidValidity,date,estimatedCost,status) values (?,?,?,?,?,?,?,?,?,?,?,'Pending')");
-                //PreparedStatement pst = con.prepareStatement("insert into tender (tenderId,tenderName,grade,category,workType,workingPlace,companyName,contactNo,period,bidValidity) values ('asdf1','asdasd','cd','asdasd','asdasd','asdasd','asda',1232131,12,12)");
-
-                pst.setString(1, tId);
-                pst.setString(2, tName);
-                pst.setString(3, tgrade);
-                pst.setString(4, tcategory);
-                pst.setString(5, twtype);
-                pst.setString(6, tplace);
-                pst.setString(7, tcompName);
-                pst.setInt(8, tperiod);
-                pst.setInt(9, tbValidity);
-                pst.setDate(10, java.sql.Date.valueOf(tdate.getValue()));
-                //    pst.setString(10, date);
-                pst.setDouble(11, estimated_cost);
+                pst = con.prepareStatement("insert into tender (tenderId,tenderName,grade,category,workType,workingPlace,companyName,period,bidValidity,date,status,estimatedCost,cost) "
+                        + "values ('" + tenderId.getText() + "','" + tenderName.getText() + "','" + grade.getValue().toString() + "','" + category.getValue().toString() + "','" + workType.getValue().toString() + "','" + place.getValue().toString() + "','" + companyName.getText() + "'," + Integer.parseInt(period.getText()) + "," + Integer.parseInt(bidValidity.getText()) + ",'" + java.sql.Date.valueOf(tdate.getValue()) + "','Pending',0,0)");
 
                 pst.executeUpdate();
 
                 alerboxInfo("Add Tender", "Value added successfully");
 
+                assignTableValues();
+                loadDBtoTable();
+                clearFields();
+
                 //  DbConnection.closeConnection();
             } catch (SQLIntegrityConstraintViolationException r) {
 
-                alertboxWarn("Add Tender", "This Tender Id already has been taken");
+                alertboxWarn("Add Tender", "This Tender detail(s) already taken");
+                System.out.println(" Error" + r);
             } catch (Exception e) {
+
                 System.out.println(" Error");
                 System.err.println(e);
 
@@ -173,13 +149,10 @@ public class TenderController implements Initializable {
 
         }//if-else
 
-        assignTableValues();
-        loadDBtoTable();
-
     }
 
     //assign Tenderdetails to table
-    private void assignTableValues() {
+    public void assignTableValues() {
         try {
             DbConnection.openConnection();
             con = DbConnection.getConnection();
@@ -204,7 +177,7 @@ public class TenderController implements Initializable {
     }
 
     //load tenderDB to table
-    private void loadDBtoTable() {
+    public void loadDBtoTable() {
 
         data.clear();
         try {
@@ -228,7 +201,10 @@ public class TenderController implements Initializable {
 
     //rowclick for tendertable
     private void RowclickEvent() {
-        ttable.setOnMouseClicked((e) -> {
+       
+        
+            
+            ttable.setOnMouseClicked((e) -> {
             TenderDetails t1 = ttable.getItems().get(ttable.getSelectionModel().getSelectedIndex());
 
             tenderId.setText(t1.getTenderId());
@@ -241,13 +217,13 @@ public class TenderController implements Initializable {
             period.setText(t1.getPeriod());
             bidValidity.setText(t1.getBidValidity());
             tdate.setValue(LocalDate.parse(t1.getTdate()));
-            estimatedCost.setText(t1.getEstimatedCost());
-        
+
         });
+            
+        
+        
 
     }
-    
-    
 
     @FXML
     private void updateClicked(ActionEvent event) {
@@ -257,8 +233,10 @@ public class TenderController implements Initializable {
 
                 try {
 
-                    pst = con.prepareStatement("UPDATE tender set tenderName= '" + tenderName.getText() + "',grade= '" + grade.getValue() + "',category = '" + category.getValue() + "',workType = '" + workType.getValue() + "',workingPlace = '" + place.getValue() + "',companyName = '" + companyName.getText() + "',period = '" + Integer.parseInt(period.getText()) + "',bidValidity = '" + Integer.parseInt(bidValidity.getText()) + "',date = '" + tdate.getValue() + "',estimatedCost = '" + Double.parseDouble(estimatedCost.getText()) + "'  where tenderId = '" + tenderId.getText() + "' ");
+                    pst = con.prepareStatement("UPDATE tender set tenderName= '" + tenderName.getText() + "',grade= '" + grade.getValue() + "',category = '" + category.getValue() + "',workType = '" + workType.getValue() + "',workingPlace = '" + place.getValue() + "',companyName = '" + companyName.getText() + "',period = '" + Integer.parseInt(period.getText()) + "',bidValidity = '" + Integer.parseInt(bidValidity.getText()) + "',date = '" + tdate.getValue() + "'  where tenderId = '" + tenderId.getText() + "' ");
                     pst.execute();
+
+                    alerboxInfo("Add Tender", "Details updated successfully");
 
                 } catch (Exception e) {
                     System.out.println("Update  error");
@@ -276,26 +254,95 @@ public class TenderController implements Initializable {
     @FXML
     private void deleteClicked(ActionEvent event) {
 
-        if (alertboxConfirm("Delete tender details !", "Do you really want to Delete ?")) {
+        
+        
+        if (TenderManagement.checkClosedCancelOngoing(tenderId.getText(),"Closed")) {
+            alertboxWarn("Alert", "Can not delete Closed Tender..!!");
+            return;
+        }
+        
+        if (TenderManagement.checkClosedCancelOngoing(tenderId.getText(),"Cancelled")) {
+            alertboxWarn("Alert", "Can not delete Cancelled Tender..!!");
+            return;
+        }
+        
+        if (TenderManagement.checkClosedCancelOngoing(tenderId.getText(),"On progress")) {
+            alertboxWarn("Alert", "Can not delete Ongoing Tender..!!");
+            return;
+        }
 
-            try {
+        if (TenderManagement.checkRequired(tenderId.getText()) && alertboxConfirm("Delete Tender", "Requirements will be deleted from this Tender... Do you really want to Delete ?")) {
+            deleterequired();
+            deleteClicked();
+            return;
+        }
 
-                pst = con.prepareStatement("DELETE from tender where tenderId = '" + tenderId.getText() + "' ");
-                pst.execute();
+        if (!TenderManagement.checkRequired(tenderId.getText()) && alertboxConfirm("Delete tender details !", "Do you really want to Delete ?")) {
 
-            } catch (Exception e) {
-                System.out.println("del  error");
-
-            }
-
-            assignTableValues();
-            loadDBtoTable();
+            deleteClicked();
 
         }
 
     }
 
-    @FXML
+    private void deleteClicked() {
+
+        try {
+
+            pst = con.prepareStatement("DELETE from tender where tenderId = '" + tenderId.getText() + "' ");
+            pst.execute();
+
+            alerboxInfo("Delete Tender", "Tender deleted successfully");
+
+        } catch (Exception e) {
+            System.out.println("del  error" + e);
+
+        }
+
+        assignTableValues();
+        loadDBtoTable();
+
+    }
+
+    private void deleterequired() {
+
+        try {
+            pst = con.prepareStatement("DELETE from jobasset  where tenderId = '" + tenderId.getText() + "' ");
+            pst.execute();
+
+        } catch (Exception e) {
+            System.out.println("del  error" + e);
+        }
+
+        try {
+            pst = con.prepareStatement("DELETE from equiptender  where tenderId = '" + tenderId.getText() + "' ");
+            pst.execute();
+
+        } catch (Exception e) {
+            System.out.println("del  error" + e);
+        }
+
+        try {
+            pst = con.prepareStatement("DELETE from jobemployee  where tenderId = '" + tenderId.getText() + "' ");
+            pst.execute();
+
+        } catch (Exception e) {
+            System.out.println("del  error" + e);
+        }
+
+        try {
+            pst = con.prepareStatement("DELETE from materialtender  where tenderId = '" + tenderId.getText() + "' ");
+            pst.execute();
+
+        } catch (Exception e) {
+            System.out.println("del  error" + e);
+        }
+
+        assignTableValues();
+        loadDBtoTable();
+
+    }
+
     private void viewClicked(ActionEvent event) throws IOException {
 
         //   FXMLLoader fxmlLoader = FXMLLoader(getClass().getResource("Demo.fxml"));
@@ -318,54 +365,6 @@ public class TenderController implements Initializable {
         }
    
          */
-    }
-
-    @FXML
-    private void esti() throws IOException {
-
-        //double estimated_cost;
-/*
-        Parent root2 = FXMLLoader.load(getClass().getResource("estimation_popup.fxml"));
-
-        Scene scene = new Scene(root2);
-        Stage stage = new Stage();
-
-        stage.setScene(scene);
-        stage.show();
-        
-  */
-        String est_tenderId = tenderId.getText();
-        String est_grade = grade.getValue().toString();
-        String est_tcategory = category.getValue().toString();
-        
-
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("estimation_popup.fxml"));
-        try {
-           loader.load();
-        } catch (Exception e) {
-            System.out.println("Error loading popup class " + e);
-          
-        }
-        
-        try {
-            Estimation_popupController estimate = new FXMLLoader().getController();
-        estimate.setText(est_tenderId, est_grade, est_tcategory);
-        
-        } catch (Exception e) {
-            System.out.println("Error loading set method " + e);
-        }
-        
-        Parent p = loader.getRoot();
-        Stage stage = new Stage();
-        stage.setScene(new Scene(p));
-        stage.showAndWait();
-        
-        
-        
-        
-        
-
     }
 
     //search
@@ -449,71 +448,97 @@ public class TenderController implements Initializable {
 
     }
 
-    @FXML
-    private void keytyped(javafx.scene.input.KeyEvent event) {
-
-        if (!(event.getCode().isDigitKey())) {
-
-            // System.out.println(event.getCode());
-            // event.consume();;
-        }
-
-        /*
-        char c = event.getKeyChar();
-        
-      if (!((c >= '0') && (c <= '9') ||
-         (c == KeyEvent.VK_BACK_SPACE) ||
-         (c == KeyEvent.VK_DELETE))) {
-        
-        event.consume();
-      }
-
-         */
-    }
-
     //validation
     private boolean validatefields() {
+
         if (tenderId.getText().isEmpty() || tenderName.getText().isEmpty() || (grade.getValue() == null)
                 || (category.getValue() == null) || (workType.getValue() == null) || (place.getValue() == null)
                 || companyName.getText().isEmpty() || period.getText().isEmpty() || bidValidity.getText().isEmpty()
-                || estimatedCost.getText().isEmpty() || (tdate.getValue() == null)) {
+                || (tdate.getValue() == null)) {
             alertboxWarn("Add Tender", "All fields should be filled !");
             //  cssLabel.getStylesheets().add("error");
 
             return false;
 
+        } else if (tenderId.getText().length() > 5) {
+            alertboxWarn("Add Tender", "Tender id should be less than 5 digits");
+            return false;
+        } else if (validateTextfield.validateNumber(period, "Period Input invalid", "Input should be in numbers") && validateTextfield.validateNumber(bidValidity, "bidValidity Input invalid", "bidValidity should be in numbers")) {
+
+            return false;
         } else if (Integer.parseInt(period.getText()) <= Integer.parseInt(bidValidity.getText())) {
             alertboxWarn("Add Tender", "Bid Validity should be less than Tender Period");
             period.setText("");
             bidValidity.setText("");
 
-            cssLabel.getStylesheets().remove("error");
             return false;
 
+        } else if (tdate.getValue().isAfter(LocalDate.now())) {
+
+            alertboxWarn("Add Tender", "date input is invalid");
+            return false;
         } else {
-            cssLabel.getStylesheets().remove("error");
+
             return true;
 
         }
 
     }
 
-    
-    
+    public void clearFields() {
+        tenderId.setText("");
+        bidValidity.setText("");
+        category.setValue("");
+        companyName.setText("");
+        grade.setValue("");
+        period.setText("");
+        place.setValue("");
+        tenderName.setText("");
+        tdate.setValue(null);
+        workType.setValue("");
+
+    }
+
     //report
+
+    public void tender_report() {        
+
+        Report.gen_Normal_report("//Users//KishBelic//Desktop//ITP//TenderManagement//src//tendermanagement//TenderReport//AllTender.jrxml");
+
+    }
+
     @FXML
-    private void tender_report(ActionEvent event)  {
-        /*
-        try {
-            DbConnection.openConnection();
-            Connection con = DbConnection.getConnection();
-            String report = "/UsersKishBelic/Desktop/ITP/TenderManagement/src/tendermanagement/Tender.jrxml";
-           JasperReport jr = JasperCompileManager.compileReport(report);
-            JasperPrint jp = JasperFillManager.fillReport(jr, null, con);
-            JasperViewer.viewReport(jp);
-        } catch (Exception e) {
-           System.out.println("sdas" + e);
-        }*/
+    private void keytyped(javafx.scene.input.KeyEvent event) {
+
+    }
+
+    @FXML
+    private void previousClicked(ActionEvent event) throws IOException {
+        Stage s = (Stage) previousButton.getScene().getWindow();
+        s.close();
+
+        /*FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("TenderHome.fxml"));
+         Parent root1 = (Parent) fxmlLoader.load();
+         Stage stage = new Stage();
+         stage.setScene(new Scene(root1));
+         stage.show();*/
+        
+        
+    }
+
+    @FXML
+    private void reqClicked(ActionEvent event) throws IOException {
+
+        Stage s = (Stage) previousButton.getScene().getWindow();
+        s.close();
+
+//        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Requirement.fxml"));
+//        Parent root1 = (Parent) fxmlLoader.load();
+//        Stage stage = new Stage();
+//        stage.setScene(new Scene(root1));
+//        stage.show();
+dkjconstruction.DKJConstruction.showTender_requirement();
+
     }
 
 }

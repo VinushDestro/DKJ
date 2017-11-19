@@ -189,7 +189,7 @@ public class VehicleController implements Initializable {
         } catch (ClassNotFoundException | NumberFormatException | SQLException e) {
             alert.setTitle("Error");
             alert.setHeaderText(null);
-            alert.setContentText("Check your Fields");
+            alert.setContentText("Invalid Input/nCheck your Fields");
             alert.show();
 
         }
@@ -239,7 +239,7 @@ public class VehicleController implements Initializable {
             } else if (!rNo.isEmpty() && !lifT.isEmpty() && ((String) condi.getValue() == null)) {
                 result = VehicleManagement.updateVehicle(String.valueOf(rNo), Integer.valueOf(lifT));
                 if (result == 1) {
-                    alert.setContentText("lifetime Successful!");
+                    alert.setContentText("Lifetime Update Successful!");
                 } else if (result == 0) {
                     alert.setContentText("Operation Failed");
                 }
@@ -247,14 +247,14 @@ public class VehicleController implements Initializable {
             else if (!rNo.isEmpty() && lifT.isEmpty() && !((String) condi.getValue() == null)) {
                try{
                 if (cond.equals("Brand New")){
-                alert.setContentText("You cant Change as Brand New!");
+                alert.setContentText("You cannot Change as Brand New!");
                   }
                 else{
                      result = VehicleManagement.updateVehicle(String.valueOf(rNo), (String) condi.getValue());
                      if (result == 1) {
-                    alert.setContentText("Condition Successful!");
+                    alert.setContentText("Condition update Successful!");
                 } else if (result == 0) {
-                    alert.setContentText("Operation Failed33333");
+                    alert.setContentText("Operation Failed");
                 }
                 }
                }
@@ -271,7 +271,7 @@ public class VehicleController implements Initializable {
                 else{
                 result = VehicleManagement.updateVehicle(String.valueOf(rNo), Integer.valueOf(lifT), (String) condi.getValue());
                 if (result == 1) {
-                    alert.setContentText("Both Successful now edit!");
+                    alert.setContentText("Both update Successful!");
                 } else if (result == 0) {
                     alert.setContentText("Operation Failed");
                 }
@@ -440,7 +440,7 @@ public class VehicleController implements Initializable {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("Marked as Repair");
                 alert.setHeaderText(null);
-                alert.setContentText("Vehicle Successfully Set!");
+                alert.setContentText("Vehicle Successfully Set to Repair!");
                 alert.show();
             } else if (result == 0) {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -479,7 +479,7 @@ public class VehicleController implements Initializable {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("Marked as Available");
                 alert.setHeaderText(null);
-                alert.setContentText("Vehicle Successfully Set!");
+                alert.setContentText("Vehicle Successfully Set to Available!");
                 alert.show();
             } else if (result == 0) {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);

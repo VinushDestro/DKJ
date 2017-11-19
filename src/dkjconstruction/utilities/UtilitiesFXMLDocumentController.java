@@ -169,7 +169,7 @@ public class UtilitiesFXMLDocumentController implements Initializable {
     private void ReportClicked() throws SQLException, ClassNotFoundException {
         Connection con = DbConnection.getConnection();
         try {
-            String report = "C:\\Users\\h3\\Desktop\\dkjconstruction fin\\src\\dkjconstruction\\utilities\\report1.jrxml";
+            String report = "C:\\Users\\Mahesh\\Documents\\NetBeansProjects\\dkjconstructions\\src\\dkjconstruction\\utilities\\report1.jrxml";
             JasperReport jr = JasperCompileManager.compileReport(report);
             JasperPrint jp = JasperFillManager.fillReport(jr, null, con);
             JasperViewer.viewReport(jp);

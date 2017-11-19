@@ -6,7 +6,6 @@
 package dkjconstruction.rawmaterial;
 
 import dkjconstruction.DbConnection;
-import dkjconstruction.rawmaterial.RawMaterialDetail;
 import java.io.IOException;
 import java.sql.*;
 
@@ -27,7 +26,8 @@ import javafx.stage.Stage;
 public class RawMaterial extends Application {
     private static Stage stage;
     private static AnchorPane Pane;
- 
+
+  
      @Override
     public void start(Stage stage) throws IOException {
        Parent root = FXMLLoader.load(getClass().getResource("Rawmaterial.fxml"));
@@ -46,20 +46,21 @@ public class RawMaterial extends Application {
 
 
  // add rawmaterial  
-    public static int addrawmaterial(String type,int quantity,Double price,String supplier) throws SQLException, ClassNotFoundException{
+    public static int addrawmaterial(String type,int quantity,Double price,String measurement,int supplier) throws SQLException, ClassNotFoundException{
         DbConnection DbConnection= new DbConnection();
         DbConnection.openConnection();
         Connection con = DbConnection.getConnection();
-        PreparedStatement stmt = con.prepareStatement("insert into rawmaterial (type,quantity,price,supplier) values (?,?,?,?)");
+        PreparedStatement stmt = con.prepareStatement("insert into rawmaterial (type,quantity,price,measurement,supplier) values (?,?,?,?,?)");
         
         stmt.setString(1,type);
         stmt.setInt(2,quantity);
         stmt.setDouble(3,price);
-        stmt.setString(4,supplier);
+        stmt.setInt(5,supplier);
+        stmt.setString(4,measurement);
         
         
         int result = stmt.executeUpdate();
-        DbConnection.closeConnection();
+      //  DbConnection.closeConnection();
 
         return result;
     }
@@ -67,7 +68,7 @@ public class RawMaterial extends Application {
 
 
  //update rawmaterial
-    public static int updaterawmaterial(String type,double price,int  quantity,String supplier) throws SQLException, ClassNotFoundException {
+    public static int updaterawmaterial(String type,int  quantity) throws SQLException, ClassNotFoundException {
         int result = -1;
         Alert alert= new Alert(Alert.AlertType.INFORMATION);
         DbConnection DbConnection= new DbConnection();
@@ -75,11 +76,11 @@ public class RawMaterial extends Application {
         DbConnection.openConnection();
         Connection con = DbConnection.getConnection();
 
-        PreparedStatement stmt = con.prepareStatement("update rawmaterial set price=?,quantity=?,supplier=? where type=?");
-        stmt.setDouble(1,price);
-        stmt.setDouble(2,quantity);
-        stmt.setString(3,supplier);
-        stmt.setString(4,type);
+        PreparedStatement stmt = con.prepareStatement("update rawmaterial set quantity=quantity+? where type=?");
+       
+        stmt.setInt(1,quantity);
+      
+        stmt.setString(2,type);
         
         
         try{
@@ -92,7 +93,7 @@ public class RawMaterial extends Application {
             alert.show();
 
         }
-        DbConnection.closeConnection();
+      //  DbConnection.closeConnection();
         return result;
     }
     
@@ -100,7 +101,7 @@ public class RawMaterial extends Application {
 
 
 
-//delete rawmatrerial
+//delete rawmaterial
     public static int deleterawmaterial(String type) throws SQLException, ClassNotFoundException {
         int result = -1;
         Alert alert= new Alert(Alert.AlertType.INFORMATION);
@@ -121,13 +122,90 @@ public class RawMaterial extends Application {
             alert.show();
 
         }
-        DbConnection.closeConnection();
+      //  DbConnection.closeConnection();
         return result;
     }
   
- 
-  
+    /**
+     *
+     * @return
+     * @throws IOException
+     * @throws ClassNotFoundException
+     * @throws SQLException
+     * 
+     * 
+     * 
+     */
+    
+    
+    
+    public static int deleterawmaterial(String type, int  quantity) throws SQLException, ClassNotFoundException {
+        int result = -1;
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        DbConnection DbConnection = new DbConnection();
+        DbConnection.openConnection();
+        Connection con = DbConnection.getConnection();
+        
+      //   int s=Integer.parseInt(quantity);
+        PreparedStatement stmt = con.prepareStatement("update rawmaterial set quantity=quantity-?   where type=?");
+        stmt.setInt(1, quantity);
+        stmt.setString(2, type);
+      
+
+        try {
+            result = stmt.executeUpdate();
+        } catch (Exception e) {
+            alert.setTitle("Error");
+            alert.setHeaderText(null);
+            alert.setContentText("No such record found\n" + e.getMessage());
+            alert.show();
+
+        }
+        DbConnection.closeConnection();
+        return result;
+    }
+    
+    
+    
+    
+    
+    //update rawmaterial
+    public static int deductmaterial(String type,int  quantity) throws SQLException, ClassNotFoundException {
+        int result = -1;
+        Alert alert= new Alert(Alert.AlertType.INFORMATION);
+        DbConnection DbConnection= new DbConnection();
+
+        DbConnection.openConnection();
+        Connection con = DbConnection.getConnection();
+
+        PreparedStatement stmt = con.prepareStatement("update rawmaterial set quantity= quantity-?   where type=?");
+       
+        stmt.setInt(1,quantity);
+      
+        stmt.setString(2,type);
+        
+        
+        try{
+            result = stmt.executeUpdate();
+        }
+        catch (SQLException e){
+            alert.setTitle("Error");
+            alert.setHeaderText(null);
+            alert.setContentText("Invalid Entry\n"+e.getMessage());
+            alert.show();
+
+        }
+      //  DbConnection.closeConnection();
+        return result;
+    }
+    
    
+    
+    
+    
+    
+    
+    
     public static ObservableList<RawMaterialDetail> getRawmaterial() throws IOException, ClassNotFoundException, SQLException {
         ObservableList<RawMaterialDetail>  rawmaterial= FXCollections.observableArrayList();
 
@@ -142,40 +220,20 @@ public class RawMaterial extends Application {
             String type=rs.getString("type");
             double price =rs.getDouble("price");
             int quantity =rs.getInt("quantity");
-            String supplier=rs.getString("supplier");
+            String measurement=rs.getString("measurement");
+            int supplierId=rs.getInt("supplier");
           
-            rawmaterial.add(new RawMaterialDetail(type,quantity,price,supplier));
+            rawmaterial.add(new RawMaterialDetail(type,quantity,price,measurement,supplierId));
 // creating objects and load it in
         }
-        DbConnection.closeConnection();
+      //  DbConnection.closeConnection();
         return rawmaterial;
     }
     
     
     
     
-    
-       public static ObservableList<TenderDetail> getTender() throws IOException, ClassNotFoundException, SQLException {
-        ObservableList<TenderDetail>  Tender= FXCollections.observableArrayList();
-
-        DbConnection.openConnection();
-        Connection con=DbConnection.getConnection();
-        Statement stmt =con.createStatement();
-
-        ResultSet rs=stmt.executeQuery("select * from  jobmaterial");
-
-        while(rs.next()) {
-
-            String id=rs.getString("tenderId");
-            String type =rs.getString("materialType");
-            int quantity=rs.getInt("materialCount");
-                      
-            Tender.add(new TenderDetail(id,type,quantity));
-// creating objects and load it in
-        }
-        DbConnection.closeConnection();
-        return Tender;
-    }
+      
       
 //
 // public static int assignrawmaterial(String id,String type) throws SQLException, ClassNotFoundException{
@@ -210,6 +268,50 @@ public class RawMaterial extends Application {
           tenderStage.showAndWait();
        }
 
+       
+       
+       
+       
+       
+        public static boolean doCheckAvailble(String materialType ) throws ClassNotFoundException, SQLException {
+//        int result = -1;
+//        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        DbConnection DbConnection = new DbConnection();
+
+        DbConnection.openConnection();
+        Connection con = DbConnection.getConnection();
+
+        boolean bool = false;
+
+        try {
+
+            PreparedStatement stmt = con.prepareStatement("Select assignCount  from materialtender where materialType =?");
+            stmt.setString(1, materialType );
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+
+                if (rs.getInt("assignCount")>0) {
+
+                    bool = true;
+                }
+
+            }
+
+        } catch (Exception e) {
+            System.err.println("error " + e);
+
+        }
+        DbConnection.closeConnection();
+        return bool;
+
+    }
+
+       
+       
+       
+       
+       
     
 }
     

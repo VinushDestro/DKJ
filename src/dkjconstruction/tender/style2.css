@@ -1,0 +1,91 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 28-Sep-2017, 01:17:07
+    Author     : User
+*/
+
+.button{
+    -fx-background-color:   #2c3e50;
+    -fx-border-style: solid;
+    -fx-border-width: 1px;
+    -fx-border-color: #2c3e50;
+    -fx-border-radius: 0px;
+}
+
+.button:hover {
+    -fx-background-color:  #233140;
+    /*-fx-border-width:5px;*/
+    -fx-cursor:hand;
+    -fx-text-fill: #1e8bc3;
+}
+
+.table-view {
+    -fx-base: whitesmoke;
+    -fx-control-inner-background: whitesmoke;
+    -fx-background-color: whitesmoke;
+    -fx-table-cell-border-color: transparent;
+    -fx-table-header-border-color: transparent;
+    -fx-padding: 10;
+}
+
+.table-view .column-header-background {
+    -fx-background-color: transparent;
+}
+
+.table-view .column-header{
+    -fx-border-width: 0 0 0 0;
+    -fx-border-color: 
+        transparent
+        transparent
+        transparent
+        transparent;
+}
+.table-view .column-header, .table-view .filler {
+    -fx-background-color: transparent;
+    -fx-border-insets: 0 10 1 0;
+}
+
+.table-view .column-header .label {
+    -fx-font-size: 9pt;
+    -fx-font-family: "Raleway";
+    -fx-text-fill: #2c3e50;
+    -fx-alignment: CENTER_LEFT;
+    -fx-opacity: 1;
+}
+
+.table-view:focused .table-row-cell:filled:focused:selected {
+    -fx-background-color: -fx-focus-color;
+}
+
+.split-pane:vertical > .split-pane-divider {
+    -fx-border-color: transparent transparent transparent transparent;
+    -fx-background-color: transparent, transparent;
+}
+
+.split-pane {
+    -fx-border-color: transparent;
+    -fx-background-color: transparent;
+    -fx-padding: 0 0 0 0;
+}
+
+.background{
+    -fx-background-color:#fefefe;
+}
+
+.search{
+    -fx-border-style: solid;
+    -fx-border-width: 1px;
+    -fx-border-radius: 0px;
+    -fx-border-color: lightgrey;
+}
+
+.redtext{
+    -fx-font-size: 7pt;
+    -fx-font-family: "Raleway";
+    -fx-text-fill: red;
+    -fx-alignment: CENTER;
+}

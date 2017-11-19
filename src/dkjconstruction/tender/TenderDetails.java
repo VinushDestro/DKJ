@@ -25,24 +25,36 @@ public class TenderDetails {
     
     private String MaterialType;
     private String MaterialCount;
+    private String m_price;
     private String NoOfEmployee;
 
-    public TenderDetails(String TenderId, String CompanyName, String BidValidity, String Tdate, String MaterialType, String MaterialCount, String NoOfEmployee) {
+    public TenderDetails(String TenderId, String WorkingPlace, String CompanyName, String Period, String BidValidity, String Tdate) {
         this.TenderId = TenderId;
+        this.WorkingPlace = WorkingPlace;
         this.CompanyName = CompanyName;
+        this.Period = Period;
         this.BidValidity = BidValidity;
         this.Tdate = Tdate;
+    }
+
+    public TenderDetails(String NoOfEmployee) {
+        this.NoOfEmployee = NoOfEmployee;
+    }
+
+    
+
+    public TenderDetails(String MaterialType, String MaterialCount, String m_price) {
         this.MaterialType = MaterialType;
         this.MaterialCount = MaterialCount;
-        this.NoOfEmployee = NoOfEmployee;
+        this.m_price = m_price;
     }
     
 
-    public TenderDetails(String TenderId, String BidValidity, String EstimatedCost) {
-        this.TenderId = TenderId;
-        this.BidValidity = BidValidity;
-        this.EstimatedCost = EstimatedCost;
-    }
+    /* public TenderDetails(String TenderId, String BidValidity, String EstimatedCost) {
+    this.TenderId = TenderId;
+    this.BidValidity = BidValidity;
+    this.EstimatedCost = EstimatedCost;
+    }*/
 
     public TenderDetails(String TenderId, String TenderName, String Grade, String Category, String WorkType, String WorkingPlace, String CompanyName, String Period, String BidValidity, String Tdate, String EstimatedCost) {
         this.TenderId = TenderId;
@@ -247,6 +259,20 @@ public class TenderDetails {
      */
     public void setNoOfEmployee(String NoOfEmployee) {
         this.NoOfEmployee = NoOfEmployee;
+    }
+
+    /**
+     * @return the m_price
+     */
+    public String getM_price() {
+        return m_price;
+    }
+
+    /**
+     * @param m_price the m_price to set
+     */
+    public void setM_price(String m_price) {
+        this.m_price = m_price;
     }
 
     

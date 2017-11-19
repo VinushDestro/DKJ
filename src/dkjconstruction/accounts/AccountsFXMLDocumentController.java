@@ -155,7 +155,11 @@ public class AccountsFXMLDocumentController implements Initializable {
         setTabletrans();
         loadtabletrans();
   
+        setTablehr();
+        loadtablehr();
+       
         searchtw();
+        
 
     
     }
@@ -316,7 +320,7 @@ public class AccountsFXMLDocumentController implements Initializable {
                     + "UNION \n"
                     + "select date,tenderId,destination,cost from transport\n"
                     + "UNION \n"
-                    + "select p.date,p.empId,e.tenderId,p.finalSalary\n"
+                    + "select p.date,e.tenderId,p.empId,p.finalSalary\n"
                     + "  from payroll p ,emptender e\n"
                     + "  where p.empId = e.empId"
             );
@@ -398,7 +402,7 @@ public class AccountsFXMLDocumentController implements Initializable {
                             + "select t.date,t.tenderId,t.destination,t.cost\n"
                             + "from transport t\n"
                             + "where t.tenderId like  '%" + twtxt.getText() + "%' union\n"
-                            + "select p.date,p.empId,e.tenderId,p.finalSalary\n"
+                            + "select p.date,e.tenderId,p.empId,p.finalSalary\n"
                             + "from payroll p ,emptender e\n"
                             + "where p.empId = e.empId and e.tenderId like '%" + twtxt.getText() + "%' ");
                     System.out.println("hiiiiiiiiiiiiiiiiii");
@@ -536,11 +540,11 @@ public class AccountsFXMLDocumentController implements Initializable {
                     transsum = transsum + d;
                 }
 
-                ResultSet rs9 = con.createStatement().executeQuery("select p.date,p.empId,e.tenderId,p.finalSalary\n"
-                        + " from payroll p ,emptender e\n"
-                        + " where p.empId = e.empId and e.`tenderId` like '%" + twtxt.getText() + "%'");
+                ResultSet rs9 = con.createStatement().executeQuery("select (p.`finalSalary`) from payroll p ,emptender e where p.`empId` = e.`empId` AND  e.`tenderId` like '%" + twtxt.getText() + "%'");
+                         
+                       
 
-                while (rs2.next()) {
+                while (rs9.next()) {
 
                     double d = rs9.getDouble(1);
                     hrsum = hrsum + d;

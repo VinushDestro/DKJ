@@ -6,6 +6,9 @@
 package dkjconstruction.home;
 
 import dkjconstruction.DbConnection;
+import dkjconstruction.equip.Equipment;
+import dkjconstruction.rawmaterial.RawMaterial;
+import dkjconstruction.vehicle.VehicleManagement;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
@@ -49,62 +52,53 @@ public class HomeController implements Initializable {
     private TableColumn c4;
     @FXML
     private TableColumn c5;
-//
-//    private ObservableList<Detail> tableS; 
-//    
-//    
-//    /**
-//     * Initializes the controller class.
-//     */
+
+    private ObservableList<Detail> tableS; 
+
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
         category.getItems().addAll("Tender","Employee","Asset","Equipment","Raw Material");
         
         setTable();
-        System.out.println("main");
-        //doSearch();
+        doSearch();
     }    
-//    public static ObservableList<Detail> getTable(String tname,String c1,String c2,String c3,String c4,String c5) throws IOException, ClassNotFoundException, SQLException {
-//            ObservableList<Detail>  table= FXCollections.observableArrayList();
-//
-//            DbConnection.openConnection();
-//            Connection con=DbConnection.getConnection();
-//            PreparedStatement pst = con.prepareStatement("select ?,?,?,?,? from ?");
-//            pst.setString(1,c1);
-//            pst.setString(2,c2);
-//            pst.setString(3,c3);
-//            pst.setString(4,c4);
-//            pst.setString(5,c5);
-//            pst.setString(6,tname);
-//            ResultSet rs = pst.executeQuery();
-//            while(rs.next()) {
-//                
-//                table.add(new Detail(rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5)));
-//            }
-//                return table;
-//        }
-//    
+
     public void setTable(){
-        System.out.println("set");
 
         category.setOnHidden(e -> {
             
         switch(category.getValue().toString()){
             case "Tender":
-                c1.setText("Name");
+                c1.setText("Tender Name");
                 c2.setText("Work Type");
                 c3.setText("Working Place");
                 c4.setText("Company Name");
                 c5.setText("Status");
+        {
+            try {
+                loadTenTable();
+            } catch (IOException ex) {
+                Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
                 break;
                 
                 case "Employee":
                 c1.setText("Name");
-                c2.setText("Position");
-                c3.setText("Address");
-                c4.setText("Contact No");
-                c5.setText("Availability");
+                c2.setText("Address");
+                c3.setText("Contact No");
+                c4.setText("Position");
+                c5.setText("Emp Type");
+                {
+                    try {
+                        loadEmpTable();
+                    } catch (IOException ex) {
+                        Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+                
                 break;
                 
                 case "Asset":
@@ -113,7 +107,7 @@ public class HomeController implements Initializable {
                 c3.setText("Type");
                 c4.setText("Condition");
                 c5.setText("Current Value");
-                //loadTable();
+                loadAssTable();
                 break;
                 
                 case "Equipment":
@@ -122,14 +116,16 @@ public class HomeController implements Initializable {
                 c3.setText("Price");
                 c4.setText(null);
                 c5.setText(null);
+                loadEquipTable();
                 break;
                 
                 case "Raw Material":
                 c1.setText("Type");
-                c2.setText("Price");
-                c3.setText("Quantity");
-                c4.setText("Supplier Name");
+                c2.setText("Quantity");
+                c3.setText("Unit Price");
+                c4.setText(null);
                 c5.setText(null);
+                loadMatTable();
                 break;
                 
                 default : 
@@ -142,71 +138,177 @@ public class HomeController implements Initializable {
         });
         
     }
-//    private void loadTable(){
-//                //String n = c1.getText().replaceAll("\\s","");
-//                //System.out.println(n);
-//                c1.setCellValueFactory(new PropertyValueFactory<>(c1.getText().replaceAll("\\s","")));
-//                c2.setCellValueFactory(new PropertyValueFactory<>(c2.getText().replaceAll("\\s","")));
-//                c3.setCellValueFactory(new PropertyValueFactory<>(c3.getText().replaceAll("\\s","")));
-//                c4.setCellValueFactory(new PropertyValueFactory<>(c4.getText().replaceAll("\\s","")));
-//                c5.setCellValueFactory(new PropertyValueFactory<>(c5.getText().replaceAll("\\s","")));
-//                
-//                String val1=c1.getText().replaceAll("\\s","");
-//                String val2=c2.getText().replaceAll("\\s","");
-//                String val3=c3.getText().replaceAll("\\s","");
-//                String val4=c4.getText().replaceAll("\\s","");
-//                String val5=c5.getText().replaceAll("\\s","");
-//                String cat=category.getValue().toString().replaceAll("\\s","");
-//                
-//                try {
-//                    homeTab.setItems(getTable(cat,val1,val2,val3,val4,val5));
-//                    
-//                } catch (IOException | ClassNotFoundException | SQLException ex) {
-//                    Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
-//                }
-//    }
-//    private void doSearch() {
-//        search.setOnKeyReleased(e -> {
-//            if (search.getText().equals("")) {
-//                loadTable();
-//        
-//
-//            }
-//            else{
-//                String val1=c1.getText().replaceAll("\\s","");
-//                String val2=c2.getText().replaceAll("\\s","");
-//                String val3=c3.getText().replaceAll("\\s","");
-//                String val4=c4.getText().replaceAll("\\s","");
-//                String val5=c5.getText().replaceAll("\\s","");
-//                Connection con = DbConnection.getConnection();
-//                PreparedStatement pst;
-//                try {
-//                    pst = con.prepareStatement
-//                                   ("SELECT ?,?,?,?,? FROM ? where ? LIKE '%" + search.getText() + "%' or ? LIKE '%" + search.getText() + "%' or ? LIKE '%" + search.getText() + "%' or ? LIKE '%" + search.getText() + "%' or ? LIKE '%" + search.getText() + "%'");
-//                    pst.setString(1,val1);
-//                    pst.setString(2,val2);
-//                    pst.setString(3,val3);
-//                    pst.setString(4,val4);
-//                    pst.setString(5,val5);
-//                    pst.setString(6,category.getValue().toString());
-//                    pst.setString(7,val1);
-//                    pst.setString(8,val2);
-//                    pst.setString(9,val3);
-//                    pst.setString(10,val4);
-//                    pst.setString(11,val5);
-//                    
-//                    ResultSet rs = pst.executeQuery();
-//                    tableS= FXCollections.observableArrayList();
-//                    while (rs.next()) {
-//                        
-//                        tableS.add(new Detail(rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5))); 
-//                        
-//                    }
-//                    homeTab.setItems(tableS);
-//                } catch (SQLException ex) {
-//                    Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
-//                }
-//            }
-//        });
-//    }
+    private void loadAssTable() {
+        c1.setCellValueFactory(new PropertyValueFactory<>("RegNo"));
+        c2.setCellValueFactory(new PropertyValueFactory<>("Name"));
+        c3.setCellValueFactory(new PropertyValueFactory<>("Type"));
+        c4.setCellValueFactory(new PropertyValueFactory<>("Condition"));
+        c5.setCellValueFactory(new PropertyValueFactory<>("CurrentValue"));
+
+        try {
+            homeTab.setItems(VehicleManagement.getVehicle());
+        } catch (IOException | ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+        }
+
+    }
+    
+    private void loadMatTable() {
+        c1.setCellValueFactory(new PropertyValueFactory<>("Type"));
+        c2.setCellValueFactory(new PropertyValueFactory<>("Quantity"));
+        c3.setCellValueFactory(new PropertyValueFactory<>("Price"));
+    
+        try {
+            homeTab.setItems(RawMaterial.getRawmaterial());
+        } catch (IOException | ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    public void loadEquipTable() {
+        c1.setCellValueFactory(new PropertyValueFactory<>("Name"));
+        c2.setCellValueFactory(new PropertyValueFactory<>("Count"));
+        c3.setCellValueFactory(new PropertyValueFactory<>("Cost"));
+        
+        try {
+            homeTab.setItems(Equipment.getEquipment());
+        } catch (IOException | ClassNotFoundException | SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+    
+    public void loadTenTable() throws IOException {
+         c1.setCellValueFactory(new PropertyValueFactory<>("TenderName"));
+        c2.setCellValueFactory(new PropertyValueFactory<>("WorkType"));
+        c3.setCellValueFactory(new PropertyValueFactory<>("WorkingPlace"));
+        c4.setCellValueFactory(new PropertyValueFactory<>("CompanyName"));
+        c5.setCellValueFactory(new PropertyValueFactory<>("Status"));
+        
+        try {
+            homeTab.setItems(getTender());
+        } catch (ClassNotFoundException | SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+    
+    public void loadEmpTable() throws IOException {
+         c1.setCellValueFactory(new PropertyValueFactory<>("Name"));
+        c2.setCellValueFactory(new PropertyValueFactory<>("Address"));
+        c3.setCellValueFactory(new PropertyValueFactory<>("ContactNo"));
+        c4.setCellValueFactory(new PropertyValueFactory<>("Position"));
+        c5.setCellValueFactory(new PropertyValueFactory<>("EmpType"));
+        
+        try {
+            homeTab.setItems(getEmp());
+        } catch (ClassNotFoundException | SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+    
+    public ObservableList<Detail> getTender() throws IOException, ClassNotFoundException, SQLException {
+
+        DbConnection.openConnection();
+        Connection con = DbConnection.getConnection();
+        Statement stmt = con.createStatement();
+
+        ResultSet rs = stmt.executeQuery("select tendername,worktype,workingplace,companyname,status from tender");
+        tableS= FXCollections.observableArrayList();
+
+        while (rs.next()) {
+
+            String n = rs.getString("tendername");
+            String w = rs.getString("worktype");
+            String wp = rs.getString("workingplace");
+            String c = rs.getString("companyname");
+            String s = rs.getString("status");
+            
+            tableS.add(new Detail(n,w,wp,c,s));
+        }
+        return tableS;
+    }
+    
+    public ObservableList<Detail> getEmp() throws IOException, ClassNotFoundException, SQLException {
+
+        DbConnection.openConnection();
+        Connection con = DbConnection.getConnection();
+        Statement stmt = con.createStatement();
+
+        ResultSet rs = stmt.executeQuery("select * from employee");
+        tableS= FXCollections.observableArrayList();
+
+        while (rs.next()) {
+
+            String n = rs.getString("name");
+            String w = rs.getString("address");
+            String wp = rs.getString("contactno");
+            String c = rs.getString("position");
+            String s = rs.getString("emptype");
+            
+            tableS.add(new Detail(n,w,wp,c,s));
+        }
+        return tableS;
+    }
+    
+    private void doSearch() {
+        search.setOnKeyReleased(e -> {
+            if (search.getText().equals("")) {
+                switch(category.getValue().toString()){
+                    case "Asset": loadAssTable();break;
+                    case "Equipment": loadEquipTable();break;
+                    case "Raw Material": loadMatTable();break;
+                   case "Tender": {
+                    try {
+                        loadTenTable();
+                    } catch (IOException ex) {
+                        Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+                break;
+                }
+            }
+            else{
+                try {
+// ("SELECT ?,?,?,?,? FROM ? where ? LIKE '%" + search.getText() + "%' or ? LIKE '%" + search.getText() + "%' or ? LIKE '%" + search.getText() + "%' or ? LIKE '%" + search.getText() + "%' or ? LIKE '%" + search.getText() + "%'");
+
+                    Connection con = DbConnection.getConnection();
+                    
+                    PreparedStatement pst = con.prepareStatement
+                    ("SELECT regno,name,type,asset.condition,currentvalue FROM asset where regno LIKE '%" + search.getText() + /*"%' or ? LIKE '%" + search.getText() + "%' or ? LIKE '%" + search.getText() +  */"%'");
+//                    pst.setString(1, c1.getText().replaceAll("\\s", ""));
+//                    pst.setString(2, c2.getText().replaceAll("\\s", ""));
+//                    pst.setString(3, c3.getText().replaceAll("\\s", ""));
+//                    pst.setString(4, c4.getText().replaceAll("\\s", ""));
+//                    pst.setString(5, c5.getText().replaceAll("\\s", ""));
+                    //pst.setString(6, category.getValue().toString().replaceAll("\\s", ""));
+                    //pst.setString(7, c1.getText().replaceAll("\\s", ""));
+//                    pst.setString(8, c2.getText());
+//                    pst.setString(9, c3.getText());
+                    
+                    
+                    ResultSet rs = pst.executeQuery();
+                    tableS= FXCollections.observableArrayList();
+                    while (rs.next()) {
+                        String v1=rs.getString(1);
+                        String v2=rs.getString(2);
+                        String v3=rs.getString(3);
+                        String v4=rs.getString(4);
+                        String v5=rs.getString(5);
+                        System.out.println(v1);
+                        System.out.println(v2);
+                        System.out.println(v3);
+                        System.out.println(v4);
+                        System.out.println(v5);
+                        
+                        tableS.add(new Detail(v1,v2,v3,v4,v5)); 
+                        //System.out.println(Detail.getCol1());
+                        }
+                    homeTab.setItems(tableS);
+
+                } catch (SQLException ex) {
+                    System.err.println("Error loading table data " + ex);
+
+                }
+            }
+        });
+    }
 }

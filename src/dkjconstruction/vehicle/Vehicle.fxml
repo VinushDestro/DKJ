@@ -57,10 +57,10 @@
                   <TableColumn fx:id="tabLifeTime" prefWidth="68.0" text="Life Time" />
                   <TableColumn fx:id="tabBoughtDate" prefWidth="87.0" text="Bought Date" />
                   <TableColumn fx:id="tabCondition" minWidth="9.0" prefWidth="70.0" text="Condition" />
-                  <TableColumn fx:id="tabDepPercent" prefWidth="47.0" text="Dep%" />
-                  <TableColumn fx:id="tabCurrentDep" prefWidth="52.0" text="DepYr" />
-                  <TableColumn fx:id="tabTotalDep" minWidth="0.0" prefWidth="71.0" text="TotDep" />
-                  <TableColumn fx:id="tabCurrentValue" prefWidth="136.0" text="FIVal" />
+                  <TableColumn fx:id="tabDepPercent" prefWidth="47.0" text="Depriciation" />
+                  <TableColumn fx:id="tabCurrentDep" prefWidth="52.0" text="Depriciation per Year" />
+                  <TableColumn fx:id="tabTotalDep" minWidth="0.0" prefWidth="71.0" text="Total Depriciation" />
+                  <TableColumn fx:id="tabCurrentValue" prefWidth="54.0" text="Final Value" />
               </columns>
             </TableView>
             <JFXDatePicker fx:id="bouDate" layoutX="366.0" layoutY="560.0" prefHeight="25.0" prefWidth="151.0" promptText="Bought Date" />

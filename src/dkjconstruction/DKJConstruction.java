@@ -43,6 +43,7 @@ public class DKJConstruction extends Application {
         stage.setResizable(false);
         stage.show();
         System.out.println("start method");
+        
     }
     
     public static void showMainPage() throws IOException {
@@ -53,6 +54,7 @@ public class DKJConstruction extends Application {
         primaryStage.setScene(scene);
         primaryStage.show();
         System.out.println("homepage method");
+                
     }
     
     public static void showHome() throws IOException {
@@ -210,6 +212,50 @@ public class DKJConstruction extends Application {
         GridPane Pane = loader.load();
         mainLayout.add(Pane, 1, 1);
     }
+    
+    public static void showTender_requirement() throws IOException {
+        mainLayout.getChildren().clear();
+        showMainPage();
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(DKJConstruction.class.getResource("tender/Requirement.fxml"));
+        GridPane Pane = loader.load();
+        mainLayout.add(Pane, 1, 1);
+    }
+    
+    public static void showTender_TenderHome() throws IOException {
+        mainLayout.getChildren().clear();
+        showMainPage();
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(DKJConstruction.class.getResource("tender/TenderHome.fxml"));
+        GridPane Pane = loader.load();
+        mainLayout.add(Pane, 1, 1);
+    }
+    
+    public static void showTender_viewTender() throws IOException {
+        mainLayout.getChildren().clear();
+        showMainPage();
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(DKJConstruction.class.getResource("tender/viewTender.fxml"));
+        GridPane Pane = loader.load();
+        mainLayout.add(Pane, 1, 1);
+    }
+    public static void showTender_closeTender() throws IOException {
+        mainLayout.getChildren().clear();
+        showMainPage();
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(DKJConstruction.class.getResource("tender/closeTender.fxml"));
+        GridPane Pane = loader.load();
+        mainLayout.add(Pane, 1, 1);
+    }
+    public static void showTender_summery() throws IOException {
+        mainLayout.getChildren().clear();
+        showMainPage();
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(DKJConstruction.class.getResource("tender/summery.fxml"));
+        GridPane Pane = loader.load();
+        mainLayout.add(Pane, 1, 1);
+    }
+    
     public static void showAsset() throws IOException {
         mainLayout.getChildren().clear();
         showMainPage();
@@ -245,12 +291,12 @@ public class DKJConstruction extends Application {
     }
     
     public static void showErrorPage() throws IOException {
-        mainLayout.getChildren().clear();
-        showMainPage();
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(DKJConstruction.class.getResource("settings/Error.fxml"));
-        GridPane Pane = loader.load();
-        mainLayout.add(Pane, 1, 1);
+//        mainLayout.getChildren().clear();
+//        showMainPage();
+//        FXMLLoader loader = new FXMLLoader();
+//        loader.setLocation(DKJConstruction.class.getResource("main/Error.fxml"));
+//        GridPane Pane = loader.load();
+//        mainLayout.add(Pane, 1, 1);
     }
     
     public static void showChangePw() throws IOException {

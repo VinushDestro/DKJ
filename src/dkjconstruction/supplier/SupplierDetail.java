@@ -11,32 +11,32 @@ package dkjconstruction.supplier;
  */
 public class SupplierDetail {
  
-    private String id;
+    private int supplierid;
     private String name;
     private String nic;
     private String contact;
    
-    public SupplierDetail(String id,String name,String nic,String contact) {
-        this.setId(id);
+    public SupplierDetail(int  supplierid,String name,String nic,String contact) {
+        this.setSupplierid(supplierid);
         this.setName(name);
         this.setNic(nic);
         this.setContact(contact);
     
-    
+  
 }
 
     /**
-     * @return the id
+     * @return the supplierid
      */
-    public String getId() {
-        return id;
+    public int getSupplierid() {
+        return supplierid;
     }
 
     /**
-     * @param id the id to set
+     * @param supplierid the supplierid to set
      */
-    public void setId(String id) {
-        this.id = id;
+    public void setSupplierid(int supplierid) {
+        this.supplierid = supplierid;
     }
 
     /**
@@ -79,5 +79,4 @@ public class SupplierDetail {
      */
     public void setContact(String contact) {
         this.contact = contact;
-    }
-}
+    }}

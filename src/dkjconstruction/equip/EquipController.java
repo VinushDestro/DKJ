@@ -157,9 +157,9 @@ public class EquipController implements Initializable {
 
             alert.setContentText("Fields cannot be empty");
         } else if (Integer.valueOf(cut) <= 0) {
-            alert.setContentText("Cannot update to Zero or Less than that");
+            alert.setContentText("Cannot update to Zero or Less than!");
         } else if (name.isEmpty()) {
-            alert.setContentText("Equipment ID field cannot be empty");
+            alert.setContentText("Equipment Name field cannot be empty");
         } else if (cut.isEmpty()) {
             alert.setContentText("Count field cannot be empty");
         } else {
@@ -167,7 +167,7 @@ public class EquipController implements Initializable {
                 result = Equipment.updateEquipment(String.valueOf(name), cut); //Integer.valueOf(cut)
                 acc.addE(equipName.getText(), Integer.parseInt(count.getText()), Double.parseDouble(cost.getText()));
                 if (result == 1) {
-                    alert.setContentText("Operation Successful!");
+                    alert.setContentText("Operation AddCount Successful!");
                 } else {
                     alert.setContentText("Operation Failed");
                 }

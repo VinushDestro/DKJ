@@ -47,15 +47,17 @@ public class MainController {
         DbConnection DbConnection= new DbConnection();
         DbConnection.openConnection();
         Connection con = DbConnection.getConnection();
-        PreparedStatement stmt = con.prepareStatement("select userType from user where username=?");
-        stmt.setString(1,currentUser);
-        
+        PreparedStatement stmt = con.prepareStatement("select userType from user where userid in (select empid from employee where name=?)");
+        stmt.setString(1,currentUser.toLowerCase());
+        System.out.println(currentUser);
         ResultSet rs = stmt.executeQuery();
         if(rs.next()){
+            System.out.println("rs get :"+rs.getString("userType"));
             type=rs.getString(1);
         }               
         System.out.println(type+"main");
         //homeBtn.setDefaultButton(true);    fire()
+        
     }
     
     @FXML
@@ -87,97 +89,98 @@ public class MainController {
     @FXML
     private void doTransport() throws IOException {
         System.out.println("tr"+type);
-            //if (type.equals("assetadmin") || type.equals("supervisor"))
+        if (type.equals("supervisor"))
             main.showTransport();
-        //else
-           // main.showErrorPage();      
+        else
+           main.showErrorPage();      
     }
     
     @FXML
     private void doSetting() throws IOException {
-        //if (type.equals("supervisor"))
+        if (type.equals("supervisor"))
             main.showAdmin();
-        //else
-            //main.showChangePw();
+        else
+            main.showChangePw();
     }
     
     @FXML
     private void doJob() throws IOException {
-        //if (type.equals("supervisor"))
+        if (type.equals("supervisor"))
             main.showJobAllocation();
-//        else
-//            main.showErrorPage();
+        else
+            main.showErrorPage();
     }
     
     @FXML
     private void doAccounts() throws IOException {
-//        if (type.equals("clerk")||type.equals("supervisor"))
+        if (type.equals("manager")||type.equals("supervisor"))
             main.showAccounts();
-//        else
-//            main.showErrorPage();
+        else
+            main.showErrorPage();
     }
     
     @FXML
     private void doUtilities() throws IOException {
-//        if (type.equals("clerk")||type.equals("supervisor"))
+        if (type.equals("admin")||type.equals("supervisor"))
             main.showUtilities();
-//        else
-//            main.showErrorPage();
+        else
+            main.showErrorPage();
     }
     @FXML
     private void doSupplier() throws IOException {
-     //   if (type.equals("materialadmin") || type.equals("supervisor"))
+        if (type.equals("admin") || type.equals("supervisor"))
             main.showSupplier();
-     //   else
-     //       main.showErrorPage();
+       else
+            main.showErrorPage();
         
     }
     
     @FXML
     private void doMaterial() throws IOException {
-//        if (type.equals("materialadmin") || type.equals("supervisor"))
+       if (type.equals("admin") || type.equals("supervisor"))
             main.showMaterial();
-//        else
-//            main.showErrorPage();
+        else
+            main.showErrorPage();
     }
     
     @FXML
     private void doTender() throws IOException {
-//        if (type.equals("supervisor"))
-            main.showTender();
-//        else
-//            main.showErrorPage();
+        System.out.println("user "+type);
+        if (type.equals("manager") || type.equals("supervisor"))
+            main.showTender_TenderHome();
+        else
+            main.showTender_TenderHome();
     }
     @FXML
     private void doAsset() throws IOException {
-        //if (type.equals("assetadmin") || type.equals("supervisor"))
+        if (type.equals("admin") || type.equals("supervisor"))
             main.showAsset();
-//        else
-//            main.showErrorPage();
+        else
+            main.showErrorPage();
     }
     
     @FXML
     private void doEquip() throws IOException {
-       // if (type.equals("assetadmin") || type.equals("supervisor"))
+        if (type.equals("admin") || type.equals("supervisor"))
             main.showEquip();
-//        else
-//            main.showErrorPage();
+        else
+            main.showErrorPage();
     }
     
     @FXML
     private void doHr() throws IOException {
-      //  if (type.equals("hradmin") || type.equals("supervisor"))
+        if (type.equals("admin") || type.equals("supervisor"))
             main.showHr();
-//        else
-//            main.showErrorPage();
+        else
+            main.showErrorPage();
     }
     
     @FXML
     private void doPayroll() throws IOException {
-       // if (type.equals("hradmin") || type.equals("supervisor"))
-          //  main.showPayroll();
-       // else
-        //    main.showErrorPage();
+        if (type.equals("manager") || type.equals("supervisor"))
+            main.showPayroll();
+        else
+            main.showErrorPage();
     }
     
     @FXML
