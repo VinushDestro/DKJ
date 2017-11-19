@@ -126,6 +126,7 @@ public class DKJConstruction extends Application {
         mainLayout.add(Pane, 1, 1);
     }
     
+    
     public static void showPendingEmployee() throws IOException {
         mainLayout.getChildren().clear();
         showMainPage();
@@ -225,6 +226,15 @@ public class DKJConstruction extends Application {
         showMainPage();
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(DKJConstruction.class.getResource("tender/Tender.fxml"));
+        GridPane Pane = loader.load();
+        mainLayout.add(Pane, 1, 1);
+    }
+    
+     public static void showChat() throws IOException {
+        mainLayout.getChildren().clear();
+        showMainPage();
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(DKJConstruction.class.getResource("main/chat.fxml"));
         GridPane Pane = loader.load();
         mainLayout.add(Pane, 1, 1);
     }
