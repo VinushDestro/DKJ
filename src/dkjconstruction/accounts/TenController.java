@@ -42,6 +42,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperCompileManager;
@@ -453,7 +454,7 @@ public class TenController implements Initializable {
             a.show();
         } else if (!frmd.getText().matches("[0-9]{4}")) {
             Alert a = new Alert(Alert.AlertType.ERROR);
-            a.setContentText("Invalid input for YEAR");
+            a.setContentText("Invalid input for YEAR\n YEAR should be\n eg: 2010");
             a.show();
         } else {
             try {
@@ -595,9 +596,11 @@ public class TenController implements Initializable {
                 double f = rs5.getDouble(1);
                 dmatsum = dmatsum + f;
             }
-
+            
             dtotsum = dutsum + dassum + deqsum + dmatsum +dchrsum;
-
+            
+            tdt.setTextFill(Color.RED);
+            
             utdt.setText(Double.toString(dutsum)+" Rs");
             asdt.setText(Double.toString(dassum)+" Rs");
             eqdt.setText(Double.toString(deqsum)+" Rs");

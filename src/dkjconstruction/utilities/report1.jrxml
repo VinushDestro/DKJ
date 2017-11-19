@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="0cb0398a-a6c8-4adb-b0a6-a7d68b449dbb">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
 	<queryString language="SQL">
 		<![CDATA[SELECT
      utilities.`billNo` AS utilities_billNo,
@@ -29,14 +32,14 @@ FROM
 					<textElement>
 						<font size="34" isBold="true"/>
 					</textElement>
-					<text><![CDATA[TITLE]]></text>
+					<text><![CDATA[DKJ]]></text>
 				</staticText>
 				<staticText>
 					<reportElement x="395" y="43" width="180" height="20" forecolor="#FFFFFF" uuid="4de4ab94-0076-462e-8600-802ae88abf7b"/>
 					<textElement textAlignment="Right">
 						<font size="14" isBold="false"/>
 					</textElement>
-					<text><![CDATA[Add a description here]]></text>
+					<text><![CDATA[UTILITIES]]></text>
 				</staticText>
 			</frame>
 		</band>
@@ -54,42 +57,42 @@ FROM
 				<textElement textAlignment="Center">
 					<font size="14" isBold="true"/>
 				</textElement>
-				<text><![CDATA[utilities_billNo]]></text>
+				<text><![CDATA[billNo]]></text>
 			</staticText>
 			<staticText>
 				<reportElement mode="Opaque" x="92" y="0" width="92" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="6b276e6a-108d-44f3-a3a1-88381fb0fa8a"/>
 				<textElement textAlignment="Center">
 					<font size="14" isBold="true"/>
 				</textElement>
-				<text><![CDATA[utilities_billType]]></text>
+				<text><![CDATA[billType]]></text>
 			</staticText>
 			<staticText>
 				<reportElement mode="Opaque" x="184" y="0" width="92" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="5b7ad819-5153-4c8b-81bb-aea629c78073"/>
 				<textElement textAlignment="Center">
 					<font size="14" isBold="true"/>
 				</textElement>
-				<text><![CDATA[utilities_paidAmount]]></text>
+				<text><![CDATA[paidAmount]]></text>
 			</staticText>
 			<staticText>
 				<reportElement mode="Opaque" x="276" y="0" width="92" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="a154d8c6-d4cc-4e72-a909-f34eb4fa2ab9"/>
 				<textElement textAlignment="Center">
 					<font size="14" isBold="true"/>
 				</textElement>
-				<text><![CDATA[utilities_billDate]]></text>
+				<text><![CDATA[billDate]]></text>
 			</staticText>
 			<staticText>
 				<reportElement mode="Opaque" x="368" y="0" width="92" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="1d76b86c-0a6d-4f75-bdeb-f7bc58238797"/>
 				<textElement textAlignment="Center">
 					<font size="14" isBold="true"/>
 				</textElement>
-				<text><![CDATA[utilities_paidDate]]></text>
+				<text><![CDATA[paidDate]]></text>
 			</staticText>
 			<staticText>
 				<reportElement mode="Opaque" x="460" y="0" width="92" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="6d6ab8e3-7d01-4bd8-94f1-99fe3189f9d7"/>
 				<textElement textAlignment="Center">
 					<font size="14" isBold="true"/>
 				</textElement>
-				<text><![CDATA[utilities_paymentMethod]]></text>
+				<text><![CDATA[paidMethod]]></text>
 			</staticText>
 		</band>
 	</columnHeader>

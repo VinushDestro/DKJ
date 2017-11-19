@@ -178,25 +178,29 @@ public class HomeController implements Initializable {
     }
     
     public void loadTenTable() throws IOException {
-         c1.setCellValueFactory(new PropertyValueFactory<>("TenderName"));
-        c2.setCellValueFactory(new PropertyValueFactory<>("WorkType"));
-        c3.setCellValueFactory(new PropertyValueFactory<>("WorkingPlace"));
-        c4.setCellValueFactory(new PropertyValueFactory<>("CompanyName"));
-        c5.setCellValueFactory(new PropertyValueFactory<>("Status"));
+        c1.setCellValueFactory(new PropertyValueFactory<>("co11"));
+        c2.setCellValueFactory(new PropertyValueFactory<>("col2"));
+        c3.setCellValueFactory(new PropertyValueFactory<>("col3"));
+        c4.setCellValueFactory(new PropertyValueFactory<>("col4"));
+        c5.setCellValueFactory(new PropertyValueFactory<>("col5"));
         
         try {
             homeTab.setItems(getTender());
         } catch (ClassNotFoundException | SQLException ex) {
             ex.printStackTrace();
         }
+        finally {
+            System.out.println("c1 : "+c1.getText());
+        }
     }
     
     public void loadEmpTable() throws IOException {
-         c1.setCellValueFactory(new PropertyValueFactory<>("Name"));
-        c2.setCellValueFactory(new PropertyValueFactory<>("Address"));
-        c3.setCellValueFactory(new PropertyValueFactory<>("ContactNo"));
-        c4.setCellValueFactory(new PropertyValueFactory<>("Position"));
-        c5.setCellValueFactory(new PropertyValueFactory<>("EmpType"));
+        c1.setCellValueFactory(new PropertyValueFactory<>("col1"));
+        c2.setCellValueFactory(new PropertyValueFactory<>("col2"));
+        c3.setCellValueFactory(new PropertyValueFactory<>("col3"));
+        c4.setCellValueFactory(new PropertyValueFactory<>("col4"));
+        c5.setCellValueFactory(new PropertyValueFactory<>("col5"));
+        
         
         try {
             homeTab.setItems(getEmp());
@@ -211,7 +215,7 @@ public class HomeController implements Initializable {
         Connection con = DbConnection.getConnection();
         Statement stmt = con.createStatement();
 
-        ResultSet rs = stmt.executeQuery("select tendername,worktype,workingplace,companyname,status from tender");
+        ResultSet rs = stmt.executeQuery("select * from tender");
         tableS= FXCollections.observableArrayList();
 
         while (rs.next()) {
@@ -221,7 +225,12 @@ public class HomeController implements Initializable {
             String wp = rs.getString("workingplace");
             String c = rs.getString("companyname");
             String s = rs.getString("status");
-            
+           
+            System.out.println("name :"+n);
+            System.out.println(w);
+                        System.out.println(wp);
+                        System.out.println(c);
+                        System.out.println(s);
             tableS.add(new Detail(n,w,wp,c,s));
         }
         return tableS;
@@ -243,7 +252,11 @@ public class HomeController implements Initializable {
             String wp = rs.getString("contactno");
             String c = rs.getString("position");
             String s = rs.getString("emptype");
-            
+            System.out.println(n);
+                        System.out.println(w);
+                        System.out.println(wp);
+                        System.out.println(c);
+                        System.out.println(s);
             tableS.add(new Detail(n,w,wp,c,s));
         }
         return tableS;
@@ -256,14 +269,22 @@ public class HomeController implements Initializable {
                     case "Asset": loadAssTable();break;
                     case "Equipment": loadEquipTable();break;
                     case "Raw Material": loadMatTable();break;
-                   case "Tender": {
-                    try {
-                        loadTenTable();
-                    } catch (IOException ex) {
-                        Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
+                    case "Tender": {
+                        try {
+                            loadTenTable();
+                        } catch (IOException ex) {
+                            Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
+                        }
                     }
-                }
-                break;
+                    break;
+                    case "Employee": {
+                        try {
+                            loadEmpTable();
+                        } catch (IOException ex) {
+                            Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    }
+                    break;
                 }
             }
             else{
@@ -293,6 +314,8 @@ public class HomeController implements Initializable {
                         String v3=rs.getString(3);
                         String v4=rs.getString(4);
                         String v5=rs.getString(5);
+                        System.out.println("------------------------");
+
                         System.out.println(v1);
                         System.out.println(v2);
                         System.out.println(v3);

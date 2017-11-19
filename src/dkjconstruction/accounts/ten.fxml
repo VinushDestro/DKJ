@@ -5,6 +5,7 @@
 <?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TableColumn?>
@@ -15,7 +16,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="665.0" prefWidth="840.0" styleClass="background" stylesheets="@../style2.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dkjconstruction.accounts.TenController">
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="665.0" prefWidth="840.0" styleClass="background" stylesheets="@../style2.css" xmlns="http://javafx.com/javafx/8.0.102" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dkjconstruction.accounts.TenController">
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="25.0" prefWidth="100.0" />
@@ -79,7 +80,7 @@
                               <TableView fx:id="eqtab" layoutX="33.0" layoutY="25.0" prefHeight="404.0" prefWidth="547.0">
                                  <columns>
                                     <TableColumn fx:id="eqdatecol" prefWidth="131.0" text="Bought Date" />
-                                    <TableColumn fx:id="eqnamecol" prefWidth="240.0" text="Name" />
+                                    <TableColumn fx:id="eqnamecol" prefWidth="240.0" text="Type" />
                                     <TableColumn fx:id="eqamount" prefWidth="175.0" text="Amount" />
                                  </columns>
                               </TableView>
@@ -96,7 +97,7 @@
                               <TableView fx:id="mbtab" layoutX="33.0" layoutY="25.0" prefHeight="404.0" prefWidth="547.0">
                                  <columns>
                                     <TableColumn fx:id="mbdate" prefWidth="131.0" text="Bought Date" />
-                                    <TableColumn fx:id="mbtype" prefWidth="240.0" text="Name" />
+                                    <TableColumn fx:id="mbtype" prefWidth="240.0" text="Type" />
                                     <TableColumn fx:id="mbamount" prefWidth="175.0" text="Amount" />
                                  </columns>
                               </TableView>
@@ -113,7 +114,7 @@
                               <TableView fx:id="chrtab" layoutX="33.0" layoutY="25.0" prefHeight="404.0" prefWidth="547.0">
                                  <columns>
                                     <TableColumn fx:id="chrdatecol" prefWidth="131.0" text="Bought Date" />
-                                    <TableColumn fx:id="chrtypecol" prefWidth="240.0" text="Name" />
+                                    <TableColumn fx:id="chrtypecol" prefWidth="240.0" text="ID" />
                                     <TableColumn fx:id="chramountcol" prefWidth="175.0" text="Amount" />
                                  </columns>
                               </TableView>
@@ -134,11 +135,11 @@
                                     <TableColumn fx:id="dwamount" prefWidth="175.0" text="Amount" />
                                  </columns>
                               </TableView>
-                              <JFXTextField fx:id="frmd" layoutX="33.0" layoutY="395.0" promptText="Enter the Year">
+                              <JFXTextField fx:id="frmd" layoutX="33.0" layoutY="395.0" prefHeight="28.0" prefWidth="116.0" promptText="Enter the Year">
                                  <font>
                                     <Font name="System Italic" size="14.0" />
                                  </font></JFXTextField>
-                              <JFXButton layoutX="14.0" layoutY="439.0" onAction="#find" prefHeight="45.0" prefWidth="106.0" text="FIND" textFill="WHITE">
+                              <JFXButton layoutX="33.0" layoutY="448.0" onAction="#find" prefHeight="45.0" prefWidth="106.0" text="FIND" textFill="WHITE">
                                  <font>
                                     <Font name="System Bold" size="24.0" />
                                  </font></JFXButton>
@@ -184,7 +185,6 @@
                                     <Font name="System Bold" size="24.0" />
                                  </font></Label>
                               <JFXComboBox fx:id="abc" layoutX="33.0" layoutY="329.0" promptText="Select Month" />
-                              <JFXButton layoutX="156.0" layoutY="465.0" onAction="#dwex" style="-fx-border-width: 2; -fx-border-color: #D9D9D9;" text="Export to Excel" textFill="WHITE" />
                               <Label layoutX="307.0" layoutY="307.0" prefHeight="32.0" prefWidth="94.0" text="HR">
                                  <font>
                                     <Font size="20.0" />
@@ -195,6 +195,7 @@
                                     <Font size="20.0" />
                                  </font>
                               </Label>
+                              <Separator layoutX="227.0" layoutY="309.0" orientation="VERTICAL" prefHeight="200.0" />
                            </children>
                         </AnchorPane>
                      </content>

@@ -40,7 +40,9 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import jxl.format.Colour;
 import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
@@ -551,7 +553,8 @@ public class AccountsFXMLDocumentController implements Initializable {
                 }
 
                 totsum = transsum + matsum + hrsum;
-
+                tottot.setTextFill(Color.RED);
+                
                 mattot.setText(Double.toString(matsum)+" Rs");
                 trantot.setText(Double.toString(transsum)+" Rs");
                 tottot.setText(Double.toString(totsum )+" Rs");

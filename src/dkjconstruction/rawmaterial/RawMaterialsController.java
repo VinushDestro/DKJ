@@ -178,8 +178,10 @@ public class RawMaterialsController implements Initializable {
         } catch (Exception e) {
             System.out.println("error in program" + e);
 
-            alert.setContentText("You have entered an existing keyword"+e);
+          alert.setContentText("The Material you added already exist");
              alert.showAndWait();
+
+
 
         }
         
@@ -677,7 +679,7 @@ public void doSearchRawMaterial() {
     private void showReportRawMaterial(){// throws JRException, SQLException, ClassNotFoundException {
      try{   DbConnection.openConnection();
         Connection con = DbConnection.getConnection();
-        String report = "C:\\Users\\Asus\\Documents\\NetBeansProjects\\dkjconstruction\\src\\dkjconstruction\\rawmaterial\\RawMaterial.jrxml";
+        String report = "C:\\Users\\Mahesh\\Documents\\NetBeansProjects\\dkjconstructions\\src\\dkjconstruction\\rawmaterial\\RawMaterial.jrxml";
         JasperReport jr = JasperCompileManager.compileReport(report);
         JasperPrint jp = JasperFillManager.fillReport(jr,null,con);
         JasperViewer.viewReport(jp,false);

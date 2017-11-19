@@ -266,7 +266,33 @@ public class ViewTenderController implements Initializable {
             pb.progressProperty().bind(pDAys);
             pi.progressProperty().bind(pDAys);
             
+            if(rDays >= 10)
+            {
+                lbl_days.setTextFill(Color.GREEN);
+                lbl_days.setText( Integer.toString(rDays) + " days remaining");
+            }
+            else if((rDays < 10) && (rDays > 0 ) )
+            {
+            lbl_days.setTextFill(Color.BLUE);
             lbl_days.setText(Integer.toString(rDays) + " days remaining");
+                
+            }
+            else if(rDays == 0 )
+            {
+            lbl_days.setTextFill(Color.RED);
+            lbl_days.setText("("+ Integer.toString(rDays)  +" days )" + " Tender has reached the bid validity duration");
+                
+            }
+            else { 
+                lbl_days.setTextFill(Color.RED);
+                
+                lbl_days.setText( (Integer.toString( (-1) * rDays) )  + " days have exceeded the duration(bidValidity)");
+            
+            
+            }
+            
+
+
             
             
             

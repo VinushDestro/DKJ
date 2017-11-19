@@ -25,7 +25,7 @@ public class Detail {
     }
     
     public String getCol1() {
-        return col1;
+        return this.col1;
     }
 
     public void setCol1(String col1) {
@@ -33,7 +33,7 @@ public class Detail {
     }
 
     public String getCol2() {
-        return col2;
+        return this.col2;
     }
 
     public void setCol2(String col2) {
@@ -41,7 +41,7 @@ public class Detail {
     }
 
     public String getCol3() {
-        return col3;
+        return this.col3;
     }
 
     public void setCol3(String col3) {
@@ -49,7 +49,7 @@ public class Detail {
     }
 
     public String getCol4() {
-        return col4;
+        return this.col4;
     }
 
     public void setCol4(String col4) {
@@ -57,7 +57,7 @@ public class Detail {
     }
 
     public String getCol5() {
-        return col5;
+        return this.col5;
     }
 
     public void setCol5(String col5) {

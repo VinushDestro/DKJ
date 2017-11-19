@@ -7,8 +7,10 @@ package dkjconstruction;
 
 import java.io.IOException;
 import javafx.application.Application;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
@@ -47,9 +49,23 @@ public class DKJConstruction extends Application {
     }
     
     public static void showMainPage() throws IOException {
+        
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(DKJConstruction.class.getResource("main/Main.fxml"));
         mainLayout = loader.load();
+        
+
+        mainLayout.setOnMousePressed((MouseEvent event) -> {
+            final double xOffset = event.getSceneX();
+            final double yOffset = event.getSceneY();
+        });
+        mainLayout.setOnMouseDragged((MouseEvent event) -> {
+            final double xOffset = event.getSceneX();
+            final double yOffset = event.getSceneY();
+            primaryStage.setX(event.getScreenX() - xOffset);
+            primaryStage.setY(event.getScreenY() - yOffset);
+        });
+
         Scene scene = new Scene(mainLayout, 1200, 700);
         primaryStage.setScene(scene);
         primaryStage.show();
@@ -291,12 +307,12 @@ public class DKJConstruction extends Application {
     }
     
     public static void showErrorPage() throws IOException {
-//        mainLayout.getChildren().clear();
-//        showMainPage();
-//        FXMLLoader loader = new FXMLLoader();
-//        loader.setLocation(DKJConstruction.class.getResource("main/Error.fxml"));
-//        GridPane Pane = loader.load();
-//        mainLayout.add(Pane, 1, 1);
+        mainLayout.getChildren().clear();
+        showMainPage();
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(DKJConstruction.class.getResource("main/Error.fxml"));
+        GridPane Pane = loader.load();
+        mainLayout.add(Pane, 1, 1);
     }
     
     public static void showChangePw() throws IOException {

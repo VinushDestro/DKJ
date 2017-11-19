@@ -121,7 +121,7 @@ public class MainController {
     
     @FXML
     private void doUtilities() throws IOException {
-        if (type.equals("admin")||type.equals("supervisor"))
+        if (type.equals("manager")||type.equals("supervisor"))
             main.showUtilities();
         else
             main.showErrorPage();

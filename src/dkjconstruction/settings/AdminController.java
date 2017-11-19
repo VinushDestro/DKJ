@@ -111,7 +111,7 @@ public class AdminController {
                             addUserType=(rs.getString(1));
                             
                             if ("employee".equals(addUserType.toLowerCase()))
-                                addUserType="Admin";
+                                addUserType="admin";
                             result = Admin.addAdmin(addUserId,addUserType,Date.valueOf(addDate),addUsername,addPassword);
                         }
                             

@@ -153,7 +153,7 @@ public class RequirementController implements Initializable {
             DbConnection.openConnection();
             con = DbConnection.getConnection();
 
-            pst = con.prepareStatement("SELECT tenderId FROM tender ORDER BY tenderId ASC");
+            pst = con.prepareStatement("SELECT tenderId FROM tender where status='Pending' ORDER BY tenderId ASC");
             rs = pst.executeQuery();
 
             while (rs.next()) {

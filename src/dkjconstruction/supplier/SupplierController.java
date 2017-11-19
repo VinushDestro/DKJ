@@ -5,20 +5,6 @@
  */
 package dkjconstruction.supplier;
 
-import java.net.URL;
-import java.util.ResourceBundle;
-import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
-import javafx.scene.control.Label;
-import java.net.URL;
-import java.util.ResourceBundle;
-import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
-import javafx.scene.control.Label;
-import com.jfoenix.controls.*;
-import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.controls.JFXTreeTableView;
 import dkjconstruction.DbConnection;
@@ -175,11 +161,14 @@ public class SupplierController implements Initializable {
             alert.show();
             System.out.println("alert");
             
-            }else {
-                String regexStr,regexnic ;
+            
+ }else {
+                String regexStr,regexnic,regname ;
                         regexStr = "^[0-9]{10}$";
-                         regexnic = "^[0-9]{9}[v|V]$";           
-                  if ((contact.getText().matches(regexStr))&&(nic.getText().matches(regexnic))){
+                         regexnic = "^[0-9]{9}[v|V]$";  
+                         regname = "^^[a-zA-Z\\\\s]*$";
+                  if ((contact.getText().matches(regexStr))&&(nic.getText().matches(regexnic)) && (name.getText().matches(regname))){
+
             
         int result=0;
     
@@ -491,7 +480,7 @@ public class SupplierController implements Initializable {
             name.setText(String.valueOf(r1.getName()));
             nic.setText(String.valueOf(r1.getNic()));
             contact.setText(String.valueOf(r1.getContact()));
-             
+            nic.setDisable(true);
             
             supplierid.setDisable(true);
             
@@ -571,7 +560,7 @@ public class SupplierController implements Initializable {
     private void showReportSupplier(){// throws JRException, SQLException, ClassNotFoundException {
      try{   DbConnection.openConnection();
         Connection con = DbConnection.getConnection();
-        String report = "C:\\Users\\Asus\\Documents\\NetBeansProjects\\dkjconstruction\\src\\dkjconstruction\\supplier\\Supplier.jrxml";
+        String report = "C:\\Users\\Mahesh\\Documents\\NetBeansProjects\\dkjconstructions\\src\\dkjconstruction\\supplier\\Supplier.jrxml";
         JasperReport jr = JasperCompileManager.compileReport(report);
         JasperPrint jp = JasperFillManager.fillReport(jr,null,con);
         JasperViewer.viewReport(jp,false);

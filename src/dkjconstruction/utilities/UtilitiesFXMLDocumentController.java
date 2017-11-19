@@ -172,7 +172,7 @@ public class UtilitiesFXMLDocumentController implements Initializable {
             String report = "C:\\Users\\Mahesh\\Documents\\NetBeansProjects\\dkjconstructions\\src\\dkjconstruction\\utilities\\report1.jrxml";
             JasperReport jr = JasperCompileManager.compileReport(report);
             JasperPrint jp = JasperFillManager.fillReport(jr, null, con);
-            JasperViewer.viewReport(jp);
+            JasperViewer.viewReport(jp,false);
         } catch (Exception e) {
             System.out.println("report" + e);
         }
