@@ -21,33 +21,33 @@
     <RowConstraints maxHeight="70.33331298828125" minHeight="1.0" prefHeight="1.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
-      <AnchorPane prefHeight="200.0" prefWidth="200.0">
+      <AnchorPane prefHeight="200.0" prefWidth="200.0" stylesheets="@../style2.css">
          <children>
-            <JFXTextField fx:id="vRegNo" layoutX="433.0" layoutY="479.0" promptText="Vehicle Number">
+            <JFXTextField fx:id="vRegNo" layoutX="438.0" layoutY="550.0" promptText="Vehicle Number">
                <font>
                   <Font name="Raleway-Regular" size="14.0" />
                </font>
             </JFXTextField>
-            <AnchorPane layoutX="626.0" prefHeight="609.0" prefWidth="217.0" style="-fx-background-color: #2c3e50;">
+            <AnchorPane layoutX="626.0" prefHeight="661.0" prefWidth="217.0" stylesheets="@../style2.css">
                <children>
-                  <Button layoutX="26.0" layoutY="257.0" mnemonicParsing="false" onAction="#addTenderAsset" prefHeight="43.0" prefWidth="166.0" style="-fx-border-color: #1e8bc3; -fx-background-color: #2c3e50; -fx-border-width: 2; -fx-border-radius: 150,10,10;" text="Assign tender Asset" textFill="#1e8bc3">
+                  <Button layoutX="21.0" layoutY="461.0" mnemonicParsing="false" onAction="#addTenderAsset" prefHeight="43.0" prefWidth="175.0" stylesheets="@../style2.css" text="Assign tender Asset" textFill="WHITE">
                      <font>
                         <Font name="Raleway-Bold" size="14.0" />
                      </font>
                   </Button>
-                  <Button layoutX="32.0" layoutY="412.0" mnemonicParsing="false" onAction="#tender_reportAsset" prefHeight="43.0" prefWidth="135.0" style="-fx-border-color: #1e8bc3; -fx-background-color: #2c3e50; -fx-border-width: 2; -fx-border-radius: 150,10,10;" text="iReport" textFill="#1e8bc3">
+                  <Button layoutX="18.0" layoutY="535.0" mnemonicParsing="false" onAction="#tender_reportAsset" prefHeight="43.0" prefWidth="186.0" stylesheets="@../style2.css" text="Report" textFill="WHITE">
                      <font>
                         <Font name="Raleway-Bold" size="14.0" />
                      </font>
                   </Button>
                </children>
             </AnchorPane>
-            <JFXTextField fx:id="aTenderId" layoutX="50.0" layoutY="479.0" prefHeight="26.0" prefWidth="162.0" promptText="Tender ID">
+            <JFXTextField fx:id="aTenderId" layoutX="47.0" layoutY="551.0" prefHeight="26.0" prefWidth="162.0" promptText="Tender ID">
                <font>
                   <Font name="Raleway-Regular" size="14.0" />
                </font>
             </JFXTextField>
-            <TableView fx:id="transTable" layoutX="76.0" layoutY="24.0" prefHeight="164.0" prefWidth="500.0">
+            <TableView fx:id="transTable" layoutX="78.0" layoutY="79.0" prefHeight="164.0" prefWidth="500.0">
                <columns>
                   <TableColumn fx:id="assetTender" prefWidth="119.0" text="TenderID" />
                   <TableColumn fx:id="assettype" prefWidth="130.0" text="Asset Type" />
@@ -55,15 +55,15 @@
                   <TableColumn fx:id="assetAssignCount" prefWidth="130.0" text="Assigned Count" />
                </columns>
             </TableView>
-            <TableView fx:id="assetTable" layoutX="78.0" layoutY="209.0" prefHeight="200.0" prefWidth="498.0">
+            <TableView fx:id="assetTable" layoutX="88.0" layoutY="276.0" prefHeight="200.0" prefWidth="498.0">
                <columns>
                   <TableColumn fx:id="regNo" prefWidth="136.0" text="REG Number" />
                   <TableColumn fx:id="assName" prefWidth="155.0" text="Name" />
                   <TableColumn fx:id="assType" prefWidth="172.0" text="Type" />
                </columns>
             </TableView>
-            <JFXTextField fx:id="assetType" layoutX="248.0" layoutY="480.0" promptText="Type" />
-            <JFXTextField fx:id="searchfield" layoutX="41.0" layoutY="2.0" prefHeight="25.0" prefWidth="531.0" />
+            <JFXTextField fx:id="assetType" layoutX="251.0" layoutY="550.0" promptText="Type" />
+            <JFXTextField fx:id="searchfield" layoutX="45.0" layoutY="13.0" prefHeight="49.0" prefWidth="572.0" promptText="Search" stylesheets="@../style2.css" />
          </children>
       </AnchorPane>
    </children>

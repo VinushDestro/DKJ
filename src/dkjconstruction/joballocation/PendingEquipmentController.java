@@ -23,6 +23,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -35,11 +36,11 @@ import javafx.stage.Stage;
  */
 public class PendingEquipmentController implements Initializable {
 
-    private Connection con = null;
+ private Connection con = null;
     private PreparedStatement pst = null;
     private ResultSet rs = null;
     private ResultSet rs2 = null;
-    private ObservableList<EQUI> dataEquipending;
+    private ObservableList<EquipTender> dataEquipending;
     private ObservableList<Equipment> dataequipmentpending;
 
     @FXML
@@ -55,6 +56,8 @@ public class PendingEquipmentController implements Initializable {
     @FXML
     private JFXTextField pendingEqCount;
     @FXML
+    private JFXTextField searchfield;
+    @FXML
     private TableView pendingequipTable;
     @FXML
     private TableColumn pendingeqTender;
@@ -64,6 +67,7 @@ public class PendingEquipmentController implements Initializable {
     private TableColumn pendingeqReq;
     @FXML
     private TableColumn pendingeqAssign;
+   
 
     /**
      * Initializes the controller class.
@@ -73,7 +77,10 @@ public class PendingEquipmentController implements Initializable {
         // TODO
         dataEquipending = FXCollections.observableArrayList();
         dataequipmentpending = FXCollections.observableArrayList();
-
+        
+          pendingequipTender.setDisable(true);
+            pendingtenderEquipId.setDisable(true);
+              
         pendingsetJobEquipmentTable();
         pendingloadFromJobEquipDB();
         pendingsetEquipmentTable();
@@ -81,6 +88,7 @@ public class PendingEquipmentController implements Initializable {
 
         RowclickEvent12();
         RowclickEvent13();
+        search();
 
     }
 
@@ -123,11 +131,11 @@ public class PendingEquipmentController implements Initializable {
 
             Connection con = DbConnection.getConnection();
 
-            pst = con.prepareStatement("select tenderId,equipName,count,assignCount from equiptender");
+            pst = con.prepareStatement("select tenderId,equipName,count,assignCount from equiptender where tenderid IN(select tenderId from jobasset where assignCount > 0 and tenderId IN(select tenderId from tender where status='pending'))");
             rs = pst.executeQuery();
 
             while (rs.next()) {
-                dataEquipending.add(new EQUI(rs.getString(1), rs.getString(2), rs.getInt(3), rs.getInt(4)));
+                dataEquipending.add(new EquipTender(rs.getString(1), rs.getString(2), rs.getInt(3), rs.getInt(4)));
             }
 
         } catch (Exception e) {
@@ -162,7 +170,7 @@ public class PendingEquipmentController implements Initializable {
 
             Connection con = DbConnection.getConnection();
 
-            pst = con.prepareStatement("select name,(count-assignedCount) from equipment ");
+            pst = con.prepareStatement("select name,(count-assignedCount) from equipment where(count-assignedCount)>0 ");
             rs = pst.executeQuery();
 
             while (rs.next()) {
@@ -191,13 +199,12 @@ public class PendingEquipmentController implements Initializable {
 
             if (addTender.isEmpty() || addEq.isEmpty()) {
                 alerboxInfo("Error", "Fields cannot be empty");
-                /* Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Error");
-                alert.setHeaderText(null);
-                alert.setContentText("Fields cannot be empty");
-                alert.show();*/
-            } else if (addEqcount == 0) {
-                alerboxInfo("Operation Failed", "You have enterd 0 for count ");
+               pendingequipTender.clear();
+               pendingtenderEquipId.clear();
+               pendingEqCount.clear();
+               
+            } else if (addEqcount<=0) {
+                alerboxInfo("Operation Failed", "You have enterd 0 lesser value for count ");
             }
 
             PreparedStatement stmt2 = con.prepareStatement("select count from equiptender where tenderid=? and equipName=?");
@@ -206,7 +213,7 @@ public class PendingEquipmentController implements Initializable {
             rs = stmt2.executeQuery();
 
             while (rs.next()) {
-                dataEquipending.add(new EQUI(rs.getInt(1)));
+                dataEquipending.add(new EquipTender(rs.getInt(1)));
                 //  dataKISH.add(new KISHANTH(null, null, null));
                 Integer amount;
                 amount = rs.getInt(1);
@@ -217,11 +224,7 @@ public class PendingEquipmentController implements Initializable {
 
                     alerboxInfo("Error", "Assigning amount cannot be greater than required amount. Try entering again");
 
-                    /* Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Error");
-                alert.setHeaderText(null);
-                alert.setContentText("Assigning amount cannot be greater than required amount. Try entering again");
-                alert.show();*/
+                   
                     pendingEqCount.clear();
 
                 } else {
@@ -233,7 +236,7 @@ public class PendingEquipmentController implements Initializable {
                     stmt.setString(3, addEq);
                     stmt.executeUpdate();
 
-                    PreparedStatement stmt3 = con4.prepareStatement("UPDATE equipment SET  availableCount=availableCount-? where name=?");
+                    PreparedStatement stmt3 = con4.prepareStatement("UPDATE equipment SET  assignedCount=assignedCount+? where name=?");
                     stmt3.setInt(1, addEqcount);
                     stmt3.setString(2, addEq);
                     stmt3.executeUpdate();
@@ -242,12 +245,7 @@ public class PendingEquipmentController implements Initializable {
                     pendingloadFromEquipDB();
 
                     System.out.println("success");
-                    alerboxInfo("Oeration Success", "Equipment added successfully");
-                    /*  Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Success");
-            alert.setHeaderText(null);
-            alert.setContentText("Equipment added successfully");
-            alert.show();*/
+                    alerboxInfo("Operation Success", "Equipment added successfully");
                 }
 
             }
@@ -261,14 +259,20 @@ public class PendingEquipmentController implements Initializable {
             pendingtenderEquipId.clear();
             pendingEqCount.clear();
         }
+         pendingequipTender.clear();
+            pendingtenderEquipId.clear();
+            pendingEqCount.clear();
+          pendingloadFromEquipDB();
+          pendingloadFromJobEquipDB();
     }
 
     private void RowclickEvent12() {
         pendingequipTable.setOnMouseClicked((e)
                 -> {
-            EQUI v1 = (EQUI) pendingequipTable.getItems().get(pendingequipTable.getSelectionModel().getSelectedIndex());
+            EquipTender v1 = (EquipTender) pendingequipTable.getItems().get(pendingequipTable.getSelectionModel().getSelectedIndex());
             pendingequipTender.setText(v1.getTenderId());
             pendingtenderEquipId.setText(v1.getEquiName());
+           
 
             dataequipmentpending.clear();
 
@@ -278,6 +282,7 @@ public class PendingEquipmentController implements Initializable {
 
                 PreparedStatement stmt4 = con.prepareStatement("select name,(count-assignedCount) from equipment where name IN(select equipName from equiptender where tenderId=? and equipName=?)");
                 stmt4.setString(1, addTender);
+                System.out.println(nameQ);
                 stmt4.setString(2, nameQ);
                 rs = stmt4.executeQuery();
                 //nameQ=null;
@@ -316,5 +321,38 @@ public class PendingEquipmentController implements Initializable {
     @FXML
     private void backClicked(ActionEvent event) throws IOException {
   dkjconstruction.DKJConstruction.showPendingMaterial();
+    }
+    
+     public void search() {
+        searchfield.setOnKeyReleased(e -> {
+            if (searchfield.getText().equals("")) {
+               // loadFromTenderDB();
+                //loadFromAssetDB();
+               pendingloadFromJobEquipDB();
+              //  loadFromJobAssetADB();
+                //loadFromTenderMaterialDB();
+            } else {
+                dataEquipending.clear();
+                try {
+
+                    Connection con = DbConnection.getConnection();
+
+                     pst = con.prepareStatement("select tenderId,equipName,count,assignCount from equiptender where tenderId IN(select tenderId from jobasset where assignCount>0) and tenderId  LIKE '%" + searchfield.getText() + "%'");
+            rs = pst.executeQuery();
+
+            while (rs.next()) {
+                dataEquipending.add(new EquipTender(rs.getString(1), rs.getString(2), rs.getInt(3), rs.getInt(4)));
+            }
+                    System.out.println("Search clicked");
+                } catch (Exception ex) {
+                    System.err.println("Error loading table data search table jobemployee" + ex);
+
+                }
+
+                pendingequipTable.setItems(dataEquipending);
+
+            }
+
+        });//event
     }
 }

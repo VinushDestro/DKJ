@@ -9,6 +9,8 @@ package dkjconstruction.joballocation;
  *
  * @author Ranjitha
  */
+//Class Material referencing material
+
 public class Material {
     private String matType;
     private Integer available;

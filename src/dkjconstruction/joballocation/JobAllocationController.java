@@ -51,10 +51,10 @@ public class JobAllocationController implements Initializable {
     private PreparedStatement pst = null;
     private ResultSet rs = null;
 
-    private ObservableList<KISHANTH> dataKISH;
-    private ObservableList<ASRAJ> dataASRAJ;
-    private ObservableList<EQUI> dataEqui;
-    private ObservableList<VINU> datavinu;
+    private ObservableList<JobEmployee> dataKISH;
+    private ObservableList<EMPLOYEE> dataASRAJ;
+    private ObservableList<EquipTender> dataEqui;
+    private ObservableList<JobAsset> datavinu;
     private ObservableList<asset> dataasset;
     private ObservableList<Equipment> dataequipment;
     private ObservableList<matTender> dataMatTend;
@@ -65,11 +65,11 @@ public class JobAllocationController implements Initializable {
     @FXML
     private TableView employeeTable;
     @FXML
-    private TableView<VINU> transTable;
+    private TableView<JobAsset> transTable;
     @FXML
     private TableView<asset> assetTable;
     @FXML
-    private TableView<EQUI> equipTable;
+    private TableView<EquipTender> equipTable;
     @FXML
     private TableView<Equipment> equipmentTable;
     @FXML

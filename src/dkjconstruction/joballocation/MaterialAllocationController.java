@@ -127,7 +127,7 @@ public class MaterialAllocationController implements Initializable {
 
             Connection con = DbConnection.getConnection();
 
-            pst = con.prepareStatement("select tenderId,materialType,materialcount,assignCount from materialtender");
+            pst = con.prepareStatement("select tenderId,materialType,materialcount,assignCount from materialtender where tenderId IN(select tenderId from tender where ststus='on progress')");
             rs = pst.executeQuery();
 
             while (rs.next()) {
@@ -166,7 +166,7 @@ public class MaterialAllocationController implements Initializable {
 
             Connection con = DbConnection.getConnection();
 
-            pst = con.prepareStatement("select type,quantity from rawmaterial");
+            pst = con.prepareStatement("select type,quantity from rawmaterial where quantity>0");
             rs = pst.executeQuery();
 
             while (rs.next()) {
@@ -197,12 +197,13 @@ public class MaterialAllocationController implements Initializable {
             if (addMatTender.isEmpty() || addMaterial.isEmpty()) {
                
                 alerboxInfo("Operation Failed","Fields cannot be empty");
+                
               
             }
             else if(addMatcount==0){
                  alerboxInfo("Operation Failed","You have enterd 0 for count ");
             }
-            
+            else{
             PreparedStatement stmt2 = con.prepareStatement("select assignCount from materialtender where tenderid=? and materialType=?");
            stmt2.setString(1, addMatTender); 
            stmt2.setString(2, addMaterial);
@@ -242,6 +243,7 @@ public class MaterialAllocationController implements Initializable {
             loadFromTenderMaterialDB();
             loadMaterialDB();
               }
+            }
        
            
         } catch (Exception e) {
@@ -260,7 +262,29 @@ public class MaterialAllocationController implements Initializable {
                 -> {
             matTender v1 = (matTender) tendMatTbl.getItems().get(tendMatTbl.getSelectionModel().getSelectedIndex());
             materialtender.setText(v1.getMatTender());
+            tendermaterialtype.setText(v1.getMatType());
+            
+            datamat.clear();
+            try{
+            String addTender = materialtender.getText();
+            String mType = tendermaterialtype.getText();
+                
+             PreparedStatement stmt1 = con.prepareStatement("select type,quantity from rawmaterial WHERE type =?");
+            stmt1.setString(1, mType);
+            rs=stmt1.executeQuery();  
+            
+            while(rs.next()){
+            datamat.add(new Material(rs.getString(1), rs.getInt(2)));
+                //  dataKISH.add(new KISHANTH(null, null, null));
 
+            }
+
+        } catch (Exception e1) {
+            System.out.println("ranjithatender");
+            System.err.println("Error loading table data ");
+
+        }
+        material.setItems(datamat);
         });
     }
 

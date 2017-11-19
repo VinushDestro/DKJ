@@ -184,6 +184,14 @@ public class MainController {
     }
     
     @FXML
+    private void showChat() throws IOException {
+        if (type.equals("supervisor"))
+            main.showChat();
+        else
+            main.showErrorPage();
+    }
+    
+    @FXML
     private void doLogout() {
         main.logout();
     }

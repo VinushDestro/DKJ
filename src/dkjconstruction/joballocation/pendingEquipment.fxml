@@ -18,7 +18,7 @@
     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
-      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="371.0" prefWidth="505.0">
+      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="371.0" prefWidth="505.0" stylesheets="@../style2.css">
          <children>
             <TableView fx:id="pendingequipmentTable" layoutX="86.0" layoutY="254.0" prefHeight="200.0" prefWidth="367.0">
                <columns>
@@ -26,8 +26,8 @@
                   <TableColumn fx:id="pendingavailableEquipCount" prefWidth="193.0" text="Available Count" />
                </columns>
             </TableView>
-            <JFXTextField fx:id="pendingequipTender" layoutX="34.0" layoutY="485.0" promptText="TenderID" />
-            <JFXTextField fx:id="pendingtenderEquipId" layoutX="202.0" layoutY="485.0" promptText="Material Type" />
+            <JFXTextField fx:id="pendingequipTender" layoutX="28.0" layoutY="566.0" promptText="TenderID" />
+            <JFXTextField fx:id="pendingtenderEquipId" layoutX="191.0" layoutY="567.0" promptText="Material Type" />
             <TableView fx:id="pendingequipTable" layoutX="14.0" layoutY="35.0" prefHeight="200.0" prefWidth="531.0">
                <columns>
                   <TableColumn fx:id="pendingeqTender" prefWidth="121.0" text="TenderID" />
@@ -36,26 +36,27 @@
                   <TableColumn fx:id="pendingeqAssign" prefWidth="153.0" text="Assigned Count" />
                </columns>
             </TableView>
-            <AnchorPane layoutX="573.0" layoutY="7.0" prefHeight="629.0" prefWidth="217.0" style="-fx-background-color: #2c3e50;">
+            <AnchorPane layoutX="617.0" layoutY="-1.0" prefHeight="665.0" prefWidth="231.0" stylesheets="@../style2.css">
                <children>
-                  <Button layoutX="20.0" layoutY="160.0" mnemonicParsing="false" onAction="#pendingaddTenderEquipment" prefHeight="43.0" prefWidth="177.0" style="-fx-border-color: #1e8bc3; -fx-background-color: #2c3e50; -fx-border-width: 2; -fx-border-radius: 150,10,10;" text="Submit Equipment" textFill="#1e8bc3">
+                  <Button layoutX="20.0" layoutY="368.0" mnemonicParsing="false" onAction="#pendingaddTenderEquipment" prefHeight="43.0" prefWidth="177.0" stylesheets="@../style2.css" text="Submit Equipment" textFill="WHITE">
                      <font>
                         <Font name="Raleway-Bold" size="14.0" />
                      </font>
                   </Button>
-                  <Button layoutX="20.0" layoutY="261.0" mnemonicParsing="false" onAction="#nextClicked" prefHeight="43.0" prefWidth="177.0" style="-fx-border-color: #1e8bc3; -fx-background-color: #2c3e50; -fx-border-width: 2; -fx-border-radius: 150,10,10;" text="Next" textFill="#1e8bc3">
+                  <Button layoutX="15.0" layoutY="450.0" mnemonicParsing="false" onAction="#nextClicked" prefHeight="43.0" prefWidth="177.0" style="-fx-border-color: ; -fx-background-color: ; -fx-border-width: ; -fx-border-radius: 0;" stylesheets="@../style2.css" text="Next" textFill="WHITE">
                      <font>
                         <Font name="Raleway-Bold" size="14.0" />
                      </font>
                   </Button>
-                  <Button layoutX="20.0" layoutY="345.0" mnemonicParsing="false" onAction="#backClicked" prefHeight="43.0" prefWidth="177.0" style="-fx-border-color: #1e8bc3; -fx-background-color: #2c3e50; -fx-border-width: 2; -fx-border-radius: 150,10,10;" text="Back" textFill="#1e8bc3">
+                  <Button layoutX="19.0" layoutY="531.0" mnemonicParsing="false" onAction="#backClicked" prefHeight="43.0" prefWidth="177.0" style="-fx-border-color: ; -fx-background-color: ; -fx-border-width: ; -fx-border-radius: 0;" stylesheets="@../style2.css" text="Back" textFill="WHITE">
                      <font>
                         <Font name="Raleway-Bold" size="14.0" />
                      </font>
                   </Button>
                </children>
             </AnchorPane>
-            <JFXTextField fx:id="pendingEqCount" layoutX="367.0" layoutY="485.0" promptText="count" />
+            <JFXTextField fx:id="pendingEqCount" layoutX="374.0" layoutY="566.0" promptText="count" />
+            <JFXTextField fx:id="searchfield" layoutX="28.0" layoutY="5.0" prefHeight="34.0" prefWidth="539.0" promptText="Search" />
          </children>
       </AnchorPane>
    </children>

@@ -38,7 +38,7 @@ public class EquipmentAllocationController implements Initializable {
     private Connection con = null;
     private PreparedStatement pst = null;
     private ResultSet rs = null;
-     private ObservableList<EQUI> dataEqui;
+     private ObservableList<EquipTender> dataEqui;
        private ObservableList<Equipment> dataequipment;
     
     @FXML
@@ -120,11 +120,11 @@ public class EquipmentAllocationController implements Initializable {
 
             Connection con = DbConnection.getConnection();
 
-            pst = con.prepareStatement("select tenderId,equipName,count,assignCount from equiptender");
+            pst = con.prepareStatement("select tenderId,equipName,count,assignCount from equiptender where tenderId IN(select tederId from tender where status ='on progress')");
             rs = pst.executeQuery();
 
             while (rs.next()) {
-                dataEqui.add(new EQUI(rs.getString(1), rs.getString(2), rs.getInt(3), rs.getInt(4)));
+                dataEqui.add(new EquipTender(rs.getString(1), rs.getString(2), rs.getInt(3), rs.getInt(4)));
             }
 
         } catch (Exception e) {
@@ -159,7 +159,7 @@ public class EquipmentAllocationController implements Initializable {
 
             Connection con = DbConnection.getConnection();
 
-            pst = con.prepareStatement("select name,availableCount from equipment ");
+            pst = con.prepareStatement("select name,(count-assignedCount) from equipment");
             rs = pst.executeQuery();
 
             while (rs.next()) {
@@ -188,23 +188,19 @@ public class EquipmentAllocationController implements Initializable {
             Integer addeqcount= Integer.parseInt(matCount.getText());
             if (addTender.isEmpty() || addEq.isEmpty()) {
                  alerboxInfo("Operation Failed","Fields cannot be empty");
-               /* Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Error");
-                alert.setHeaderText(null);
-                alert.setContentText("Fields cannot be empty");
-                alert.show();*/
+              
             }
             else if(addeqcount==0){
                  alerboxInfo("Operation Failed","you have enterd 0 for count ");
             }
-                 
-             PreparedStatement stmt2 = con.prepareStatement("select count from equiptender where tenderid=? and equipName=?");
+            
+             PreparedStatement stmt2 = con.prepareStatement("select count from equiptender where tenderId=? and equipName=?");
            stmt2.setString(1, addTender); 
            stmt2.setString(2, addEq);
            rs = stmt2.executeQuery();
 
             while (rs.next()) {
-                dataEqui.add(new EQUI( rs.getInt(1)));
+                dataEqui.add(new EquipTender( rs.getInt(1)));
                 //  dataKISH.add(new KISHANTH(null, null, null));
                  Integer amount;
                 amount=rs.getInt(1);
@@ -215,16 +211,16 @@ public class EquipmentAllocationController implements Initializable {
                  alerboxInfo("Attention","Amount greater than required amount!! press ok to continue");
                       
             }
+                else{   
+             DbConnection.openConnection();
+                    Connection con4 = DbConnection.getConnection();
+                    PreparedStatement stmt = con4.prepareStatement("UPDATE equiptender SET assignCount=assignCount+? where tenderId=? and equipName=?");
+                    stmt.setInt(1, addeqcount);
+                    stmt.setString(2, addTender);
+                    stmt.setString(3, addEq);
+                    stmt.executeUpdate();
 
-            DbConnection.openConnection();
-            Connection con4 = DbConnection.getConnection();
-            PreparedStatement stmt = con4.prepareStatement("UPDATE equiptender SET assignCount=assignCount+? and where tenderId=? and equipName=?");
-             stmt.setInt(1, addeqcount);
-            stmt.setString(2, addTender);
-            stmt.setString(3, addEq);
-            stmt.executeUpdate();
-
-            PreparedStatement stmt5 = con4.prepareStatement("UPDATE equipment SET  availableCount=availableCount-? where name=?");
+            PreparedStatement stmt5 = con4.prepareStatement("UPDATE equipment SET assignedCount=assignedCount+? where name=?");
             stmt5.setInt(1, addeqcount);
             stmt5.setString(2, addEq);
             stmt5.executeUpdate();
@@ -235,26 +231,20 @@ public class EquipmentAllocationController implements Initializable {
             System.out.println("success");
             alerboxInfo("Operation Success","Equipment added successfully");
 
-           /* Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Success");
-            alert.setHeaderText(null);
-            alert.setContentText("Equipment added successfully");
-            alert.show();*/
-            
+           
+            }
 
         }
             }catch (Exception e) {
 
             System.out.println("error" + e);
             alerboxInfo("Operation Failed","Equipment cannot be added ");
-            /*Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Error");
-            alert.setHeaderText(null);
-            alert.setContentText("error" + e);
-            alert.show();*/
+           
         }
         equipTender.clear();
         tenderEquipId.clear();
+        loadFromEquipDB();
+        loadFromJobEquipDB();
     }
     
     
@@ -262,7 +252,7 @@ public class EquipmentAllocationController implements Initializable {
       private void RowclickEvent4() {
          equipTable.setOnMouseClicked((e)
                 -> {
-            EQUI v1 = (EQUI) equipTable.getItems().get(equipTable.getSelectionModel().getSelectedIndex());
+            EquipTender v1 = (EquipTender) equipTable.getItems().get(equipTable.getSelectionModel().getSelectedIndex());
             equipTender.setText(v1.getTenderId());
             tenderEquipId.setText(v1.getEquiName());
             
@@ -314,7 +304,7 @@ public class EquipmentAllocationController implements Initializable {
             rs = pst.executeQuery();
 
             while (rs.next()) {
-                dataEqui.add(new EQUI(rs.getString(1), rs.getString(2), rs.getInt(3), rs.getInt(4)));
+                dataEqui.add(new EquipTender(rs.getString(1), rs.getString(2), rs.getInt(3), rs.getInt(4)));
             }
                     System.out.println("Search clicked");
                 } catch (Exception ex) {

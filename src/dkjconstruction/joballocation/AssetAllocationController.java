@@ -35,11 +35,11 @@ import net.sf.jasperreports.view.JasperViewer;
  */
 public class AssetAllocationController implements Initializable {
 
-    private Connection con = null;
+   private Connection con = null;
     private PreparedStatement pst = null;
     private ResultSet rs = null;
 
-    private ObservableList<VINU> datavinu;
+    private ObservableList<JobAsset> datavinu;
     private ObservableList<asset> dataasset;
 
     @FXML
@@ -112,7 +112,7 @@ public class AssetAllocationController implements Initializable {
         try {
 
             Connection con = DbConnection.getConnection();
-            pst = con.prepareStatement("select tenderId,assetType,assetCount,assignCount from jobasset");
+            pst = con.prepareStatement("select tenderId,assetType,assetCount,assignCount from jobasset where tenderId IN(select tenderId from tender where status='on progress')");
 
             rs = pst.executeQuery();
 
@@ -120,7 +120,7 @@ public class AssetAllocationController implements Initializable {
             
             rs = pst.executeQuery();*/
             while (rs.next()) {
-                datavinu.add(new VINU(rs.getString(1), rs.getString(2), rs.getInt(3), rs.getInt(4)));
+                datavinu.add(new JobAsset(rs.getString(1), rs.getString(2), rs.getInt(3), rs.getInt(4)));
                 //  dataKISH.add(new KISHANTH(null, null, null));
 
             }
@@ -187,7 +187,15 @@ public class AssetAllocationController implements Initializable {
             String addTender = aTenderId.getText();
             String addAsset = vRegNo.getText();
             String addAssetType = assetType.getText();
-
+            
+            if (addTender.isEmpty() || addAsset.isEmpty()) {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Error");
+                alert.setHeaderText(null);
+                alert.setContentText("Fields cannot be empty");
+                alert.show();
+            }
+            else{
             DbConnection.openConnection();
             Connection con4 = DbConnection.getConnection();
             PreparedStatement stmt = con4.prepareStatement("insert into assettender (tenderId,regNo) values(?,?)");
@@ -213,6 +221,7 @@ public class AssetAllocationController implements Initializable {
 
             loadFromAssetDB();
             loadFromJobAssetADB();
+            }
 
         } catch (Exception e) {
 
@@ -223,6 +232,11 @@ public class AssetAllocationController implements Initializable {
             alert.setContentText("errorxxxxx" + e);
             alert.show();
         }
+        aTenderId.clear();
+        vRegNo.clear();
+        assetType.clear();
+        loadFromAssetDB();
+            loadFromJobAssetADB();
     }
 
     private void RowclickEvent2() {
@@ -238,7 +252,7 @@ public class AssetAllocationController implements Initializable {
     private void RowclickEvent3() {
         transTable.setOnMouseClicked((e)
                 -> {
-            VINU v1 = (VINU) transTable.getItems().get(transTable.getSelectionModel().getSelectedIndex());
+            JobAsset v1 = (JobAsset) transTable.getItems().get(transTable.getSelectionModel().getSelectedIndex());
             aTenderId.setText(v1.getTenderId());
             assetType.setText(v1.getType());
 
@@ -281,5 +295,37 @@ public class AssetAllocationController implements Initializable {
             System.out.println("sdas");
         }
     }
+    
+      public void search() {
+        searchfield.setOnKeyReleased(e -> {
+            if (searchfield.getText().equals("")) {
+                //loadFromTenderDB();
+                //loadFromAssetDB();
+               // loadFromJobEquipDB();
+                loadFromJobAssetADB();
+               // loadFromTenderMaterialDB();
+            } else {
+                datavinu.clear();
+                try {
 
+                    Connection con = DbConnection.getConnection();
+
+                    pst = con.prepareStatement("select tenderId,assetType,assetCount,assignCount from jobasset where tenderId  LIKE '%" + searchfield.getText() + "%' ");
+                    rs = pst.executeQuery();
+
+                    while (rs.next()) {
+                        datavinu.add(new JobAsset(rs.getString(1),rs.getString(2), rs.getInt(3), rs.getInt(4)));
+                    }
+                    System.out.println("Search clicked");
+                } catch (Exception ex) {
+                    System.err.println("Error loading table data search table jobemployee" + ex);
+
+                }
+
+                transTable.setItems(datavinu);
+
+            }
+
+        });//event
+    }
 }

@@ -36,11 +36,11 @@ import javafx.stage.Stage;
  */
 public class PendingAssetController implements Initializable {
 
-    private Connection con = null;
+   private Connection con = null;
     private PreparedStatement pst = null;
     private ResultSet rs = null;
 
-    private ObservableList<VINU> datavinupending;
+    private ObservableList<JobAsset> datavinupending;
     private ObservableList<asset> dataassetpending;
 
     @FXML
@@ -78,7 +78,10 @@ public class PendingAssetController implements Initializable {
         // TODO
         datavinupending = FXCollections.observableArrayList();
         dataassetpending = FXCollections.observableArrayList();
-
+        pendingaTenderId.setDisable(true);
+         pendingvRegNo.setDisable(true);
+      
+        
         setpendingJobAssetTable();
         loadFrompendingJobAssetADB();
         setpendingAssetTable();
@@ -86,6 +89,7 @@ public class PendingAssetController implements Initializable {
 
         RowclickEvent10();
         RowclickEvent11();
+        search();
     }
 
     private void setpendingJobAssetTable() {
@@ -116,12 +120,13 @@ public class PendingAssetController implements Initializable {
             /* pst = con.prepareStatement("select tenderId,assetType,assetCount,assignCount from jobasset");
             rs = pst.executeQuery();*/
 
-            pst = con.prepareStatement("select tenderId,assetType,assetCount,assignCount from jobasset");
+            pst = con.prepareStatement("SELECT  tenderId,  assetType,  assetCount,  assignCount FROM  jobasset WHERE  tenderId IN(  SELECT    tenderId FROM   jobemployee WHERE assignCount > 0 AND tenderID IN(    SELECT      tenderId    FROM      tender    WHERE  STATUS    = 'pending'  ))");
+                  
 
             rs = pst.executeQuery();
 
             while (rs.next()) {
-                datavinupending.add(new VINU(rs.getString(1), rs.getString(2), rs.getInt(3), rs.getInt(4)));
+                datavinupending.add(new JobAsset(rs.getString(1), rs.getString(2), rs.getInt(3), rs.getInt(4)));
                 //  dataKISH.add(new KISHANTH(null, null, null));
 
             }
@@ -192,6 +197,7 @@ public class PendingAssetController implements Initializable {
                 alert.setContentText("Any Fields Cannot field cannot be empty");
                 alert.show();
             }
+            else{
             DbConnection.openConnection();
             Connection con2 = DbConnection.getConnection();
             PreparedStatement stmt = con2.prepareStatement("insert into transport (regNo,tenderId) values(?,?)");
@@ -211,6 +217,7 @@ public class PendingAssetController implements Initializable {
             alert.setHeaderText(null);
             alert.setContentText("Assigned to travel ");
             alert.show();
+            }
         } catch (Exception e) {
 
             System.out.println("error" + e);
@@ -220,6 +227,8 @@ public class PendingAssetController implements Initializable {
             alert.setContentText("error" + e);
             alert.show();
         }
+        loadFrompendingAssetDB();
+        loadFrompendingJobAssetADB();
     }
 
     @FXML
@@ -230,6 +239,19 @@ public class PendingAssetController implements Initializable {
             String addTender = pendingaTenderId.getText();
             String addAsset = pendingvRegNo.getText();
             String addAssetType = pendingassetType.getText();
+            
+            if (addTender.isEmpty() || addAsset.isEmpty()) {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Error in assigning");
+                alert.setHeaderText(null);
+                alert.setContentText("Any Fields Cannot field cannot be empty");
+                alert.show();
+                
+                 pendingassetType.clear();
+                pendingvRegNo.clear();
+                pendingaTenderId.clear();
+            }
+            else{
 
             DbConnection.openConnection();
             Connection con4 = DbConnection.getConnection();
@@ -256,6 +278,8 @@ public class PendingAssetController implements Initializable {
 
             //  loadFrompendingJobAssetADB(accessStatic.getTender());
             loadFrompendingAssetDB();
+            loadFrompendingJobAssetADB();
+            }
 
         } catch (Exception e) {
 
@@ -285,7 +309,7 @@ public class PendingAssetController implements Initializable {
     private void RowclickEvent11() {
         pendingtransTable.setOnMouseClicked((e)
                 -> {
-            VINU v1 = (VINU) pendingtransTable.getItems().get(pendingtransTable.getSelectionModel().getSelectedIndex());
+            JobAsset v1 = (JobAsset) pendingtransTable.getItems().get(pendingtransTable.getSelectionModel().getSelectedIndex());
             pendingaTenderId.setText(v1.getTenderId());
             pendingassetType.setText(v1.getType());
 
@@ -316,12 +340,47 @@ public class PendingAssetController implements Initializable {
 
     @FXML
     private void nextClicked(ActionEvent event) throws IOException {
-   dkjconstruction.DKJConstruction.showPendingEquipment();
-           }
+       dkjconstruction.DKJConstruction.showPendingEquipment();
+
+    }
 
     @FXML
     private void backClicked(ActionEvent event) throws IOException {
-  dkjconstruction.DKJConstruction.showPendingEmployee();
+        dkjconstruction.DKJConstruction.showPendingEmployee();
     }
+    
+     public void search() {
+        searchfield.setOnKeyReleased(e -> {
+            if (searchfield.getText().equals("")) {
+                //loadFromTenderDB();
+                //loadFromAssetDB();
+               // loadFromJobEquipDB();
+                loadFrompendingJobAssetADB();
+               // loadFromTenderMaterialDB();
+            } else {
+                datavinupending.clear();
+                try {
+
+                    Connection con = DbConnection.getConnection();
+
+                    pst = con.prepareStatement("select tenderId,assetType,assetCount,assignCount from jobasset where tenderId IN(SELECT tenderId from jobemployee where assignCount>0) and tenderId  LIKE '%" + searchfield.getText() + "%' ");
+                    rs = pst.executeQuery();
+
+                    while (rs.next()) {
+                        datavinupending.add(new JobAsset(rs.getString(1),rs.getString(2), rs.getInt(3), rs.getInt(4)));
+                    }
+                    System.out.println("Search clicked");
+                } catch (Exception ex) {
+                    System.err.println("Error loading table data search table jobemployee" + ex);
+
+                }
+
+                pendingtransTable.setItems(datavinupending);
+
+            }
+
+        });//event
+    }
+
 
 }
