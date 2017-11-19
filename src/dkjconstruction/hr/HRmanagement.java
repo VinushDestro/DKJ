@@ -100,7 +100,7 @@ public class HRmanagement implements Initializable {
         // TODO
         hrgender.getItems().addAll("Male", "Female");
         hrposition.getItems().addAll("Manager","supervisor", "Employee");
-        hremployeetype.getItems().addAll("Permenent","Contract based");
+        hremployeetype.getItems().addAll("Permanent","Contract based");
 
         hrbasicsalary.setVisible(false);
         hrdaysalary.setVisible(false);
@@ -111,13 +111,14 @@ public class HRmanagement implements Initializable {
 
         RowclickEvent();
         searchEmployee();
+        hremployeeid.setDisable(true);
 
     }
 
     @FXML
     private void empTypeClicked() {
 
-        if (hremployeetype.getValue().equals("Permenent employee")) {
+        if (hremployeetype.getValue().equals("Permanent")) {
             hrbasicsalary.setVisible(true);
             hrdaysalary.setText(null);
             hrdaysalary.setVisible(false);
@@ -137,7 +138,7 @@ public class HRmanagement implements Initializable {
             String salType = null;
             double sal = 0;
 
-            if (empType.equals("Permenent employee")) {
+            if (empType.equals("Permanent")) {
                 salType = "basicSalary";
                 sal = Double.parseDouble(hrbasicsalary.getText());
 
@@ -152,18 +153,18 @@ public class HRmanagement implements Initializable {
             DbConnection.openConnection();
             Connection con = DbConnection.getConnection();
 
-            PreparedStatement stmt = con.prepareStatement("Insert into employee (empId,name,address,gender,contactNo,position,empType,dob,nic," + salType + ") values (?,?,?,?,?,?,?,?,?,? )");
+            PreparedStatement stmt = con.prepareStatement("Insert into employee (name,address,gender,contactNo,position,empType,dob,nic," + salType + ") values (?,?,?,?,?,?,?,?,? )");
 
-            stmt.setString(1, hremployeeid.getText());
-            stmt.setString(2, hremployeename.getText());
-            stmt.setString(3, hraddress.getText());
-            stmt.setString(4, hrgender.getValue().toString());
-            stmt.setString(5, hrcontactno.getText());
-            stmt.setString(6, hrposition.getValue().toString());
-            stmt.setString(7, hremployeetype.getValue().toString());
-            stmt.setDate(8, java.sql.Date.valueOf(hrdob.getValue()));
-            stmt.setString(9, hrnic.getText());
-            stmt.setString(10, "" + sal);
+//            stmt.setString(1, hremployeeid.getText());
+            stmt.setString(1, hremployeename.getText());
+            stmt.setString(2, hraddress.getText());
+            stmt.setString(3, hrgender.getValue().toString());
+            stmt.setString(4, hrcontactno.getText());
+            stmt.setString(5, hrposition.getValue().toString());
+            stmt.setString(6, hremployeetype.getValue().toString());
+            stmt.setDate(7, java.sql.Date.valueOf(hrdob.getValue()));
+            stmt.setString(8, hrnic.getText());
+            stmt.setString(9, "" + sal);
 
             stmt.executeUpdate();
 
@@ -257,10 +258,11 @@ public class HRmanagement implements Initializable {
             
             if (validatefields()) {
         
-        if(hremployeetype.getValue().equals("Permenent" ))
+        if(hremployeetype.getValue().equals("Permanent" ))
          {
              System.out.println("basic : " + hrbasicsalary.getText());
             updateEmployee("basicSalary", Double.parseDouble(hrbasicsalary.getText()));
+            
             
          }
         
@@ -359,7 +361,7 @@ public class HRmanagement implements Initializable {
 
 //VALIDATION
     private boolean validatefields() {
-        if (hremployeeid.getText().isEmpty() || hremployeename.getText().isEmpty() || (hraddress.getText().isEmpty())
+        if ( hremployeename.getText().isEmpty() || (hraddress.getText().isEmpty())
                 || (hrcontactno.getText().isEmpty()) || (hrdob.getValue() == null) || (hrgender.getValue() == null)
                 || (hrposition.getValue() == null)
                 || hrnic.getText().isEmpty() || (hremployeetype.getValue() == null)) {
@@ -370,7 +372,7 @@ public class HRmanagement implements Initializable {
 
         } 
         
-        else if (hremployeetype.getValue().equals("Permenent") && hrbasicsalary.getText() == null) {
+        else if (hremployeetype.getValue().equals("Permanent") && hrbasicsalary.getText() == null) {
 
             alertboxWarn("Add Employee", "All fields should be filled !");
             return false;
@@ -483,7 +485,7 @@ public class HRmanagement implements Initializable {
             hrposition.setValue(t1.getPosition());
             hremployeetype.setValue(t1.getEmpType());
             
-            if(t1.getEmpType().equals("Permenent"))
+            if(t1.getEmpType().equals("Permanent"))
             {
             hrdaysalary.setVisible(false);
             hrbasicsalary.setText(t1.getBasicSalary());

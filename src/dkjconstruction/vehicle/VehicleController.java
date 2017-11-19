@@ -127,7 +127,7 @@ public class VehicleController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
         type.getItems().addAll("Heavy", "Light", "Transport");
-        condi.getItems().addAll("Brand New", "Used", "Refurbished", "Damage", "Old");
+        condi.getItems().addAll("Brand New", "Used", "Refurbished", "Old");
         view.getItems().addAll("View_All", "Available","Assigned", "Repair");
         view.getSelectionModel().selectFirst();
         rep.setVisible(false);
@@ -167,7 +167,7 @@ public class VehicleController implements Initializable {
             } else if (Integer.valueOf(lifT) <= 0) {
                 alert.setContentText("Life Time cannot be 0");
             } else if (bDate.isAfter(today)) {
-                    alert.setContentText("Invalid value for date.\nShould be less than current date.");
+                    alert.setContentText("Invalid value for date.\n Should be less than current date.");
                 }
             else if(!(rNo.matches("[A-Z]{2}[-][A-Z]{3}[0-9]{4}") || rNo.matches("[A-Z]{2}[-][A-Z]{2}[0-9]{4}")) ){
                 alert.setContentText("Invalid RegNo");
@@ -189,7 +189,7 @@ public class VehicleController implements Initializable {
         } catch (ClassNotFoundException | NumberFormatException | SQLException e) {
             alert.setTitle("Error");
             alert.setHeaderText(null);
-            alert.setContentText("Invalid Input/nCheck your Fields");
+            alert.setContentText("Invalid Input \n Check your Fields");
             alert.show();
 
         }
@@ -273,11 +273,12 @@ public class VehicleController implements Initializable {
                 if (result == 1) {
                     alert.setContentText("Both update Successful!");
                 } else if (result == 0) {
-                    alert.setContentText("Operation Failed");
+                    alert.setContentText("Operation Failed \n Check your Fields");
                 }
                 }}
                 catch(Exception e){
                    System.out.println("e");
+                   alert.setContentText("Operation failed \n Check your Fields");
             }
             }
 
@@ -290,6 +291,7 @@ public class VehicleController implements Initializable {
             updateLoad();
         } catch (Exception e) {
             e.printStackTrace();
+            alert.setContentText("Operation failed \n Check your Fields");
         }
 
     }
@@ -506,14 +508,14 @@ public class VehicleController implements Initializable {
                     VehicleDetail tab = vehicleTab.getItems().get(vehicleTab.getSelectionModel().getSelectedIndex());
 
                     vehName.setText(tab.getName());
-                    //vehName.setEditable(false);
+                    
                     vehName.setDisable(true);
 
                     regNo.setText(tab.getRegNo());
-                    regNo.setDisable(true);
+                   regNo.setDisable(true);
 
                     type.setValue(tab.getType());
-                    //type.setVisible(false);
+                    
                     type.setDisable(true);
 
                     cost.setText(tab.getCost());
@@ -522,7 +524,7 @@ public class VehicleController implements Initializable {
                     liTime.setText(tab.getLifeTime());
 
                     bouDate.setValue(LocalDate.parse(tab.getBoughtDate()));
-                    bouDate.setDisable(true);
+                   bouDate.setDisable(true);
 
                     condi.setValue(tab.getCondition());
 

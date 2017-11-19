@@ -202,7 +202,7 @@ public class PayrollController implements Initializable {
     c_allowance.setDisable(false);
     c_totalDays.setDisable(false);
     c_bonus.setDisable(false);
-    c_daysalary.setDisable(false);
+    c_daysalary.setDisable(true);
    
   //outputTextArea.appendText("ComboBox Action (selected: " + selectedPerson + ")\n");
   //System.out.println("selected id is " + id);
@@ -261,7 +261,7 @@ public class PayrollController implements Initializable {
                  
                  c_employeeid.setText(rs.getString(1));
                  c_employeename.setText(rs.getString(2));
-                 //c_daysalary.setText(rs.getString(10));
+                 c_daysalary.setText(rs.getString("daySalary"));
               }
              
             } catch (Exception ex) {
@@ -529,8 +529,8 @@ public class PayrollController implements Initializable {
             System.out.println("success");
         
             } 
-          catch (SQLIntegrityConstraintViolationException r) {
-            System.out.println("payroll for employeeid already exist");
+            catch (SQLIntegrityConstraintViolationException r) {
+                System.out.println("payroll for employeeid already exist");
             
             } 
           catch (Exception e) {
@@ -538,7 +538,7 @@ public class PayrollController implements Initializable {
             System.err.println(e);
 
         } finally {
-              getDB();
+              C_getDB();
               c_setTable();
           }
           
@@ -599,7 +599,7 @@ public class PayrollController implements Initializable {
             DbConnection.openConnection();
             Connection con = DbConnection.getConnection();
 
-            ResultSet rs = con.createStatement().executeQuery("SELECT * from Payroll ");
+            ResultSet rs = con.createStatement().executeQuery("SELECT * from Payroll where empId in (select empId from employee where empType = 'permanent')");
 
             while (rs.next()) {
                 
@@ -620,7 +620,7 @@ public class PayrollController implements Initializable {
             DbConnection.openConnection();
             Connection con = DbConnection.getConnection();
 
-            ResultSet rs = con.createStatement().executeQuery("SELECT * from Payroll  ");
+            ResultSet rs = con.createStatement().executeQuery("SELECT * from Payroll  where empId in (select empId from employee where empType = 'Contract based')");
 
             while (rs.next()) {
              //   System.out.println(rs.getString("allowance"));

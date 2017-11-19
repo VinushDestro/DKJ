@@ -112,7 +112,7 @@ public class AssetAllocationController implements Initializable {
         try {
 
             Connection con = DbConnection.getConnection();
-            pst = con.prepareStatement("select tenderId,assetType,assetCount,assignCount from jobasset where tenderId IN(select tenderId from tender where status='on progress')");
+            pst = con.prepareStatement("select tenderId,assetType,assetCount,assignCount from jobasset where tenderId IN(select tenderId from tender where status='On progress')");
 
             rs = pst.executeQuery();
 
@@ -187,6 +187,7 @@ public class AssetAllocationController implements Initializable {
             String addTender = aTenderId.getText();
             String addAsset = vRegNo.getText();
             String addAssetType = assetType.getText();
+            
             
             if (addTender.isEmpty() || addAsset.isEmpty()) {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);

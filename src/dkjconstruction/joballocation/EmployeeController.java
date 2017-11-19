@@ -109,7 +109,7 @@ public class EmployeeController implements Initializable {
 
             Connection con = DbConnection.getConnection();
 
-            pst = con.prepareStatement("select tenderId,noOfEmployee,assignCount from jobemployee where tenderId IN (select tenderId from tender where status='on progress'");
+            pst = con.prepareStatement("select tenderId,noOfEmployee,assignCount from jobemployee where tenderId IN (select tenderId from tender where status='On progress')");
             rs = pst.executeQuery();
 
             while (rs.next()) {
