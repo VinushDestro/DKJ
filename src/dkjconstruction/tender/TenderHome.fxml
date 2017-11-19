@@ -38,7 +38,7 @@
                <graphic>
                   <ImageView fitHeight="91.0" fitWidth="105.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../tendermanagement/images/icons8-product_documents_filled.png" />
+                        <Image url="@images/icons8-product_documents_filled.png" />
                      </image>
                   </ImageView>
                </graphic>
@@ -50,7 +50,7 @@
                <graphic>
                   <ImageView fitHeight="91.0" fitWidth="105.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../tendermanagement/images/icons8-good_pincode_filled.png" />
+                        <Image url="@images/icons8-good_pincode_filled.png" />
                      </image>
                   </ImageView>
                </graphic>
@@ -62,7 +62,7 @@
                <graphic>
                   <ImageView fitHeight="91.0" fitWidth="105.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../tendermanagement/images/icons8-show_property.png" />
+                        <Image url="@images/icons8-show_property.png" />
                      </image>
                   </ImageView>
                </graphic>

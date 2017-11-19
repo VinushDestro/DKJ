@@ -63,7 +63,6 @@ public class HomeController implements Initializable {
         
         setTable();
         doSearch();
-        //category.setSelectionModel(value);    
     }    
 
     public void setTable(){
