@@ -67,8 +67,7 @@ public class PendingEquipmentController implements Initializable {
     private TableColumn pendingeqReq;
     @FXML
     private TableColumn pendingeqAssign;
-     @FXML
-    private Label pendingAssettenderid;
+   
 
     /**
      * Initializes the controller class.
@@ -132,7 +131,7 @@ public class PendingEquipmentController implements Initializable {
 
             Connection con = DbConnection.getConnection();
 
-            pst = con.prepareStatement("select tenderId,equipName,count,assignCount from equiptender where tenderid IN(select tenderId from jobasset where assignCount>0 and tenderId IN(select tenderId from tender where status='pending')");
+            pst = con.prepareStatement("select tenderId,equipName,count,assignCount from equiptender where tenderid IN(select tenderId from jobasset where assignCount > 0 and tenderId IN(select tenderId from tender where status='pending'))");
             rs = pst.executeQuery();
 
             while (rs.next()) {
@@ -273,7 +272,7 @@ public class PendingEquipmentController implements Initializable {
             EquipTender v1 = (EquipTender) pendingequipTable.getItems().get(pendingequipTable.getSelectionModel().getSelectedIndex());
             pendingequipTender.setText(v1.getTenderId());
             pendingtenderEquipId.setText(v1.getEquiName());
-            pendingAssettenderid.setText(v1.getEquiName());
+           
 
             dataequipmentpending.clear();
 
@@ -283,6 +282,7 @@ public class PendingEquipmentController implements Initializable {
 
                 PreparedStatement stmt4 = con.prepareStatement("select name,(count-assignedCount) from equipment where name IN(select equipName from equiptender where tenderId=? and equipName=?)");
                 stmt4.setString(1, addTender);
+                System.out.println(nameQ);
                 stmt4.setString(2, nameQ);
                 rs = stmt4.executeQuery();
                 //nameQ=null;

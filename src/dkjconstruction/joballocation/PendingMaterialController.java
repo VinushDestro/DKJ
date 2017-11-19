@@ -199,7 +199,7 @@ public class PendingMaterialController implements Initializable {
              else if(addMatcount<=0){
                  alerboxInfo("Operation Failed","you have enterd 0 or lesser value for count ");
             }
-             else{
+          
              PreparedStatement stmt2 = con.prepareStatement("select materialCount from materialtender where tenderid=? and materialType=?");
            stmt2.setString(1, addMatTender); 
            stmt2.setString(2, addMaterial);
@@ -233,18 +233,16 @@ public class PendingMaterialController implements Initializable {
 
             PreparedStatement stmt1 = con4.prepareStatement("UPDATE rawmaterial SET quantity = quantity-? WHERE type =?");
             stmt1.setInt(1, addMatcount);
-            stmt1.setString(1, addMaterial);
+            stmt1.setString(2, addMaterial);
             stmt1.executeUpdate();
             
-            PreparedStatement stmt3 = con4.prepareStatement("UPDATE tender SET status ='on progress' WHERE tenderId =?");
+            PreparedStatement stmt3 = con4.prepareStatement("UPDATE tender SET status ='On progress' WHERE tenderId =?");
             stmt3.setString(1, addMatTender);
-           
             stmt3.executeUpdate();
             
 
-             pendingloadFromTenderMaterialDB();
-            pendingloadMaterialDB();
-                }
+           
+                
             }
             }
         } catch (Exception e) {
@@ -253,11 +251,13 @@ public class PendingMaterialController implements Initializable {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Error");
             alert.setHeaderText(null);
-            alert.setContentText("error adding Material ");
+            alert.setContentText("error adding Material "+e);
             alert.show();
         }
         pendingmaterialtender.clear();
         pendingtendermaterialtype.clear();
+          pendingloadFromTenderMaterialDB();
+            pendingloadMaterialDB();
     }
     
      private void RowclickEvent14() {
