@@ -294,7 +294,7 @@ public class HomeController implements Initializable {
                     Connection con = DbConnection.getConnection();
                     
                     PreparedStatement pst = con.prepareStatement
-                    ("SELECT regno,name,type,asset.condition,currentvalue FROM asset where regno LIKE '%" + search.getText() + /*"%' or ? LIKE '%" + search.getText() + "%' or ? LIKE '%" + search.getText() +  */"%'");
+                    ("SELECT * FROM asset where regno LIKE '%" + search.getText() + /*"%' or ? LIKE '%" + search.getText() + "%' or ? LIKE '%" + search.getText() +  */"%'");
 //                    pst.setString(1, c1.getText().replaceAll("\\s", ""));
 //                    pst.setString(2, c2.getText().replaceAll("\\s", ""));
 //                    pst.setString(3, c3.getText().replaceAll("\\s", ""));
@@ -305,15 +305,14 @@ public class HomeController implements Initializable {
 //                    pst.setString(8, c2.getText());
 //                    pst.setString(9, c3.getText());
                     
-                    
                     ResultSet rs = pst.executeQuery();
                     tableS= FXCollections.observableArrayList();
                     while (rs.next()) {
-                        String v1=rs.getString(1);
-                        String v2=rs.getString(2);
-                        String v3=rs.getString(3);
-                        String v4=rs.getString(4);
-                        String v5=rs.getString(5);
+                        String v1=rs.getString("regno");
+                        String v2=rs.getString("name");
+                        String v3=rs.getString("type");
+                        String v4=rs.getString("condition");
+                        String v5=rs.getString("currentvalue");
                         System.out.println("------------------------");
 
                         System.out.println(v1);
@@ -323,7 +322,6 @@ public class HomeController implements Initializable {
                         System.out.println(v5);
                         
                         tableS.add(new Detail(v1,v2,v3,v4,v5)); 
-                        //System.out.println(Detail.getCol1());
                         }
                     homeTab.setItems(tableS);
 
