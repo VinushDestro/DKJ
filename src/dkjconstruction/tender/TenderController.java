@@ -503,7 +503,7 @@ public class TenderController implements Initializable {
 
     public void tender_report() {        
 
-        Report.gen_Normal_report("//Users//KishBelic//Desktop//ITP//TenderManagement//src//tendermanagement//TenderReport//AllTender.jrxml");
+        Report.gen_Normal_report("C:\\Users\\Mahesh\\Documents\\NetBeansProjects\\dkjconstructions\\src\\dkjconstruction\\tendermanagement\\TenderReport\\AllTender.jrxml");
 
     }
 
@@ -514,8 +514,8 @@ public class TenderController implements Initializable {
 
     @FXML
     private void previousClicked(ActionEvent event) throws IOException {
-        Stage s = (Stage) previousButton.getScene().getWindow();
-        s.close();
+//        Stage s = (Stage) previousButton.getScene().getWindow();
+//        s.close();
 
         /*FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("TenderHome.fxml"));
          Parent root1 = (Parent) fxmlLoader.load();
@@ -523,14 +523,16 @@ public class TenderController implements Initializable {
          stage.setScene(new Scene(root1));
          stage.show();*/
         
+        dkjconstruction.DKJConstruction.showTender_TenderHome();
+        
         
     }
 
     @FXML
     private void reqClicked(ActionEvent event) throws IOException {
 
-        Stage s = (Stage) previousButton.getScene().getWindow();
-        s.close();
+//        Stage s = (Stage) previousButton.getScene().getWindow();
+//        s.close();
 
 //        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Requirement.fxml"));
 //        Parent root1 = (Parent) fxmlLoader.load();

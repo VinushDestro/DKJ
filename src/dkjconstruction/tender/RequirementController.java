@@ -110,6 +110,8 @@ public class RequirementController implements Initializable {
     private TableView<TenderDetails> emptable;
     @FXML
     private TableColumn<?, ?> empcolumn_units;
+    @FXML
+    private Button btn_tender_report;
 
     /**
      * Initializes the controller class.
@@ -117,7 +119,8 @@ public class RequirementController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-
+        
+        btn_tender_report.setVisible(false);
         data = FXCollections.observableArrayList();
 
         tidList = FXCollections.observableArrayList();
@@ -806,19 +809,21 @@ public class RequirementController implements Initializable {
 
     @FXML
     private void previousClicked(ActionEvent event) throws IOException {
-        Stage s = (Stage) previousButton.getScene().getWindow();
-        s.close();
+//        Stage s = (Stage) previousButton.getScene().getWindow();
+//        s.close();
 
         /*FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("TenderHome.fxml"));
          Parent root1 = (Parent) fxmlLoader.load();
          Stage stage = new Stage();
          stage.setScene(new Scene(root1));
          stage.show();*/
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Tender.fxml"));
-        Parent root1 = (Parent) fxmlLoader.load();
-        Stage stage = new Stage();
-        stage.setScene(new Scene(root1));
-        stage.show();
+//        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Tender.fxml"));
+//        Parent root1 = (Parent) fxmlLoader.load();
+//        Stage stage = new Stage();
+//        stage.setScene(new Scene(root1));
+//        stage.show();
+
+dkjconstruction.DKJConstruction.showTender();
     }
     
     private boolean validateR()

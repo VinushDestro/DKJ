@@ -41,6 +41,7 @@ import javafx.util.Callback;
 import javafx.util.StringConverter;
 import javax.print.DocFlavor;
 import dkjconstruction.tendermanagement.TenderReport.Report;
+import java.io.IOException;
 
 /**
  * FXML Controller class
@@ -292,15 +293,16 @@ public class CloseTenderController implements Initializable {
     @FXML
     private void tender_report(ActionEvent event) {
         
-        Report.gen_Normal_report("/Users/KishBelic/Desktop/ITP/TenderManagement/src/tendermanagement/TenderReport/closed&Cancel.jrxml");
+        Report.gen_Normal_report("C:\\Users\\Mahesh\\Documents\\NetBeansProjects\\dkjconstructions\\src\\dkjconstruction\\tendermanagement\\TenderReport\\closed&Cancel.jrxml");
  
         
     }
 
     @FXML
-    private void previousClicked(ActionEvent event) {
-        Stage s = (Stage) previousButton.getScene().getWindow();
-        s.close();
+    private void previousClicked(ActionEvent event) throws IOException {
+//        Stage s = (Stage) previousButton.getScene().getWindow();
+//        s.close();
+    dkjconstruction.DKJConstruction.showTender_TenderHome();
     }
 
     @FXML

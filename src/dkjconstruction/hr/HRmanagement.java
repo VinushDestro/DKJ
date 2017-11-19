@@ -16,8 +16,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableArray;
 import javafx.collections.ObservableList;
@@ -38,8 +41,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
  */
 public class HRmanagement implements Initializable {
 
-    
-    @FXML 
+    @FXML
     private TableView<HRDetails> hremployee;
     @FXML
     private TableColumn<?, ?> hemployeeid;
@@ -50,7 +52,7 @@ public class HRmanagement implements Initializable {
     @FXML
     private TableColumn<?, ?> hcontectno;
     @FXML
-    private TableColumn<?, ?> hgenderh;
+    private TableColumn<?, ?> hgender;
     @FXML
     private TableColumn<?, ?> hdob;
     @FXML
@@ -82,165 +84,226 @@ public class HRmanagement implements Initializable {
     @FXML
     private JFXTextField hrbasicsalary;
     @FXML
+    private JFXTextField hrdaysalary;
+    @FXML
     private JFXTextField hsearch;
+
     private ObservableList data;
-    
-    
+    @FXML
+    private TableColumn<?, ?> hdaysalary;
+
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-        hrgender.getItems().addAll("Male","Female");
-        hrposition.getItems().addAll("Manager","supervisor","Worker");
-        hremployeetype.getItems().addAll("Permenent employee","Contract based");
-        
+        hrgender.getItems().addAll("Male", "Female");
+        hrposition.getItems().addAll("Manager","supervisor", "Employee");
+        hremployeetype.getItems().addAll("Permenent","Contract based");
+
+        hrbasicsalary.setVisible(false);
+        hrdaysalary.setVisible(false);
+
         data = FXCollections.observableArrayList();
         setTable();
         getDB();
-        
+
         RowclickEvent();
         searchEmployee();
-        
-    }    
-//ADD EMPLOYEE
-    @FXML
-    private void AddEmployee(ActionEvent event) {
-        if (validatefields()) {
-           
-        try {      
-        DbConnection.openConnection();
-        Connection con = DbConnection.getConnection();
-        PreparedStatement stmt = con.prepareStatement("Insert into employee (empId,name,address,gender,contactNo,position,empType,dob,nic,basicSalary) values (?,?,?,?,?,?,?,?,?,?)");
-        
-        String empid = hremployeeid.getText();
-        String name = hremployeename.getText();
-        String address = hraddress.getText();
-      //String dob = hrdob.getText();
-        String gender = hrgender.getValue().toString();
-        String contactNo = hrcontactno.getText();
-        String position = hrposition.getValue().toString();
-        String emptype = hremployeetype.getValue().toString();
-      //double basicSalary = Double.parseDouble(hremployeeid.getText()); 
-      
-        
-       
-        stmt.setString(1,empid);
-        stmt.setString(2,name);
-        stmt.setString(3,address);
-      //stmt.setString(4,dob);
-        stmt.setString(4,gender);
-        stmt.setString(5,contactNo);
-        stmt.setString(6,position);
-        stmt.setString(7,emptype);
-      //stmt.setDouble(9,basicSalary);
-        stmt.setDate(8, java.sql.Date.valueOf(hrdob.getValue()));
-        stmt.setString(9, hrnic.getText());
-        stmt.setDouble(10, Double.parseDouble(hrbasicsalary.getText()));
-       
-       
-        
-       stmt.executeUpdate();
-        alerboxInfo("Add Employee", "Value added successfully");
-       System.out.println("success");
-     
-        } catch (SQLIntegrityConstraintViolationException r) {
 
-                alertboxWarn("Add Employee", "This Id already has been taken");
-            } catch (Exception e) {
-                System.out.println(" Error");
-                System.err.println(e);
+    }
+
+    @FXML
+    private void empTypeClicked() {
+
+        if (hremployeetype.getValue().equals("Permenent employee")) {
+            hrbasicsalary.setVisible(true);
+            hrdaysalary.setText(null);
+            hrdaysalary.setVisible(false);
+
+        } else if (hremployeetype.getValue().equals("Contract based")) {
+            hrdaysalary.setVisible(true);
+            hrbasicsalary.setText(null);
+            hrbasicsalary.setVisible(false);
+        }
+
+    }
+
+//ADD EMPLOYEE
+    public void InsertDB(String empType) {
+
+        try {
+            String salType = null;
+            double sal = 0;
+
+            if (empType.equals("Permenent employee")) {
+                salType = "basicSalary";
+                sal = Double.parseDouble(hrbasicsalary.getText());
 
             }
+
+            if (empType.equals("Contract based")) {
+                salType = "daySalary";
+                sal = Double.parseDouble(hrdaysalary.getText());
+
+            }
+
+            DbConnection.openConnection();
+            Connection con = DbConnection.getConnection();
+
+            PreparedStatement stmt = con.prepareStatement("Insert into employee (empId,name,address,gender,contactNo,position,empType,dob,nic," + salType + ") values (?,?,?,?,?,?,?,?,?,? )");
+
+            stmt.setString(1, hremployeeid.getText());
+            stmt.setString(2, hremployeename.getText());
+            stmt.setString(3, hraddress.getText());
+            stmt.setString(4, hrgender.getValue().toString());
+            stmt.setString(5, hrcontactno.getText());
+            stmt.setString(6, hrposition.getValue().toString());
+            stmt.setString(7, hremployeetype.getValue().toString());
+            stmt.setDate(8, java.sql.Date.valueOf(hrdob.getValue()));
+            stmt.setString(9, hrnic.getText());
+            stmt.setString(10, "" + sal);
+
+            stmt.executeUpdate();
+
+            alerboxInfo("Add Employee", "Value added successfully");
+            System.out.println("success");
+
+        } catch (SQLIntegrityConstraintViolationException r) {
+
+            alertboxWarn("Add Employee", "This details already has been taken");
+        } catch (Exception e) {
+            System.out.println(" Error");
+            System.err.println(e);
+
         }
-         
-         setTable();
-        getDB();
-        
     }
-    
-    private void setTable(){
-    
+
+    @FXML
+    private void AddEmployee(ActionEvent event) throws ClassNotFoundException, SQLException {
         try {
             DbConnection.openConnection();
             Connection con = DbConnection.getConnection();
             
+            
+            if (validatefields()) {
+                InsertDB(hremployeetype.getValue().toString());
+                
+            }
+            
+            setTable();
+            getDB();
+        } catch (SQLException ex) {
+            Logger.getLogger(HRmanagement.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
+    private void setTable() {
+
+        try {
+
             hemployeeid.setCellValueFactory(new PropertyValueFactory<>("EmpId"));
             hemployeename.setCellValueFactory(new PropertyValueFactory<>("Name"));
             haddress.setCellValueFactory(new PropertyValueFactory<>("Address"));
             hnic.setCellValueFactory(new PropertyValueFactory<>("Nic"));
             hdob.setCellValueFactory(new PropertyValueFactory<>("Dob"));
-            hgenderh.setCellValueFactory(new PropertyValueFactory<>("Gender"));
+            hgender.setCellValueFactory(new PropertyValueFactory<>("Gender"));
             hcontectno.setCellValueFactory(new PropertyValueFactory<>("ContactNo"));
             hposition.setCellValueFactory(new PropertyValueFactory<>("Position"));
             hemployeetype.setCellValueFactory(new PropertyValueFactory<>("EmpType"));
             hbasicsalary.setCellValueFactory(new PropertyValueFactory<>("BasicSalary"));
-            
-            
-            
+            hdaysalary.setCellValueFactory(new PropertyValueFactory<>("DaySalary"));
+
         } catch (Exception e) {
+            System.out.println("Error loading table" + e);
         }
-    
+
     }
-    
-    private void getDB()
-    {
-    data.clear();
+
+    private void getDB() {
+        data.clear();
         try {
             DbConnection.openConnection();
             Connection con = DbConnection.getConnection();
-            
+
             ResultSet rs = con.createStatement().executeQuery("SELECT * from employee");
-            
-             while(rs.next())
-             {
-             data.add(new HRDetails(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4),""+ rs.getDate(5), rs.getString(6),""+ rs.getString(7), rs.getString(8), rs.getString(9),""+ rs.getDouble(10)));
-             
-             }
-             
-                    
+
+            while (rs.next()) {
+                
+                data.add(new HRDetails(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), "" + rs.getDate(5), rs.getString(6), "" + rs.getString(7), rs.getString(8), rs.getString(9), "" + rs.getDouble(10), ""+ rs.getDouble(12)));
+            }
+
             hremployee.setItems(data);
         } catch (Exception e) {
+            System.out.println("error loading observable list " + e);
         }
-        
+
     }
 //GENERATE REPORT
+
     @FXML
     private void GenerateEmployeeReport(ActionEvent event) {
-        
-        
-        
-        
+
     }
 //UPDATE EMPLOYEE
+
     @FXML
     private void UpdateEmployee(ActionEvent event) {
-         
-         if (validatefields()) {
-           
-       try { DbConnection.openConnection();
-            Connection con = DbConnection.getConnection();
-         PreparedStatement stmt = con.prepareStatement("UPDATE employee set empid= '" +hremployeeid.getText() + "',name = '" + hremployeename.getText() + "',address= '" + hraddress.getText()  + "',nic= '" +hrnic.getText()+  "',dob= '" + hrdob.getValue()+ "',gender= '" + hrgender.getValue() + "',contactNo = '" + hrcontactno.getText() +  "',position = '" + hrposition.getValue() + "',basicSalary = '" + Double.parseDouble(hrbasicsalary.getText()) + "'  where empType = '" +hremployeetype.getValue()+ "' ");
-               
-                 
         
-            stmt.executeUpdate();
+        String s;
+        try {
+            
+            if (validatefields()) {
+        
+        if(hremployeetype.getValue().equals("Permenent" ))
+         {
+             System.out.println("basic : " + hrbasicsalary.getText());
+            updateEmployee("basicSalary", Double.parseDouble(hrbasicsalary.getText()));
+            
+         }
+        
+        if(hremployeetype.getValue().equals("Contract based"))
+        {
+            s = "daySalary";
+            System.out.println("cont : " + hrdaysalary.getText());
+            updateEmployee(s, Double.parseDouble(hrdaysalary.getText()));
+            
+        }
+         }
+        //setTable();
+        getDB();
+            
+        } catch (Exception e) {
+            System.out.println("error" + e);
+        }
+        
+        
+                }
 
-                } catch (Exception e) {
-                    System.out.println("Update  error");
-                }
-                }
-                 setTable();
-                 getDB();
-                }
-         
-             
+    public void updateEmployee(String salType,double sal)
+    {
     
     
 
+            try {
+                DbConnection.openConnection();
+               
+                Connection con = DbConnection.getConnection();
+                
+                PreparedStatement stmt = con.prepareStatement("UPDATE employee set empid= '" + hremployeeid.getText() + "',name = '" + hremployeename.getText() + "',address= '" + hraddress.getText() + "',nic= '" + hrnic.getText() + "',dob= '" + hrdob.getValue() + "',gender= '" + hrgender.getValue() + "',contactNo = '" + hrcontactno.getText() + "',position = '" + hrposition.getValue() + "',daySalary = '" + sal + "'  where empId = '" + hremployeeid.getText() + "' ");
+
+                stmt.executeUpdate();
+                alerboxInfo("Update Employee", "Value updated successfully");
+
+            } catch (Exception e) {
+                System.out.println("Update  error" + e);
+            }
+       
     
-     
+    }
+
 //Alertbox Information
     public void alerboxInfo(String title, String message) {
 
@@ -290,47 +353,55 @@ public class HRmanagement implements Initializable {
 
         if (!(event.getCode().isDigitKey())) {
 
-         
-    }
+        }
 
     }
-    
+
 //VALIDATION
     private boolean validatefields() {
-        if ( hremployeeid.getText().isEmpty() || hremployeename.getText().isEmpty() || (hraddress.getText().isEmpty())
-                || (hrcontactno.getText().isEmpty()) || (hrdob.getValue() == null) || (hrgender.getValue() == null) 
+        if (hremployeeid.getText().isEmpty() || hremployeename.getText().isEmpty() || (hraddress.getText().isEmpty())
+                || (hrcontactno.getText().isEmpty()) || (hrdob.getValue() == null) || (hrgender.getValue() == null)
                 || (hrposition.getValue() == null)
-                || hrnic.getText().isEmpty()|| (hremployeetype.getValue() == null)
-                || hrbasicsalary.getText().isEmpty()) {
+                || hrnic.getText().isEmpty() || (hremployeetype.getValue() == null)) {
+            
             alertboxWarn("Add Employee", "All fields should be filled !");
-          
-           
+
             return false;
 
         } 
         
-        else 
-        {
-           
-            return true;
+        else if (hremployeetype.getValue().equals("Permenent") && hrbasicsalary.getText() == null) {
 
+            alertboxWarn("Add Employee", "All fields should be filled !");
+            return false;
+        } 
+        
+        else if (hremployeetype.getValue().equals("Contract based") && hrdaysalary.getText() == null) {
+            
+            alertboxWarn("Add Employee", "All fields should be filled !");
+            return false;
+        } 
+        else {
+            
+            return true;
+            
         }
 
     }
-      
-  //search
+
+    //search
     private void searchEmployee() {
-       hsearch.setOnKeyReleased(e -> {
+        hsearch.setOnKeyReleased(e -> {
             if (hsearch.getText().equals("")) {
-               getDB();
+                getDB();
             } else {
                 data.clear();
                 try {
 
-                   DbConnection.openConnection();
-            Connection con = DbConnection.getConnection();
-            
-            ResultSet rs = con.createStatement().executeQuery("SELECT * FROM employee where empId LIKE '%" + hsearch.getText() + "%'"
+                    DbConnection.openConnection();
+                    Connection con = DbConnection.getConnection();
+
+                    ResultSet rs = con.createStatement().executeQuery("SELECT * FROM employee where empId LIKE '%" + hsearch.getText() + "%'"
                             + "UNION SELECT * FROM employee where name LIKE '%" + hsearch.getText() + "%'"
                             + "UNION SELECT * FROM employee where address LIKE '%" + hsearch.getText() + "%'"
                             + "UNION SELECT * FROM employee where nic LIKE '%" + hsearch.getText() + "%'"
@@ -339,58 +410,67 @@ public class HRmanagement implements Initializable {
                             + "UNION SELECT * FROM employee where position LIKE '%" + hsearch.getText() + "%' "
                             + "UNION SELECT * FROM employee where empType LIKE '%" + hsearch.getText() + "%' "
                             + "UNION SELECT * FROM employee where basicSalary LIKE '%" + hsearch.getText() + "%' ");
-                     while(rs.next())
-             {
-             data.add(new HRDetails(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4),""+ rs.getDate(5), rs.getString(6),""+ rs.getString(7), rs.getString(8), rs.getString(9),""+ rs.getDouble(10)));
-             
-             }
-             
-                    
-            hremployee.setItems(data);
+                    while (rs.next()) {
+                        data.add(new HRDetails(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), "" + rs.getDate(5), rs.getString(6), "" + rs.getString(7), rs.getString(8), rs.getString(9), "" + rs.getDouble(10),""+ rs.getDouble(12)));
+
+                    }
+
+                    hremployee.setItems(data);
 
                 } catch (Exception ex) {
-                    System.err.println("Error loading table data " + ex);
+                    System.err.println("Error loading table data 11 " + ex);
 
                 }
-
-               
 
             }
 
         });
-    
-                }
-    
-       
+
+    }
+
 //DELETE EMPLOYEE
     @FXML
     private void DeleteEmployee(ActionEvent event) {
- 
-         if (alertboxConfirm("Delete Employee details !", "Do you really want to Delete ?")) {
-        
-    try {
-        DbConnection.openConnection();
-        Connection con = DbConnection.getConnection();
-        PreparedStatement stmt = con.prepareStatement("DELETE from employee where empId = '" + hremployeeid.getText() + " '");
-        stmt.executeUpdate();
-        System.out.println("success");
-        setTable();
-        getDB();
-        
-        } 
-    catch (Exception e) {
-            System.out.println("error");
+
+        if (alertboxConfirm("Delete Employee details !", "Do you really want to Delete ?")) {
+
+            try {
+                DbConnection.openConnection();
+                Connection con = DbConnection.getConnection();
+                PreparedStatement stmt = con.prepareStatement("DELETE from employee where empId = '" + hremployeeid.getText() + " '");
+                stmt.executeUpdate();
+                System.out.println("success");
+                setTable();
+                getDB();
+
+            } catch (Exception e) {
+                System.out.println("error " + e);
+            }
+
         }
-          
-         } 
-    
-        
-        }
-        
+
+    }
+//CLEAR
+    @FXML
+    private void Clear(ActionEvent event){
       
-  private void RowclickEvent() {
-      
-            hremployee.setOnMouseClicked((e) -> {
+        hremployeeid.clear();
+        hremployeename.clear();    
+        hraddress.clear();
+        hrcontactno.clear();
+        hrgender.setValue(null);
+        hrdob.setValue(null);
+        hrposition.setValue(null);
+        hrnic.clear();
+        hremployeetype.setValue(null);
+        hrdaysalary.clear();
+        hrbasicsalary.clear();
+       
+    }    
+
+    private void RowclickEvent() {
+
+        hremployee.setOnMouseClicked((e) -> {
             HRDetails t1 = hremployee.getItems().get(hremployee.getSelectionModel().getSelectedIndex());
 
             hremployeeid.setText(t1.getEmpId());
@@ -402,15 +482,23 @@ public class HRmanagement implements Initializable {
             hrcontactno.setText(t1.getContactNo());
             hrposition.setValue(t1.getPosition());
             hremployeetype.setValue(t1.getEmpType());
+            
+            if(t1.getEmpType().equals("Permenent"))
+            {
+            hrdaysalary.setVisible(false);
             hrbasicsalary.setText(t1.getBasicSalary());
+            }
             
+            if(t1.getEmpType().equals("Contract based"))
+            {
+                
+            hrbasicsalary.setVisible(false);
+            hrdaysalary.setText(t1.getDaySalary());
             
-            
+            }
+
         });
 
     }
-    
 
-    
-    
 }
