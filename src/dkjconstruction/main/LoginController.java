@@ -61,7 +61,7 @@ public class LoginController {
                 userName = rs.getString("username");
                 passWord = rs.getString("password");
 
-                if (username.getText().toLowerCase().equals(userName.toLowerCase()) &&  password.getText().equals(passWord)) {
+                if (username.getText().equals(userName) &&  password.getText().equals(passWord)) {
                     
                     stmt = con.prepareStatement("Select name from employee where empid in (select userid from user where username = ?)");
                     stmt.setString(1,username.getText());
@@ -69,20 +69,33 @@ public class LoginController {
                     if(rs.next()){
                         currentUser=rs.getString("name");
                     }
+                    
                     ((Node) (event.getSource())).getScene().getWindow().hide();
                     DKJConstruction.showMainPage();
                 }
+                else{
+                    System.out.println("error");
+                    alert.setHeaderText("Login Failed");
+                    alert.setContentText("Invalid Credentials");
+                    username.clear();
+                    password.clear();                    
+                    alert.showAndWait();
+                }
+                
+            
                 
             }
             else{
                     System.out.println("error");
                     alert.setHeaderText("Login Failed");
                     alert.setContentText("Invalid Credentials");
-                    alert.show();
+                    username.clear();
+                    password.clear();                    
+                    alert.showAndWait();
                 }
             
-            username.clear();
-            password.clear();
         } 
+        username.clear();
+        password.clear();  
     }
 }

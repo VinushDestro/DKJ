@@ -335,6 +335,7 @@ public class CloseTenderController implements Initializable {
         deAllocate_Asset();
         FinishTender("Closed");
         
+        TenderManagement.alerboxInfo("Close Tender","Tender "+ c_tenderText.getText() + " Closed Succesfully");
         //db saamaangal
         assignTableValues();
         loadDBtoTable();
@@ -358,7 +359,7 @@ public class CloseTenderController implements Initializable {
         deAllocate_Asset();
         FinishTender("Cancelled");
         
-        
+        TenderManagement.alerboxInfo("Cancel Tender","Tender "+ c_tenderText.getText() + " Cancelled Succesfully");
         //db saamaangal
         assignTableValues();
         loadDBtoTable();
