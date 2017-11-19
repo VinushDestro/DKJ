@@ -12,98 +12,78 @@ package dkjconstruction.payroll;
 public class PayrollDetails {
     
     
-    private String EmpId;
-    private String Date;
-    private String Bonus;
-    private String Allowance;
-    private String Attendance;
+    private String Empid;
+    private String OverTime;
+    private String HourlyRate;
     private String Salary;
-   // private String ChooseEmployeeType;
-   
+    private String FinalSalary;
+    private String Allowance;
+    private String Deduction;
+    
+    
 
-    public PayrollDetails(String EmpId, String Date, String Bonus, String Allowance, String Attendance, String Salary) {
-        this.EmpId = EmpId;
-        this.Date = Date;
-        this.Bonus = Bonus;
-        this.Allowance = Allowance;
-        this.Attendance = Attendance;
+    public PayrollDetails(String Empid, String OverTime, String HourlyRate, String Salary, String FinalSalary) {
+        this.Empid = Empid;
+        this.OverTime = OverTime;
+        this.Deduction = HourlyRate;
+        this.Allowance = Salary;
+        this.FinalSalary = FinalSalary;
+    }
+    
+  
+ 
+public PayrollDetails(String Empid, String OverTime,String HourlyRate,String Salary, String FinalSalary,String Allowance, String Deduction  ) {
+        this.Empid = Empid;
+        this.OverTime = OverTime;
+        this.HourlyRate = HourlyRate;
         this.Salary = Salary;
-    // this.ChooseEmployeeType = ChooseEmployeeType;
-       
+        this.FinalSalary = FinalSalary;
+        this.Allowance = Allowance;
+        this.Deduction = Deduction;
+        
+      
+    
+     }
+
+    public String getEmpid() {
+        return Empid;
     }
 
-   
-   
-
-   
-
-   /* public String getChooseEmployeeType() {
-        return ChooseEmployeeType;
+    public void setEmpid(String Empid) {
+        this.Empid = Empid;
     }
 
-    public void setChooseEmployeeType(String ChooseEmployeeType) {
-        this.ChooseEmployeeType = ChooseEmployeeType;
-    }
-*/
-    /**
-     * @return the EmpId
-     */
-    public String getEmpId() {
-        return EmpId;
-    }
-
-    /**
-     * @param EmpId the EmpId to set
-     */
-    public void setEmpId(String EmpId) {
-        this.EmpId = EmpId;
-    }
-
-    /**
-     * @return the Name
-     */
-    public String getName() {
-        return Date;
-    }
-
-    /**
-     * @param Name the Name to set
-     */
-    public void setName(String Name) {
-        this.Date = Name;
-    }
-
-    public String getDate() {
+/*    public String getDate() {
         return Date;
     }
 
     public void setDate(String Date) {
         this.Date = Date;
-    }
-
-    public String getBonus() {
-        return Bonus;
-    }
-
-    public void setBonus(String Bonus) {
-        this.Bonus = Bonus;
-    }
+    } */
 
     public String getAllowance() {
-        return Allowance;
+        return this.Allowance;
     }
 
     public void setAllowance(String Allowance) {
         this.Allowance = Allowance;
     }
 
-    public String getAttendance() {
+    public String getDeduction() {
+        return this.Deduction;
+    }
+
+    public void setDeduction(String Deduction) {
+        this.Deduction = Deduction;
+    }
+
+ /*   public String getAttendance() {
         return Attendance;
     }
 
     public void setAttendance(String Attendance) {
         this.Attendance = Attendance;
-    }
+    } */
 
     public String getSalary() {
         return Salary;
@@ -113,4 +93,27 @@ public class PayrollDetails {
         this.Salary = Salary;
     }
 
+    public String getOverTime() {
+        return OverTime;
+    }
+
+    public void setOverTime(String OverTime) {
+        this.OverTime = OverTime;
+    }
+
+    public String getHourlyRate() {
+        return HourlyRate;
+    }
+
+    public void setHourlyRate(String HourlyRate) {
+        this.HourlyRate = HourlyRate;
+    }
+
+    public String getFinalSalary() {
+        return FinalSalary;
+    }
+
+    public void setFinalSalary(String FinalSalary) {
+        this.FinalSalary = FinalSalary;
+    }
 }

@@ -22,8 +22,9 @@ public class HRDetails {
     private String Position;
     private String EmpType;
     private String BasicSalary;
+    private String DaySalary;
 
-    public HRDetails(String EmpId, String Name, String Address, String Nic, String Dob, String Gender, String ContactNo, String Position, String EmpType, String BasicSalary) {
+    public HRDetails(String EmpId, String Name, String Address, String Nic, String Dob, String Gender, String ContactNo, String Position, String EmpType, String BasicSalary, String DaySalary) {
         this.EmpId = EmpId;
         this.Name = Name;
         this.Address = Address;
@@ -34,6 +35,7 @@ public class HRDetails {
         this.Position = Position;
         this.EmpType = EmpType;
         this.BasicSalary = BasicSalary;
+        this.DaySalary = DaySalary;
     }
 
     /**
@@ -175,7 +177,25 @@ public class HRDetails {
     public void setBasicSalary(String BasicSalary) {
         this.BasicSalary = BasicSalary;
     }
+
+    /**
+     * @return the DaySalary
+     */
+    public String getDaySalary() {
+        return DaySalary;
+    }
+
+    /**
+     * @param DaySalary the DaySalary to set
+     */
+    public void setDaySalary(String DaySalary) {
+        this.DaySalary = DaySalary;
+    }
+    
+
    
+
+    
    
     
 }

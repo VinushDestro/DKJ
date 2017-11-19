@@ -147,15 +147,15 @@ public class ViewTenderController implements Initializable {
         
         stage.show();*/
         
-        Stage s = (Stage) previousButton.getScene().getWindow();
-         s.close();
+//        Stage s = (Stage) previousButton.getScene().getWindow();
+//         s.close();
         
          /* FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("TenderHome.fxml"));
          Parent root1 = (Parent) fxmlLoader.load();
          Stage stage = new Stage();
          stage.setScene(new Scene(root1));
          stage.show();*/
-        
+        dkjconstruction.DKJConstruction.showTender_TenderHome();
 
     }
 
@@ -366,7 +366,7 @@ public class ViewTenderController implements Initializable {
     public void pending_tenderReport()
     {
         
-            Report.gen_Normal_report("/Users/KishBelic/Desktop/ITP/TenderManagement/src/tendermanagement/TenderReport/viewPending.jrxml");
+            Report.gen_Normal_report("C:\\Users\\Mahesh\\Documents\\NetBeansProjects\\dkjconstructions\\src\\dkjconstruction\\tendermanagement\\TenderReport\\viewPending.jrxml");
  
     }
     
@@ -375,7 +375,7 @@ public class ViewTenderController implements Initializable {
     @FXML
     public void ongoing_tenderReport()
     {
-    Report.gen_Normal_report("/Users/KishBelic/Desktop/ITP/TenderManagement/src/tendermanagement/TenderReport/viewOngoing.jrxml");
+    Report.gen_Normal_report("C:\\Users\\Mahesh\\Documents\\NetBeansProjects\\dkjconstructions\\src\\dkjconstruction\\tendermanagement\\TenderReport\\viewOngoing.jrxml");
  
     
     }

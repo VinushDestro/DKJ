@@ -27,6 +27,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import dkjconstruction.tendermanagement.TenderReport.Report;
+import java.io.IOException;
 
 /**
  * FXML Controller class
@@ -240,20 +241,22 @@ public class SummeryController implements Initializable {
     @FXML
     private void tender_report(ActionEvent event) {
         
-        Report.gen_Normal_report("/Users/KishBelic/Desktop/ITP/TenderManagement/src/tendermanagement/TenderReport/ClosedTender.jrxml");
+        Report.gen_Normal_report("C:\\Users\\Mahesh\\Documents\\NetBeansProjects\\dkjconstructions\\src\\dkjconstruction\\tendermanagement\\TenderReport\\ClosedTender.jrxml");
  
     }
 
     @FXML
-    private void previousClicked(ActionEvent event) {
-        Stage s = (Stage) previousButton.getScene().getWindow();
-        s.close();
+    private void previousClicked(ActionEvent event) throws IOException {
+//        Stage s = (Stage) previousButton.getScene().getWindow();
+//        s.close();
+
+dkjconstruction.DKJConstruction.showTender_TenderHome();
     }
 
     @FXML
     private void tender_report1(ActionEvent event) {
         
-        Report.gen_Normal_report("/Users/KishBelic/Desktop/ITP/TenderManagement/src/tendermanagement/TenderReport/CancelledTender.jrxml");
+        Report.gen_Normal_report("C:\\Users\\Mahesh\\Documents\\NetBeansProjects\\dkjconstructions\\src\\dkjconstruction\\tendermanagement\\TenderReport\\CancelledTender.jrxml");
  
     }
 

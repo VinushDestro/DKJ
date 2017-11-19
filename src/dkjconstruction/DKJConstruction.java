@@ -235,7 +235,7 @@ public class DKJConstruction extends Application {
         mainLayout.getChildren().clear();
         showMainPage();
         FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(DKJConstruction.class.getResource("tender/viewTender.fxml"));
+        loader.setLocation(DKJConstruction.class.getResource("tender/ViewTender.fxml"));
         GridPane Pane = loader.load();
         mainLayout.add(Pane, 1, 1);
     }
