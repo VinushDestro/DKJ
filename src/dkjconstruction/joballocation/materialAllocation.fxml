@@ -18,18 +18,18 @@
     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
-      <AnchorPane fx:id="pendingmCount" minHeight="0.0" minWidth="0.0" prefHeight="371.0" prefWidth="505.0">
+      <AnchorPane fx:id="pendingmCount" minHeight="0.0" minWidth="0.0" prefHeight="371.0" prefWidth="505.0" stylesheets="@../style2.css">
          <children>
-            <TableView fx:id="material" layoutX="72.0" layoutY="253.0" prefHeight="130.0" prefWidth="367.0">
+            <TableView fx:id="material" layoutX="86.0" layoutY="314.0" prefHeight="185.0" prefWidth="367.0">
                <columns>
                   <TableColumn fx:id="mattype" prefWidth="170.0" text="Material Type" />
                   <TableColumn fx:id="matcount" prefWidth="193.0" text="Available Count" />
                </columns>
             </TableView>
-            <JFXTextField fx:id="materialtender" layoutX="26.0" layoutY="419.0" promptText="TenderID" />
-            <JFXTextField fx:id="tendermaterialtype" layoutX="188.0" layoutY="419.0" promptText="Material Type" />
-            <JFXTextField fx:id="matCount" layoutX="353.0" layoutY="419.0" promptText="Count" />
-            <TableView fx:id="tendMatTbl" layoutX="14.0" layoutY="77.0" prefHeight="157.0" prefWidth="531.0">
+            <JFXTextField fx:id="materialtender" layoutX="58.0" layoutY="566.0" promptText="TenderID" />
+            <JFXTextField fx:id="tendermaterialtype" layoutX="240.0" layoutY="566.0" promptText="Material Type" />
+            <JFXTextField fx:id="matCount" layoutX="424.0" layoutY="567.0" promptText="Count" />
+            <TableView fx:id="tendMatTbl" layoutX="14.0" layoutY="77.0" prefHeight="198.0" prefWidth="531.0">
                <columns>
                   <TableColumn fx:id="matTendID" prefWidth="121.0" text="TenderID" />
                   <TableColumn fx:id="matTendType" prefWidth="133.0" text="Material Type" />
@@ -37,14 +37,14 @@
                   <TableColumn fx:id="matAssign" prefWidth="153.0" text="Assigned Count" />
                </columns>
             </TableView>
-            <AnchorPane layoutX="557.0" layoutY="-2.0" prefHeight="542.0" prefWidth="217.0" style="-fx-background-color: #2c3e50;">
+            <AnchorPane layoutX="604.0" layoutY="1.0" prefHeight="666.0" prefWidth="236.0">
                <children>
-                  <Button layoutX="20.0" layoutY="160.0" mnemonicParsing="false" onAction="#addTenderMaterial" prefHeight="43.0" prefWidth="177.0" style="-fx-border-color: #1e8bc3; -fx-background-color: #2c3e50; -fx-border-width: 2; -fx-border-radius: 150,10,10;" text="Submit Material" textFill="#1e8bc3">
+                  <Button layoutX="34.0" layoutY="465.0" mnemonicParsing="false" onAction="#addTenderMaterial" prefHeight="43.0" prefWidth="170.0" stylesheets="@../style2.css" text="Submit Material" textFill="WHITE">
                      <font>
                         <Font name="Raleway-Bold" size="14.0" />
                      </font>
                   </Button>
-                  <Button layoutX="20.0" layoutY="288.0" mnemonicParsing="false" onAction="#tender_report" prefHeight="43.0" prefWidth="177.0" style="-fx-border-color: #1e8bc3; -fx-background-color: #2c3e50; -fx-border-width: 2; -fx-border-radius: 150,10,10;" text="ireport" textFill="#1e8bc3">
+                  <Button layoutX="29.0" layoutY="528.0" mnemonicParsing="false" onAction="#tender_report" prefHeight="43.0" prefWidth="177.0" style="-fx-border-radius: 150,10,10;" stylesheets="@../style2.css" text="Report" textFill="WHITE">
                      <font>
                         <Font name="Raleway-Bold" size="14.0" />
                      </font>

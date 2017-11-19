@@ -9,6 +9,7 @@ package dkjconstruction.joballocation;
  *
  * @author Ranjitha
  */
+//Class matTender referncing materialTender 
 public class matTender {
      private String matTender;
      private String matType;

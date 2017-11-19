@@ -36,14 +36,14 @@
                   <TableColumn fx:id="pendingmatAssign" prefWidth="153.0" text="Assigned Count" />
                </columns>
             </TableView>
-            <AnchorPane layoutX="574.0" layoutY="116.0" prefHeight="542.0" prefWidth="217.0">
+            <AnchorPane layoutX="574.0" layoutY="2.0" prefHeight="668.0" prefWidth="266.0">
                <children>
-                  <Button layoutX="41.0" layoutY="327.0" mnemonicParsing="false" onAction="#pendingaddTenderMaterial" prefHeight="43.0" prefWidth="177.0" text="Submit Material" textFill="WHITE">
+                  <Button layoutX="42.0" layoutY="443.0" mnemonicParsing="false" onAction="#pendingaddTenderMaterial" prefHeight="43.0" prefWidth="177.0" text="Submit Material" textFill="WHITE">
                      <font>
                         <Font name="Raleway-Bold" size="14.0" />
                      </font>
                   </Button>
-                  <Button layoutX="35.0" layoutY="405.0" mnemonicParsing="false" onAction="#backClicked" prefHeight="43.0" prefWidth="177.0" style="-fx-border-color: ; -fx-background-color: ; -fx-border-width: ; -fx-border-radius: 150,10,10;" stylesheets="@../style2.css" text="Back" textFill="WHITE">
+                  <Button layoutX="43.0" layoutY="516.0" mnemonicParsing="false" onAction="#backClicked" prefHeight="43.0" prefWidth="177.0" style="-fx-border-color: ; -fx-background-color: ; -fx-border-width: ; -fx-border-radius: 150,10,10;" stylesheets="@../style2.css" text="Back" textFill="WHITE">
                      <font>
                         <Font name="Raleway-Bold" size="14.0" />
                      </font>
@@ -51,6 +51,7 @@
                </children>
             </AnchorPane>
             <JFXTextField fx:id="pendingMatCount" layoutX="381.0" layoutY="543.0" promptText="Material Count" />
+            <JFXTextField fx:id="searchfield" layoutX="70.0" layoutY="29.0" prefHeight="40.0" prefWidth="596.0" promptText="Search" stylesheets="@../style2.css" />
          </children>
       </AnchorPane>
    </children>

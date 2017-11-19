@@ -19,26 +19,26 @@
     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
-      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="371.0" prefWidth="505.0">
+      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="371.0" prefWidth="505.0" stylesheets="@../style2.css">
          <children>
-            <AnchorPane layoutX="623.0" layoutY="-53.0" prefHeight="611.0" prefWidth="217.0" style="-fx-background-color: #2c3e50;">
+            <AnchorPane layoutX="606.0" layoutY="4.0" prefHeight="659.0" prefWidth="238.0">
                <children>
-                  <Button layoutX="41.0" layoutY="228.0" mnemonicParsing="false" onAction="#pendingaddTenderEmployee" prefHeight="43.0" prefWidth="135.0" style="-fx-border-color: #1e8bc3; -fx-background-color: #2c3e50; -fx-border-width: 2; -fx-border-radius: 150,10,10;" text="Submit Employee" textFill="#1e8bc3">
+                  <Button layoutX="32.0" layoutY="350.0" mnemonicParsing="false" onAction="#pendingaddTenderEmployee" prefHeight="43.0" prefWidth="164.0" stylesheets="@../style2.css" text="Submit Employee" textFill="WHITE">
                      <font>
                         <Font name="Raleway-Bold" size="14.0" />
                      </font>
                   </Button>
-                  <Button layoutX="41.0" layoutY="412.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="135.0" style="-fx-border-color: #1e8bc3; -fx-background-color: #2c3e50; -fx-border-width: 2; -fx-border-radius: 150,10,10;" text="iReport" textFill="#1e8bc3">
+                  <Button layoutX="33.0" layoutY="407.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="163.0" stylesheets="@../style2.css" text="iReport" textFill="WHITE">
                      <font>
                         <Font name="Raleway-Bold" size="14.0" />
                      </font>
                   </Button>
-                  <Button layoutX="33.0" layoutY="284.0" mnemonicParsing="false" onAction="#nextClicked" prefHeight="43.0" prefWidth="135.0" style="-fx-border-color: #1e8bc3; -fx-background-color: #2c3e50; -fx-border-width: 2; -fx-border-radius: 150,10,10;" text="Next" textFill="#1e8bc3">
+                  <Button layoutX="33.0" layoutY="471.0" mnemonicParsing="false" onAction="#nextClicked" prefHeight="43.0" prefWidth="164.0" stylesheets="@../style2.css" text="Next" textFill="WHITE">
                      <font>
                         <Font name="Raleway-Bold" size="14.0" />
                      </font>
                   </Button>
-                  <Button layoutX="41.0" layoutY="343.0" mnemonicParsing="false" onAction="#backClicked" prefHeight="43.0" prefWidth="135.0" style="-fx-border-color: #1e8bc3; -fx-background-color: #2c3e50; -fx-border-width: 2; -fx-border-radius: 150,10,10;" text="Back" textFill="#1e8bc3">
+                  <Button layoutX="31.0" layoutY="540.0" mnemonicParsing="false" onAction="#backClicked" prefHeight="43.0" prefWidth="170.0" stylesheets="@../style2.css" text="Back" textFill="WHITE">
                      <font>
                         <Font name="Raleway-Bold" size="14.0" />
                      </font>
@@ -46,30 +46,31 @@
                </children>
             </AnchorPane>
             <Label layoutX="46.0" layoutY="204.0" />
-            <JFXTextField fx:id="pendingtenderEmployeeId" layoutX="332.0" layoutY="444.0" prefHeight="28.0" prefWidth="179.0" promptText=" Employee Count">
+            <JFXTextField fx:id="pendingtenderEmployeeId" layoutX="336.0" layoutY="562.0" prefHeight="43.0" prefWidth="207.0" promptText=" Employee ID" stylesheets="@../style2.css">
                <font>
                   <Font name="Raleway-Regular" size="14.0" />
                </font>
             </JFXTextField>
-            <JFXTextField fx:id="pendingKTid" layoutX="82.0" layoutY="445.0" prefHeight="26.0" prefWidth="160.0" promptText="Tender ID">
+            <JFXTextField fx:id="pendingKTid" layoutX="77.0" layoutY="572.0" prefHeight="32.0" prefWidth="191.0" promptText="Tender ID">
                <font>
                   <Font name="Raleway-Regular" size="14.0" />
                </font>
             </JFXTextField>
-            <TableView fx:id="pendingkishtbl" layoutX="27.0" layoutY="27.0" prefHeight="132.0" prefWidth="580.0">
+            <TableView fx:id="pendingkishtbl" layoutX="22.0" layoutY="87.0" prefHeight="144.0" prefWidth="545.0">
                <columns>
                   <TableColumn fx:id="pendingkTenderID" prefWidth="128.0" text="TenderId" />
                   <TableColumn fx:id="pendingreqEmpCount" prefWidth="236.0" text="Required Employee Count" />
                   <TableColumn fx:id="pendingassignedEmpCount" prefWidth="208.0" text="Assigned Count" />
                </columns>
             </TableView>
-            <TableView fx:id="pendingemployeeTable" layoutX="58.0" layoutY="241.0" prefHeight="145.0" prefWidth="503.0">
+            <TableView fx:id="pendingemployeeTable" layoutX="37.0" layoutY="274.0" prefHeight="225.0" prefWidth="503.0">
                <columns>
                   <TableColumn fx:id="pendingemployeeId" prefWidth="158.0" text="Employee ID" />
                   <TableColumn fx:id="pendingemployeeName" prefWidth="175.0" text="Employee Name" />
                   <TableColumn fx:id="pendingemployeeType" prefWidth="161.0" text="Employee Type" />
                </columns>
             </TableView>
+            <JFXTextField fx:id="searchfield" layoutX="46.0" layoutY="40.0" prefHeight="25.0" prefWidth="512.0" promptText="Search" />
          </children>
       </AnchorPane>
    </children>

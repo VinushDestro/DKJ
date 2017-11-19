@@ -35,18 +35,20 @@ import javafx.stage.Stage;
  */
 public class PendingEmployeeController implements Initializable {
     
-     private Connection con = null;
+      private Connection con = null;
     private PreparedStatement pst = null;
     private ResultSet rs = null;
     
-     private ObservableList<KISHANTH> dataKISHpending;
-    private ObservableList<ASRAJ> dataASRAJpending;
+     private ObservableList<JobEmployee> dataKISHpending;
+    private ObservableList<EMPLOYEE> dataASRAJpending;
      //private ObservableList<Tender> dataTenderpending;
 
     @FXML
     private JFXTextField pendingtenderEmployeeId;
     @FXML
     private  JFXTextField pendingKTid;
+    @FXML
+    private  JFXTextField searchfield;
     @FXML
     private TableView pendingkishtbl;
     @FXML
@@ -76,6 +78,10 @@ public class PendingEmployeeController implements Initializable {
         dataKISHpending = FXCollections.observableArrayList();
         dataASRAJpending = FXCollections.observableArrayList();
       //  dataTenderpending = FXCollections.observableArrayList();
+      
+      pendingtenderEmployeeId.setDisable(true);
+      pendingKTid.setDisable(true);
+    
         
         setTenderTablepending();
         loadFromTenderDBpending();
@@ -83,6 +89,7 @@ public class PendingEmployeeController implements Initializable {
         loadFromEmployeeDBpending();
         RowclickEvent8();
         RowclickEvent9();
+        search();
         
         String pendingaddTender = pendingKTid.getText();
        
@@ -112,10 +119,10 @@ public class PendingEmployeeController implements Initializable {
 
             Connection con = DbConnection.getConnection();
                 Connection con4 = DbConnection.getConnection();
-             pst = con.prepareStatement("select tenderId,noOfEmployee,assignCount from jobemployee where tenderId IN (select tenderId from tender where status='pending')");
+             pst = con.prepareStatement("select tenderId,noOfEmployee,assignCount from jobemployee where tenderId IN (select tenderId from tender where status='Pending')");
              rs = pst.executeQuery();
                 while (rs.next()) {
-                dataKISHpending.add(new KISHANTH(rs.getString(1), rs.getInt(2), rs.getInt(3)));
+                dataKISHpending.add(new JobEmployee(rs.getString(1), rs.getInt(2), rs.getInt(3)));
                 //  dataKISH.add(new KISHANTH(null, null, null));
                 
             }
@@ -154,11 +161,11 @@ public class PendingEmployeeController implements Initializable {
 
             Connection con = DbConnection.getConnection();
 
-            pst = con.prepareStatement("select empId,name,empType from employee");
+            pst = con.prepareStatement("select empId,name,empType from employee where availability='available'");
             rs = pst.executeQuery();
              String kish;
             while (rs.next()) {
-                dataASRAJpending.add(new ASRAJ(rs.getString(1), rs.getString(2), rs.getString(3)));
+                dataASRAJpending.add(new EMPLOYEE(rs.getString(1), rs.getString(2), rs.getString(3)));
                 //  dataKISH.add(new KISHANTH(null, null, null, null, null));
                 kish=rs.getString(1);
                  System.err.println(kish);
@@ -195,8 +202,10 @@ public class PendingEmployeeController implements Initializable {
                 alert.setHeaderText(null);
                 alert.setContentText("Fields cannot be empty");
                 alert.show();
+                pendingKTid.clear();
+                pendingtenderEmployeeId.clear();
             }
-
+            else{
             DbConnection.openConnection();
             Connection con4 = DbConnection.getConnection();
             PreparedStatement stmt = con4.prepareStatement("insert into emptender (tenderId,empId) values(?,?)");
@@ -216,11 +225,15 @@ public class PendingEmployeeController implements Initializable {
             stmt1.setString(1, pendingaddEmployee);
             stmt1.executeUpdate();
             
-             PreparedStatement stmt2 = con4.prepareStatement("UPDATE tender SET status = 'on going' WHERE tenderId=?");
+            PreparedStatement stmt3 = con4.prepareStatement("UPDATE jobemployee SET assignCount =assignCount+1 WHERE tenderId =?");
+            stmt3.setString(1, pendingaddTender);
+            stmt3.executeUpdate();
+            
+           /*  PreparedStatement stmt2 = con4.prepareStatement("UPDATE tender SET status = 'on going' WHERE tenderId=?");
             stmt2.setString(1, pendingaddTender);
-            stmt2.executeUpdate();
+            stmt2.executeUpdate();*/
             
-            
+            }
 
         } catch (Exception e) {
 
@@ -233,12 +246,14 @@ public class PendingEmployeeController implements Initializable {
         }
          pendingKTid.clear();
          pendingtenderEmployeeId.clear();
+         loadFromEmployeeDBpending();
+         loadFromTenderDBpending();
     }
     
      private void RowclickEvent8() {
         pendingkishtbl.setOnMouseClicked((e)
                 -> {
-            KISHANTH v1 = (KISHANTH) pendingkishtbl.getItems().get(pendingkishtbl.getSelectionModel().getSelectedIndex());
+            JobEmployee v1 = (JobEmployee) pendingkishtbl.getItems().get(pendingkishtbl.getSelectionModel().getSelectedIndex());
             pendingKTid.setText(v1.getTenderId());
 
            // joballocation.loadFromAssetDB();
@@ -250,12 +265,11 @@ public class PendingEmployeeController implements Initializable {
     private void RowclickEvent9() {
         pendingemployeeTable.setOnMouseClicked((e)
                 -> {
-            ASRAJ v1 = (ASRAJ) pendingemployeeTable.getItems().get(pendingemployeeTable.getSelectionModel().getSelectedIndex());
+            EMPLOYEE v1 = (EMPLOYEE) pendingemployeeTable.getItems().get(pendingemployeeTable.getSelectionModel().getSelectedIndex());
             pendingtenderEmployeeId.setText(v1.getEmpId());
 
         });
     }
-    
      @FXML
      private void nextClicked(ActionEvent event) throws IOException {
   dkjconstruction.DKJConstruction.showPendingAsset();
@@ -267,4 +281,34 @@ public class PendingEmployeeController implements Initializable {
       dkjconstruction.DKJConstruction.showJobAllocation();
 
      }  
+     
+     public void search() {
+        searchfield.setOnKeyReleased(e -> {
+            if (searchfield.getText().equals("")) {
+              //  loadFromTenderDB();
+                loadFromTenderDBpending();
+            } else {
+                dataKISHpending.clear();
+                try {
+
+                    Connection con = DbConnection.getConnection();
+
+                    pst = con.prepareStatement("select tenderId,noOfEmployee,assignCount from jobemployee where tenderId  LIKE '%" + searchfield.getText() + "%' ");
+                    rs = pst.executeQuery();
+
+                    while (rs.next()) {
+                        dataKISHpending.add(new JobEmployee(rs.getString(1), rs.getInt(2), rs.getInt(3)));
+                    }
+                    System.out.println("Search clicked");
+                } catch (Exception ex) {
+                    System.err.println("Error loading table data search table jobemployee" + ex);
+
+                }
+
+                pendingkishtbl.setItems(dataKISHpending);
+
+            }
+
+        });//event
+    }
 }

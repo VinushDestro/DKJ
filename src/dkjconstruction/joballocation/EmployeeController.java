@@ -36,12 +36,12 @@ import net.sf.jasperreports.view.JasperViewer;
  */
 public class EmployeeController implements Initializable {
     
-      private Connection con = null;
+   private Connection con = null;
     private PreparedStatement pst = null;
     private ResultSet rs = null;
 
-      private ObservableList<KISHANTH> dataKISH;
-    private ObservableList<ASRAJ> dataASRAJ;
+      private ObservableList<JobEmployee> dataKISH;
+    private ObservableList<EMPLOYEE> dataASRAJ;
     
     @FXML
     private JFXTextField tenderEmployeeId;
@@ -109,11 +109,11 @@ public class EmployeeController implements Initializable {
 
             Connection con = DbConnection.getConnection();
 
-            pst = con.prepareStatement("select tenderId,noOfEmployee,assignCount from jobemployee");
+            pst = con.prepareStatement("select tenderId,noOfEmployee,assignCount from jobemployee where tenderId IN (select tenderId from tender where status='on progress'");
             rs = pst.executeQuery();
 
             while (rs.next()) {
-                dataKISH.add(new KISHANTH(rs.getString(1), rs.getInt(2), rs.getInt(3)));
+                dataKISH.add(new JobEmployee(rs.getString(1), rs.getInt(2), rs.getInt(3)));
                 //  dataKISH.add(new KISHANTH(null, null, null));
             }
 
@@ -150,11 +150,11 @@ public class EmployeeController implements Initializable {
 
             Connection con = DbConnection.getConnection();
 
-            pst = con.prepareStatement("select empId,name,empType from employee");
+            pst = con.prepareStatement("select empId,name,empType from employee where availability='available'");
             rs = pst.executeQuery();
              String kish;
             while (rs.next()) {
-                dataASRAJ.add(new ASRAJ(rs.getString(1), rs.getString(2), rs.getString(3)));
+                dataASRAJ.add(new EMPLOYEE(rs.getString(1), rs.getString(2), rs.getString(3)));
                 //  dataKISH.add(new KISHANTH(null, null, null, null, null));
                 kish=rs.getString(1);
                  System.err.println(kish);
@@ -187,7 +187,7 @@ public class EmployeeController implements Initializable {
                 alert.setContentText("Fields cannot be empty");
                 alert.show();
             }
-
+            else{
             DbConnection.openConnection();
             Connection con4 = DbConnection.getConnection();
             PreparedStatement stmt = con4.prepareStatement("insert into emptender (tenderId,empId) values(?,?)");
@@ -207,6 +207,13 @@ public class EmployeeController implements Initializable {
             stmt1.setString(1, addEmployee);
             stmt1.executeUpdate();
             
+            PreparedStatement stmt3 = con4.prepareStatement("UPDATE jobemployee SET assignCount =assignCount+1 WHERE tenderId =?");
+            stmt3.setString(1, addTender);
+            stmt3.executeUpdate();
+            
+            loadFromEmployeeDB();
+            loadFromTenderDB();
+            }
             
 
         } catch (Exception e) {
@@ -215,17 +222,19 @@ public class EmployeeController implements Initializable {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Error");
             alert.setHeaderText(null);
-            alert.setContentText("error" + e);
+            alert.setContentText("error Adding Employee");
             alert.show();
         }
          KTid.clear();
          tenderEmployeeId.clear();
+          loadFromEmployeeDB();
+            loadFromTenderDB();
     }
     
      private void RowclickEvent() {
         kishtbl.setOnMouseClicked((e)
                 -> {
-            KISHANTH k1 = (KISHANTH) kishtbl.getItems().get(kishtbl.getSelectionModel().getSelectedIndex());
+            JobEmployee k1 = (JobEmployee) kishtbl.getItems().get(kishtbl.getSelectionModel().getSelectedIndex());
             KTid.setText(k1.getTenderId());
             addTender=k1.getTenderId();
             System.out.println(addTender);
@@ -239,7 +248,7 @@ public class EmployeeController implements Initializable {
     private void RowclickEvent1() {
         employeeTable.setOnMouseClicked((e)
                 -> {
-            ASRAJ k1 = (ASRAJ) employeeTable.getItems().get(employeeTable.getSelectionModel().getSelectedIndex());
+            EMPLOYEE k1 = (EMPLOYEE) employeeTable.getItems().get(employeeTable.getSelectionModel().getSelectedIndex());
             tenderEmployeeId.setText(k1.getEmpId());
             addEmployee=k1.getEmpId();
 
@@ -265,7 +274,7 @@ public class EmployeeController implements Initializable {
                     rs = pst.executeQuery();
 
                     while (rs.next()) {
-                        dataKISH.add(new KISHANTH(rs.getString(1), rs.getInt(2), rs.getInt(3)));
+                        dataKISH.add(new JobEmployee(rs.getString(1), rs.getInt(2), rs.getInt(3)));
                     }
                     System.out.println("Search clicked");
                 } catch (Exception ex) {
@@ -292,6 +301,7 @@ public class EmployeeController implements Initializable {
             System.out.println("sdas");
         }
     }
+    
     
     }
 

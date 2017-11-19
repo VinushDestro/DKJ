@@ -18,17 +18,17 @@
     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
-      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="371.0" prefWidth="505.0">
+      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="371.0" prefWidth="505.0" stylesheets="@../style2.css">
          <children>
-            <TableView fx:id="equipmentTable" layoutX="96.0" layoutY="297.0" prefHeight="166.0" prefWidth="367.0">
+            <TableView fx:id="equipmentTable" layoutX="138.0" layoutY="320.0" prefHeight="166.0" prefWidth="367.0">
                <columns>
                   <TableColumn fx:id="equipmentName" prefWidth="170.0" text="Equipment name" />
                   <TableColumn fx:id="availableEquipCount" prefWidth="193.0" text="Available Count" />
                </columns>
             </TableView>
-            <JFXTextField fx:id="equipTender" layoutX="101.0" layoutY="479.0" promptText="TenderID" />
-            <JFXTextField fx:id="tenderEquipId" layoutX="258.0" layoutY="479.0" promptText="Material Type" />
-            <TableView fx:id="equipTable" layoutX="14.0" layoutY="69.0" prefHeight="200.0" prefWidth="531.0">
+            <JFXTextField fx:id="equipTender" layoutX="79.0" layoutY="531.0" promptText="TenderID" />
+            <JFXTextField fx:id="tenderEquipId" layoutX="255.0" layoutY="533.0" promptText="Material Type" />
+            <TableView fx:id="equipTable" layoutX="21.0" layoutY="84.0" prefHeight="200.0" prefWidth="531.0">
                <columns>
                   <TableColumn fx:id="eqTender" prefWidth="121.0" text="TenderID" />
                   <TableColumn fx:id="eqName" prefWidth="133.0" text="Equipment name" />
@@ -36,22 +36,22 @@
                   <TableColumn fx:id="eqAssign" prefWidth="153.0" text="Assigned Count" />
                </columns>
             </TableView>
-            <AnchorPane layoutX="557.0" layoutY="-2.0" prefHeight="542.0" prefWidth="217.0" style="-fx-background-color: #2c3e50;">
+            <AnchorPane layoutX="592.0" layoutY="3.0" prefHeight="662.0" prefWidth="249.0">
                <children>
-                  <Button layoutX="20.0" layoutY="160.0" mnemonicParsing="false" onAction="#addTenderEquipment" prefHeight="43.0" prefWidth="177.0" style="-fx-border-color: #1e8bc3; -fx-background-color: #2c3e50; -fx-border-width: 2; -fx-border-radius: 150,10,10;" text="Submit Equipment" textFill="#1e8bc3">
+                  <Button layoutX="47.0" layoutY="448.0" mnemonicParsing="false" onAction="#addTenderEquipment" prefHeight="43.0" prefWidth="177.0" stylesheets="@../style2.css" text="Submit Equipment" textFill="WHITE">
                      <font>
                         <Font name="Raleway-Bold" size="14.0" />
                      </font>
                   </Button>
-                  <Button layoutX="20.0" layoutY="228.0" mnemonicParsing="false" onAction="#tender_reportEquip" prefHeight="43.0" prefWidth="177.0" style="-fx-border-color: #1e8bc3; -fx-background-color: #2c3e50; -fx-border-width: 2; -fx-border-radius: 150,10,10;" text="iReport" textFill="#1e8bc3">
+                  <Button layoutX="46.0" layoutY="511.0" mnemonicParsing="false" onAction="#tender_reportEquip" prefHeight="43.0" prefWidth="177.0" stylesheets="@../style2.css" text="Report" textFill="WHITE">
                      <font>
                         <Font name="Raleway-Bold" size="14.0" />
                      </font>
                   </Button>
                </children>
             </AnchorPane>
-            <JFXTextField fx:id="matCount" layoutX="420.0" layoutY="479.0" promptText="count" />
-            <JFXTextField fx:id="searchfield" layoutX="58.0" layoutY="26.0" prefHeight="25.0" prefWidth="447.0" />
+            <JFXTextField fx:id="matCount" layoutX="427.0" layoutY="533.0" promptText="count" />
+            <JFXTextField fx:id="searchfield" layoutX="58.0" layoutY="26.0" prefHeight="44.0" prefWidth="447.0" />
          </children>
       </AnchorPane>
    </children>

@@ -9,6 +9,7 @@ package dkjconstruction.joballocation;
  *
  * @author Ranjitha
  */
+//Class Equipment Referncing equipment
 public class Equipment {
     
     // private String equipmentId;

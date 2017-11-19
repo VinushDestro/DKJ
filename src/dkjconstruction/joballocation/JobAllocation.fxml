@@ -16,11 +16,11 @@
    <children>
       <AnchorPane prefHeight="371.0" prefWidth="505.0">
          <children>
-            <Button layoutX="246.0" layoutY="182.0" mnemonicParsing="false" onAction="#pendingClicked" prefHeight="50.0" prefWidth="150.0" text="Pending tenders" />
-            <Button layoutX="480.0" layoutY="182.0" mnemonicParsing="false" onAction="#employeeClicked" prefHeight="50.0" prefWidth="150.0" text="Allocate employee" />
-            <Button layoutX="246.0" layoutY="308.0" mnemonicParsing="false" onAction="#assetClicked" prefHeight="50.0" prefWidth="150.0" text="Allocate Asset" />
-            <Button layoutX="480.0" layoutY="308.0" mnemonicParsing="false" onAction="#equipmentClicked" prefHeight="50.0" prefWidth="150.0" text="Allocate Equipment" />
-            <Button layoutX="246.0" layoutY="415.0" mnemonicParsing="false" onAction="#materialClicked" prefHeight="50.0" prefWidth="150.0" text="Allocate Material" />
+            <Button layoutX="24.0" layoutY="284.0" mnemonicParsing="false" onAction="#pendingClicked" prefHeight="75.0" prefWidth="131.0" stylesheets="@../style2.css" text="Pending tenders" textFill="WHITE" />
+            <Button layoutX="179.0" layoutY="283.0" mnemonicParsing="false" onAction="#employeeClicked" prefHeight="76.0" prefWidth="150.0" stylesheets="@../style2.css" text="Allocate employee" textFill="WHITE" />
+            <Button layoutX="352.0" layoutY="283.0" mnemonicParsing="false" onAction="#assetClicked" prefHeight="74.0" prefWidth="150.0" stylesheets="@../style2.css" text="Allocate Asset" textFill="WHITE" />
+            <Button layoutX="527.0" layoutY="284.0" mnemonicParsing="false" onAction="#equipmentClicked" prefHeight="74.0" prefWidth="150.0" stylesheets="@../style2.css" text="Allocate Equipment" textFill="WHITE" />
+            <Button layoutX="695.0" layoutY="281.0" mnemonicParsing="false" onAction="#materialClicked" prefHeight="78.0" prefWidth="129.0" stylesheets="@../style2.css" text="Allocate Material" textFill="WHITE" />
          </children>
       </AnchorPane>
    </children>

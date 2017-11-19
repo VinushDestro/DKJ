@@ -55,6 +55,8 @@ public class PendingMaterialController implements Initializable {
     @FXML
     private JFXTextField pendingMatCount;
     @FXML
+    private JFXTextField searchfield;
+    @FXML
     private TableView pendingtendMatTbl;
     @FXML
     private TableColumn pendingmatTendID;
@@ -74,12 +76,18 @@ public class PendingMaterialController implements Initializable {
          dataMatTendpending = FXCollections.observableArrayList();
         datamatpending = FXCollections.observableArrayList();
         
+        pendingmaterialtender.setDisable(true);
+        pendingtendermaterialtype.setDisable(true);
+       
+        
         pendingsetTenderMaterialTable();
         pendingloadFromTenderMaterialDB();
         pendingsetMaterialTable();
         pendingloadMaterialDB();
         RowclickEvent14();
         RowclickEvent15();
+        search();
+    
     } 
     
      public void alerboxInfo(String title, String message) {
@@ -91,16 +99,12 @@ public class PendingMaterialController implements Initializable {
         alert.setHeight(300);
         alert.setContentText(message);
         alert.showAndWait();
-
-    }  
-
-     private void pendingsetTenderMaterialTable() {
+     }
+      private void pendingsetTenderMaterialTable() {
         try {
             DbConnection.openConnection();
             con = DbConnection.getConnection();
 
-            //Set cell value factory to tableview.
-            pendingmatTendID.setCellValueFactory(new PropertyValueFactory<>("matTender"));
             pendingmatTendType.setCellValueFactory(new PropertyValueFactory<>("matType"));
             pendingmatReq.setCellValueFactory(new PropertyValueFactory<>("reqCount"));
             pendingmatAssign.setCellValueFactory(new PropertyValueFactory<>("assignCount"));
@@ -118,7 +122,7 @@ public class PendingMaterialController implements Initializable {
 
             Connection con = DbConnection.getConnection();
 
-            pst = con.prepareStatement("select tenderId,materialType,materialcount,assignCount from materialtender");
+            pst = con.prepareStatement("select tenderId,materialType,materialcount,assignCount from materialtender WHERE tenderId IN (SELECT tenderId from equiptender WHERE assignCount>0 and tenderId IN (select tenderId from tender where status='pending')) ");
             rs = pst.executeQuery();
 
             while (rs.next()) {
@@ -157,7 +161,7 @@ public class PendingMaterialController implements Initializable {
 
             Connection con = DbConnection.getConnection();
 
-            pst = con.prepareStatement("select type,quantity from rawmaterial");
+            pst = con.prepareStatement("select type,quantity from rawmaterial where quantity>0");
             rs = pst.executeQuery();
 
             while (rs.next()) {
@@ -186,18 +190,17 @@ public class PendingMaterialController implements Initializable {
 
             if (addMatTender.isEmpty() || addMaterial.isEmpty()) {
                  alerboxInfo("Operation Failed","Fields cannot be empty");
-               /* Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Error");
-                alert.setHeaderText(null);
-                alert.setContentText("Fields cannot be empty");
-                alert.show();*/
+                  pendingmaterialtender.clear();
+                 pendingtendermaterialtype.clear();
+                 pendingMatCount.clear();
+               
             }
             
-             else if(addMatcount==0){
-                 alerboxInfo("Operation Failed","you have enterd 0 for count ");
+             else if(addMatcount<=0){
+                 alerboxInfo("Operation Failed","you have enterd 0 or lesser value for count ");
             }
-            
-             PreparedStatement stmt2 = con.prepareStatement("select count from materialtender where tenderid=? and equipName=?");
+             else{
+             PreparedStatement stmt2 = con.prepareStatement("select materialCount from materialtender where tenderid=? and materialType=?");
            stmt2.setString(1, addMatTender); 
            stmt2.setString(2, addMaterial);
            rs = stmt2.executeQuery();
@@ -212,12 +215,6 @@ public class PendingMaterialController implements Initializable {
                  System.out.println("amount is less");
                  
                  alerboxInfo("Error","Assigning amount cannot be greater than required amount. Try entering again");
-                      
-               /* Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Error");
-                alert.setHeaderText(null);
-                alert.setContentText("Assigning amount cannot be greater than required amount. Try entering again");
-                alert.show();*/
                 pendingMatCount.clear();
                 
             }
@@ -232,19 +229,23 @@ public class PendingMaterialController implements Initializable {
             System.out.println("success adding material");
              alerboxInfo("operation SuucessFull","Material Added Successfully");
 
-            /*Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("SUCCESS");
-            alert.setHeaderText(null);
-            alert.setContentText("Material Added Successfully");
-            alert.show();*/
+           
 
-            PreparedStatement stmt1 = con4.prepareStatement("UPDATE rawmaterial SET quantity = quantity-1 WHERE type =?");
+            PreparedStatement stmt1 = con4.prepareStatement("UPDATE rawmaterial SET quantity = quantity-? WHERE type =?");
+            stmt1.setInt(1, addMatcount);
             stmt1.setString(1, addMaterial);
             stmt1.executeUpdate();
+            
+            PreparedStatement stmt3 = con4.prepareStatement("UPDATE tender SET status ='on progress' WHERE tenderId =?");
+            stmt3.setString(1, addMatTender);
+           
+            stmt3.executeUpdate();
+            
 
              pendingloadFromTenderMaterialDB();
             pendingloadMaterialDB();
                 }
+            }
             }
         } catch (Exception e) {
 
@@ -252,7 +253,7 @@ public class PendingMaterialController implements Initializable {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Error");
             alert.setHeaderText(null);
-            alert.setContentText("error adding Material " + e);
+            alert.setContentText("error adding Material ");
             alert.show();
         }
         pendingmaterialtender.clear();
@@ -264,7 +265,30 @@ public class PendingMaterialController implements Initializable {
                 -> {
             matTender v1 = (matTender) pendingtendMatTbl.getItems().get(pendingtendMatTbl.getSelectionModel().getSelectedIndex());
             pendingmaterialtender.setText(v1.getMatTender());
+            pendingtendermaterialtype.setText(v1.getMatType());
+            
+            datamatpending.clear();
+            try{
+            String addTender = pendingmaterialtender.getText();
+            String mType = pendingtendermaterialtype.getText();
+                
+             PreparedStatement stmt1 = con.prepareStatement("select type,quantity from rawmaterial WHERE type =?");
+            stmt1.setString(1, mType);
+            rs=stmt1.executeQuery();  
+            
+            while(rs.next()){
+            datamatpending.add(new Material(rs.getString(1), rs.getInt(2)));
+                //  dataKISH.add(new KISHANTH(null, null, null));
 
+            }
+
+        } catch (Exception e1) {
+            System.out.println("ranjithatender");
+            System.err.println("Error loading table data ");
+
+        }
+        pendingmaterial.setItems(datamatpending);
+            
         });
     }
 
@@ -278,12 +302,44 @@ public class PendingMaterialController implements Initializable {
     }
     
     
-    
      @FXML
      private void backClicked(ActionEvent event) throws IOException {
       dkjconstruction.DKJConstruction.showJobAllocation();
         
        
+    }
+     
+      public void search() {
+        searchfield.setOnKeyReleased(e -> {
+            if (searchfield.getText().equals("")) {
+               // loadFromTenderDB();
+                //loadFromAssetDB();
+               // loadFromJobEquipDB();
+              //  loadFromJobAssetADB();
+              pendingloadFromTenderMaterialDB();
+            } else {
+                dataMatTendpending.clear();
+                try {
+
+                    Connection con = DbConnection.getConnection();
+
+                    pst = con.prepareStatement("select tenderId,materialType,materialcount,assignCount from materialtender WHERE tenderId IN (SELECT tenderId from equiptender WHERE assignCount>0) and tenderId  LIKE '%" + searchfield.getText() + "%' ");
+                    rs = pst.executeQuery();
+
+                    while (rs.next()) {
+                        dataMatTendpending.add(new matTender(rs.getString(1),rs.getString(2), rs.getInt(3), rs.getInt(4)));
+                    }
+                    System.out.println("Search clicked");
+                } catch (Exception ex) {
+                    System.err.println("Error loading table data search table jobemployee" + ex);
+
+                }
+
+                pendingtendMatTbl.setItems(dataMatTendpending);
+
+            }
+
+        });//event
     }
     
 }
