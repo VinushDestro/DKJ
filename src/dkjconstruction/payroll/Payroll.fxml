@@ -15,33 +15,31 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="630.0" prefWidth="840.0" stylesheets="@style2.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dkjconstruction.payroll.PayrollController">
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="630.0" prefWidth="840.0" stylesheets="@style2.css" xmlns="http://javafx.com/javafx/8.0.102" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dkjconstruction.payroll.PayrollController">
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" maxWidth="507.0" minWidth="10.0" percentWidth="100.0" prefWidth="498.0" />
     <ColumnConstraints hgrow="SOMETIMES" maxWidth="295.0" minWidth="10.0" percentWidth="0.0" prefWidth="102.0" />
   </columnConstraints>
   <rowConstraints>
-    <RowConstraints maxHeight="127.0" minHeight="0.0" percentHeight="10.0" prefHeight="51.0" vgrow="SOMETIMES" />
-    <RowConstraints maxHeight="374.0" minHeight="10.0" percentHeight="90.0" prefHeight="348.0" vgrow="SOMETIMES" />
-    <RowConstraints maxHeight="38.0" minHeight="0.0" prefHeight="0.0" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="374.0" minHeight="10.0" percentHeight="100.0" prefHeight="348.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
-      <AnchorPane prefHeight="564.0" prefWidth="632.0" style="-fx-background-color: #ffffff;" GridPane.rowIndex="1">
+      <AnchorPane prefHeight="665.0" prefWidth="840.0" style="-fx-background-color: #ffffff;">
          <children>
-            <TabPane layoutX="5.0" prefHeight="539.0" prefWidth="840.0" tabClosingPolicy="UNAVAILABLE">
+            <TabPane layoutX="5.0" prefHeight="623.0" prefWidth="828.0" tabClosingPolicy="UNAVAILABLE">
               <tabs>
                 <Tab fx:id="p_sal" text="Permanent employee Salary">
                   <content>
                     <AnchorPane fx:id="salary" minHeight="0.0" minWidth="0.0" prefHeight="171.0" prefWidth="309.0">
                            <children>
-                              <JFXTextField fx:id="a_totalovertime" layoutX="504.0" layoutY="141.0" promptText="Total Over Time" />
-                              <JFXTextField fx:id="a_rateperhour" layoutX="504.0" layoutY="100.0" promptText="Rate Per Hour" />
-                              <Text layoutX="502.0" layoutY="61.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Please Enter The Amount" wrappingWidth="167.13671875">
+                              <JFXTextField fx:id="a_totalovertime" layoutX="476.0" layoutY="401.0" promptText="Total Over Time" />
+                              <JFXTextField fx:id="a_rateperhour" layoutX="478.0" layoutY="359.0" promptText="Rate Per Hour" />
+                              <Text layoutX="460.0" layoutY="337.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Please Enter The Amount" wrappingWidth="167.13671875">
                                  <font>
                                     <Font name="System Bold" size="14.0" />
                                  </font>
                               </Text>
-                              <TableView fx:id="payrollpemployee" layoutX="23.0" layoutY="279.0" prefHeight="218.0" prefWidth="620.0">
+                              <TableView fx:id="payrollpemployee" layoutX="18.0" layoutY="16.0" prefHeight="218.0" prefWidth="620.0">
                                 <columns>
                                     <TableColumn fx:id="A_employeeid" prefWidth="96.0" text="Employee Id" />
                                   <TableColumn fx:id="A_overtime" prefWidth="93.0" text="Over Time" />
@@ -52,38 +50,38 @@
                                     <TableColumn fx:id="A_deduction" prefWidth="93.0" text="Deduction" />
                                 </columns>
                               </TableView>
-                              <Button layoutX="668.0" layoutY="337.0" mnemonicParsing="false" onAction="#P_Save" prefHeight="44.0" prefWidth="140.0" text="Save" textFill="WHITE">
+                              <Button layoutX="658.0" layoutY="76.0" mnemonicParsing="false" onAction="#P_Save" prefHeight="40.0" prefWidth="150.0" text="Save" textFill="WHITE">
                                  <font>
                                     <Font name="System Bold" size="13.0" />
                                  </font></Button>
-                              <Button layoutX="667.0" layoutY="281.0" mnemonicParsing="false" onAction="#p_calculate" prefHeight="44.0" prefWidth="140.0" text="Calculate" textFill="WHITE">
+                              <Button layoutX="657.0" layoutY="20.0" mnemonicParsing="false" onAction="#p_calculate" prefHeight="40.0" prefWidth="150.0" text="Calculate" textFill="WHITE">
                                  <font>
                                     <Font name="System Bold" size="13.0" />
                                  </font></Button>
-                              <Button layoutX="668.0" layoutY="448.0" mnemonicParsing="false" onAction="#P_Clear" prefHeight="44.0" prefWidth="140.0" text="Clear" textFill="WHITE">
+                              <Button layoutX="655.0" layoutY="517.0" mnemonicParsing="false" onAction="#P_Clear" prefHeight="40.0" prefWidth="150.0" text="Clear" textFill="WHITE">
                                  <font>
                                     <Font name="System Bold" size="13.0" />
                                  </font></Button>
-                              <Button layoutX="668.0" layoutY="392.0" mnemonicParsing="false" onAction="#P_Report" prefHeight="44.0" prefWidth="140.0" text="Report" textFill="WHITE">
+                              <Button layoutX="655.0" layoutY="461.0" mnemonicParsing="false" onAction="#P_Report" prefHeight="40.0" prefWidth="150.0" text="Report" textFill="WHITE">
                                  <font>
                                     <Font name="System Bold" size="13.0" />
                                  </font></Button>
-                              <Label fx:id="a_totalamount" layoutX="23.0" layoutY="232.0" text="Total Amount :">
+                              <Label fx:id="a_totalamount" layoutX="45.0" layoutY="490.0" text="Total Amount :">
                                  <font>
                                     <Font name="System Bold" size="18.0" />
                                  </font>
                               </Label>
-                              <Label fx:id="a_totalamountlabel" layoutX="153.0" layoutY="232.0" prefHeight="28.0" prefWidth="113.0" />
-                              <JFXTextField fx:id="a_allowance" layoutX="278.0" layoutY="137.0" promptText="Allowance" />
-                              <JFXTextField fx:id="a_deduction" layoutX="278.0" layoutY="100.0" promptText="Deduction" />
-                              <Label fx:id="a_employeeid" layoutX="132.0" layoutY="95.0" prefHeight="33.0" prefWidth="67.0" />
-                              <Label fx:id="a_employeename" layoutX="129.0" layoutY="137.0" prefHeight="33.0" prefWidth="91.0" />
-                              <Label fx:id="a_basicsalary" layoutX="131.0" layoutY="180.0" prefHeight="33.0" prefWidth="88.0" />
-                              <ComboBox fx:id="a_search" layoutX="236.0" layoutY="25.0" onAction="#p_handler" prefHeight="25.0" prefWidth="181.0" promptText="search" />
-                              <JFXTextField fx:id="p_bonus" layoutX="278.0" layoutY="175.0" promptText="Bonus" />
-                              <Label layoutX="31.0" layoutY="104.0" text="Employee Id        :" />
-                              <Label layoutX="30.0" layoutY="145.0" text="Employee Name  :" />
-                              <Label layoutX="31.0" layoutY="188.0" text="Basic Salary         :    " />
+                              <Label fx:id="a_totalamountlabel" layoutX="175.0" layoutY="490.0" prefHeight="28.0" prefWidth="113.0" />
+                              <JFXTextField fx:id="a_allowance" layoutX="306.0" layoutY="401.0" promptText="Allowance" />
+                              <JFXTextField fx:id="a_deduction" layoutX="308.0" layoutY="359.0" promptText="Deduction" />
+                              <Label fx:id="a_employeeid" layoutX="165.0" layoutY="353.0" prefHeight="33.0" prefWidth="67.0" />
+                              <Label fx:id="a_employeename" layoutX="162.0" layoutY="395.0" prefHeight="33.0" prefWidth="91.0" />
+                              <Label fx:id="a_basicsalary" layoutX="163.0" layoutY="447.0" prefHeight="33.0" prefWidth="88.0" />
+                              <ComboBox fx:id="a_search" layoutX="259.0" layoutY="319.0" onAction="#p_handler" prefHeight="25.0" prefWidth="181.0" promptText="search" />
+                              <JFXTextField fx:id="p_bonus" layoutX="308.0" layoutY="439.0" promptText="Bonus" />
+                              <Label layoutX="53.0" layoutY="362.0" text="Employee Id        :" />
+                              <Label layoutX="52.0" layoutY="403.0" text="Employee Name  :" />
+                              <Label layoutX="53.0" layoutY="447.0" text="Basic Salary         :    " />
                            </children>
                         </AnchorPane>
                   </content>
@@ -92,16 +90,16 @@
                     <content>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="460.0" prefWidth="559.0">
                            <children>
-                              <JFXTextField fx:id="c_totalDays" layoutX="281.0" layoutY="171.0" promptText="Total Days" />
-                              <Label fx:id="c_totalamount" layoutX="32.0" layoutY="232.0" text="Total Amount :">
+                              <JFXTextField fx:id="c_totalDays" layoutX="293.0" layoutY="451.0" promptText="Total Days" />
+                              <Label fx:id="c_totalamount" layoutX="44.0" layoutY="512.0" text="Total Amount :">
                                  <font>
                                     <Font name="System Bold" size="18.0" />
                                  </font>
                               </Label>
-                              <JFXTextField fx:id="c_allowance" layoutX="281.0" layoutY="129.0" promptText="Allowance" />
-                              <JFXTextField fx:id="c_deduction" layoutX="281.0" layoutY="87.0" promptText="Deduction" />
-                              <Label fx:id="c_totalamountlabel" layoutX="168.0" layoutY="232.0" prefHeight="28.0" prefWidth="113.0" />
-                              <TableView fx:id="payrollcemployee" layoutX="23.0" layoutY="281.0" prefHeight="218.0" prefWidth="626.0">
+                              <JFXTextField fx:id="c_allowance" layoutX="293.0" layoutY="409.0" promptText="Allowance" />
+                              <JFXTextField fx:id="c_deduction" layoutX="293.0" layoutY="367.0" promptText="Deduction" />
+                              <Label fx:id="c_totalamountlabel" layoutX="180.0" layoutY="512.0" prefHeight="28.0" prefWidth="113.0" />
+                              <TableView fx:id="payrollcemployee" layoutX="10.0" layoutY="30.0" prefHeight="218.0" prefWidth="626.0">
                                  <columns>
                                     <TableColumn fx:id="C_employeeid" prefWidth="106.0" text="Employee Id" />
                                     <TableColumn fx:id="C_overtime" prefWidth="139.0" text="Over Time" />
@@ -110,30 +108,30 @@
                                     <TableColumn fx:id="C_totalAmount" minWidth="3.0" prefWidth="124.0" text="Total Amount" />
                                  </columns>
                               </TableView>
-                              <Button layoutX="671.0" layoutY="337.0" mnemonicParsing="false" onAction="#C_Save" prefHeight="44.0" prefWidth="140.0" text="Save" textFill="WHITE">
+                              <Button layoutX="658.0" layoutY="85.0" mnemonicParsing="false" onAction="#C_Save" prefHeight="40.0" prefWidth="150.0" text="Save" textFill="WHITE">
                                  <font>
                                     <Font name="System Bold" size="13.0" />
                                  </font></Button>
-                              <Button layoutX="671.0" layoutY="281.0" mnemonicParsing="false" onAction="#c_calculate" prefHeight="44.0" prefWidth="140.0" text="Calculate" textFill="WHITE">
+                              <Button layoutX="658.0" layoutY="29.0" mnemonicParsing="false" onAction="#c_calculate" prefHeight="40.0" prefWidth="150.0" text="Calculate" textFill="WHITE">
                                  <font>
                                     <Font name="System Bold" size="13.0" />
                                  </font></Button>
-                              <Button layoutX="671.0" layoutY="448.0" mnemonicParsing="false" onAction="#C_Clear" prefHeight="44.0" prefWidth="140.0" text="Clear" textFill="WHITE">
+                              <Button layoutX="665.0" layoutY="498.0" mnemonicParsing="false" onAction="#C_Clear" prefHeight="40.0" prefWidth="150.0" text="Clear" textFill="WHITE">
                                  <font>
                                     <Font name="System Bold" size="13.0" />
                                  </font></Button>
-                              <Button layoutX="671.0" layoutY="393.0" mnemonicParsing="false" onAction="#C_Report" prefHeight="44.0" prefWidth="140.0" text="Report" textFill="WHITE">
+                              <Button layoutX="665.0" layoutY="443.0" mnemonicParsing="false" onAction="#C_Report" prefHeight="40.0" prefWidth="150.0" text="Report" textFill="WHITE">
                                  <font>
                                     <Font name="System Bold" size="13.0" />
                                  </font></Button>
-                              <Label fx:id="c_employeeid" layoutX="130.0" layoutY="86.0" prefHeight="34.0" prefWidth="103.0" />
-                              <Label fx:id="c_employeename" layoutX="131.0" layoutY="130.0" prefHeight="30.0" prefWidth="102.0" />
-                              <ComboBox fx:id="c_search" layoutX="237.0" layoutY="25.0" onAction="#c_handler" prefHeight="25.0" prefWidth="181.0" promptText="search" />
-                              <JFXTextField fx:id="c_daysalary" layoutX="36.0" layoutY="171.0" promptText="Day salary" />
-                              <JFXTextField fx:id="c_bonus" layoutX="499.0" layoutY="87.0" promptText="Bonus" />
-                              <Label layoutX="35.0" layoutY="93.0" text="Employee ID       :" />
-                              <Label layoutX="35.0" layoutY="135.0" text="Employee Name :" />
-                              <Label layoutX="522.0" layoutY="43.0" text="Please Enter The Amount">
+                              <Label fx:id="c_employeeid" layoutX="142.0" layoutY="366.0" prefHeight="34.0" prefWidth="103.0" />
+                              <Label fx:id="c_employeename" layoutX="143.0" layoutY="410.0" prefHeight="30.0" prefWidth="102.0" />
+                              <ComboBox fx:id="c_search" layoutX="248.0" layoutY="314.0" onAction="#c_handler" prefHeight="25.0" prefWidth="181.0" promptText="search" />
+                              <JFXTextField fx:id="c_daysalary" layoutX="48.0" layoutY="451.0" promptText="Day salary" />
+                              <JFXTextField fx:id="c_bonus" layoutX="511.0" layoutY="367.0" promptText="Bonus" />
+                              <Label layoutX="47.0" layoutY="373.0" text="Employee ID       :" />
+                              <Label layoutX="47.0" layoutY="415.0" text="Employee Name :" />
+                              <Label layoutX="499.0" layoutY="318.0" text="Please Enter The Amount">
                                  <font>
                                     <Font name="System Bold" size="14.0" />
                                  </font>
@@ -146,15 +144,6 @@
             </TabPane>
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="rootPane" layoutX="8.0" layoutY="124.0" prefHeight="44.0" prefWidth="191.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-      <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #ffffff;">
-         <children>
-            <Label layoutX="322.0" layoutY="13.0" prefHeight="36.0" prefWidth="241.0" text="Payroll  System">
-               <font>
-                  <Font name="ArnoPro-Bold" size="27.0" />
-               </font>
-            </Label>
-         </children></AnchorPane>
-      <AnchorPane fx:id="p_search" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" />
+      <AnchorPane fx:id="rootPane" layoutX="8.0" layoutY="124.0" prefHeight="44.0" prefWidth="191.0" GridPane.columnIndex="1" />
    </children>
 </GridPane>
