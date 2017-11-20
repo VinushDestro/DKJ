@@ -656,7 +656,7 @@ public void doSearchRawMaterial() {
                         String type = rs.getString("type");
                         int quantity = rs.getInt("quantity");
                         Double price = rs.getDouble("price");
-                        int supplier = rs.getInt("supplierId");
+                        int supplier = rs.getInt("supplier");
                         String measurement = rs.getString("measurement");
 
                         getRawMaterial.add(new RawMaterialDetail(type, quantity, price, measurement, supplier));
