@@ -54,21 +54,34 @@ public class HomeController implements Initializable {
     private TableColumn c5;
 
     private ObservableList<Detail> tableS; 
+        //private ObservableList<Detail> sea; 
+
 
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
         category.getItems().addAll("Tender","Employee","Asset","Equipment","Raw Material");
-        
+        category.getSelectionModel().select("Tender");
+        c1.setText("Tender Name");
+                c2.setText("Work Type");
+                c3.setText("Working Place");
+                c4.setText("Company Name");
+                c5.setText("Status");
+        try {
+            loadTenTable();
+        } catch (IOException ex) {
+            Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
+        }
         setTable();
+        
         doSearch();
     }    
 
     public void setTable(){
 
         category.setOnHidden(e -> {
-            
+            search.clear();
         switch(category.getValue().toString()){
             case "Tender":
                 c1.setText("Tender Name");
@@ -227,10 +240,7 @@ public class HomeController implements Initializable {
             String s = rs.getString("status");
            
             System.out.println("name :"+n);
-            System.out.println(w);
-                        System.out.println(wp);
-                        System.out.println(c);
-                        System.out.println(s);
+            
             tableS.add(new Detail(n,w,wp,c,s));
         }
         return tableS;
@@ -252,11 +262,7 @@ public class HomeController implements Initializable {
             String wp = rs.getString("contactno");
             String c = rs.getString("position");
             String s = rs.getString("emptype");
-            System.out.println(n);
-                        System.out.println(w);
-                        System.out.println(wp);
-                        System.out.println(c);
-                        System.out.println(s);
+            
             tableS.add(new Detail(n,w,wp,c,s));
         }
         return tableS;
@@ -288,31 +294,28 @@ public class HomeController implements Initializable {
                 }
             }
             else{
+                switch(category.getValue().toString()){
+                    
+                case "Employee": 
                 try {
-// ("SELECT ?,?,?,?,? FROM ? where ? LIKE '%" + search.getText() + "%' or ? LIKE '%" + search.getText() + "%' or ? LIKE '%" + search.getText() + "%' or ? LIKE '%" + search.getText() + "%' or ? LIKE '%" + search.getText() + "%'");
 
                     Connection con = DbConnection.getConnection();
                     
                     PreparedStatement pst = con.prepareStatement
-                    ("SELECT * FROM asset where regno LIKE '%" + search.getText() + /*"%' or ? LIKE '%" + search.getText() + "%' or ? LIKE '%" + search.getText() +  */"%'");
-//                    pst.setString(1, c1.getText().replaceAll("\\s", ""));
-//                    pst.setString(2, c2.getText().replaceAll("\\s", ""));
-//                    pst.setString(3, c3.getText().replaceAll("\\s", ""));
-//                    pst.setString(4, c4.getText().replaceAll("\\s", ""));
-//                    pst.setString(5, c5.getText().replaceAll("\\s", ""));
-                    //pst.setString(6, category.getValue().toString().replaceAll("\\s", ""));
-                    //pst.setString(7, c1.getText().replaceAll("\\s", ""));
-//                    pst.setString(8, c2.getText());
-//                    pst.setString(9, c3.getText());
-                    
+                    //("SELECT * FROM employee where name LIKE '%" + search.getText() + "%' or address LIKE '%" + search.getText() + "%' or contactno LIKE '%" + search.getText() + "%'");
+                 ("SELECT * FROM employee where name LIKE '%" + search.getText() + "%'"
+                            + "UNION SELECT * FROM employee where address LIKE '%" + search.getText() + "%'"
+                            + "UNION SELECT * FROM employee where contactno LIKE '%" + search.getText() + "%'"
+                            + "UNION SELECT * FROM employee where position LIKE '%" + search.getText() + "%'"
+                            + "UNION SELECT * FROM employee where emptype LIKE '%" + search.getText() + "%' ");
                     ResultSet rs = pst.executeQuery();
                     tableS= FXCollections.observableArrayList();
                     while (rs.next()) {
-                        String v1=rs.getString("regno");
-                        String v2=rs.getString("name");
-                        String v3=rs.getString("type");
-                        String v4=rs.getString("condition");
-                        String v5=rs.getString("currentvalue");
+                        String v1=rs.getString("name");
+                        String v2=rs.getString("address");
+                        String v3=rs.getString("contactno");
+                        String v4=rs.getString("position");
+                        String v5=rs.getString("emptype");
                         System.out.println("------------------------");
 
                         System.out.println(v1);
@@ -329,7 +332,172 @@ public class HomeController implements Initializable {
                     System.err.println("Error loading table data " + ex);
 
                 }
+                break;
+                case "Tender": 
+                try {
+
+                    Connection con = DbConnection.getConnection();
+                    
+                    PreparedStatement pst = con.prepareStatement
+                            ("SELECT * FROM tender where tendername LIKE '%" + search.getText() + "%'"
+                            + "UNION SELECT * FROM tender where worktype LIKE '%" + search.getText() + "%'"
+                            + "UNION SELECT * FROM tender where workingplace LIKE '%" + search.getText() + "%'"
+                            + "UNION SELECT * FROM tender where companyname LIKE '%" + search.getText() + "%'"
+                            + "UNION SELECT * FROM tender where status LIKE '%" + search.getText() + "%' ");
+                    
+                    //("SELECT * FROM tender where tendername LIKE '%" + search.getText() + /*"%' or ? LIKE '%" + search.getText() + "%' or ? LIKE '%" + search.getText() +  */"%'");
+                 
+                    ResultSet rs = pst.executeQuery();
+                    tableS= FXCollections.observableArrayList();
+                    while (rs.next()) {
+                        String v1=rs.getString("tendername");
+                        String v2=rs.getString("worktype");
+                        String v3=rs.getString("workingplace");
+                        String v4=rs.getString("companyname");
+                        String v5=rs.getString("status");
+                        System.out.println("------------------------");
+
+                        System.out.println(v1);
+                        System.out.println(v2);
+                        System.out.println(v3);
+                        System.out.println(v4);
+                        System.out.println(v5);
+                        
+                        tableS.add(new Detail(v1,v2,v3,v4,v5)); 
+                        }
+                    homeTab.setItems(tableS);
+
+                } catch (SQLException ex) {
+                    System.err.println("Error loading table data " + ex);
+
+                }
+                break;
+                case "Asset": 
+                try {
+
+                    Connection con = DbConnection.getConnection();
+                    
+                    PreparedStatement pst = con.prepareStatement
+                    //("SELECT * FROM asset where name LIKE '%" + search.getText() + /*"%' or ? LIKE '%" + search.getText() + "%' or ? LIKE '%" + search.getText() +  */"%'");
+                 ("SELECT * FROM asset where name LIKE '%" + search.getText() + "%'"
+                            + "UNION SELECT * FROM asset where regno LIKE '%" + search.getText() + "%'"
+                            + "UNION SELECT * FROM asset where type LIKE '%" + search.getText() + "%'"
+                            + "UNION SELECT * FROM asset where asset.condition LIKE '%" + search.getText() + "%'"
+                            + "UNION SELECT * FROM asset where currentvalue LIKE '%" + search.getText() + "%' ");
+                    
+                    ResultSet rs = pst.executeQuery();
+                    tableS= FXCollections.observableArrayList();
+                    while (rs.next()) {
+                        String v1=rs.getString(1);
+                        String v2=rs.getString(2);
+                        String v3=rs.getString(3);
+                        String v4=rs.getString(7);
+                        String v5=rs.getString(12);
+                        System.out.println("------------------------");
+
+                        System.out.println(v1);
+                        System.out.println(v2);
+                        System.out.println(v3);
+                        System.out.println(v4);
+                        System.out.println(v5);
+                        
+                        tableS.add(new Detail(v1,v2,v3,v4,v5)); 
+                        }
+                    homeTab.setItems(tableS);
+
+                } catch (SQLException ex) {
+                    System.err.println("Error loading table data " + ex);
+
+                }
+                break;
+                case "Equipment": 
+                try {
+
+                    Connection con = DbConnection.getConnection();
+                    
+                    PreparedStatement pst = con.prepareStatement
+                    //("SELECT * FROM equipment where name LIKE '%" + search.getText() + /*"%' or ? LIKE '%" + search.getText() + "%' or ? LIKE '%" + search.getText() +  */"%'");
+                 ("SELECT * FROM Equipment where name LIKE '%" + search.getText() + "%'"
+                            + "UNION SELECT * FROM Equipment where count LIKE '%" + search.getText() + "%'"
+                            + "UNION SELECT * FROM Equipment where cost LIKE '%" + search.getText() + "%' ");
+                    
+                    ResultSet rs = pst.executeQuery();
+                    tableS= FXCollections.observableArrayList();
+                    while (rs.next()) {
+                        String v1=rs.getString("name");
+                        String v2=rs.getString("count");
+                        String v3=rs.getString("cost");
+                        
+                        System.out.println("------------------------");
+
+                        System.out.println(v1);
+                        System.out.println(v2);
+                        System.out.println(v3);
+                        
+                        
+                        tableS.add(new Detail(v1,v2,v3)); 
+                        }
+                    homeTab.setItems(tableS);
+
+                } catch (SQLException ex) {
+                    System.err.println("Error loading table data " + ex);
+
+                }
+                break;
+                case "Raw Material": 
+                try {
+
+                    Connection con = DbConnection.getConnection();
+                    
+                    PreparedStatement pst = con.prepareStatement
+                    //("SELECT * FROM rawmaterial where type LIKE '%" + search.getText() + /*"%' or ? LIKE '%" + search.getText() + "%' or ? LIKE '%" + search.getText() +  */"%'");
+                 ("SELECT * FROM RawMaterial where type LIKE '%" + search.getText() + "%'"
+                            + "UNION SELECT * FROM RawMaterial where quantity LIKE '%" + search.getText() + "%'"
+                            + "UNION SELECT * FROM RawMaterial where price LIKE '%" + search.getText() + "%' ");
+                    
+                    ResultSet rs = pst.executeQuery();
+                    tableS= FXCollections.observableArrayList();
+                    while (rs.next()) {
+                        String v1=rs.getString("type");
+                        String v2=rs.getString("quantity");
+                        String v3=rs.getString("price");
+                        
+                        System.out.println("------------------------");
+
+                        System.out.println(v1);
+                        System.out.println(v2);
+                        System.out.println(v3);
+                        
+                        
+                        tableS.add(new Detail(v1,v2,v3)); 
+                        }
+                    homeTab.setItems(tableS);
+
+                } catch (SQLException ex) {
+                    System.err.println("Error loading table data " + ex);
+
+                }
+                break;
+                default : ;
+                }
             }
         });
     }
 }
+
+
+
+
+
+// ("SELECT ?,?,?,?,? FROM ? where ? LIKE '%" + search.getText() + "%' or ? LIKE '%" + search.getText() + "%' or ? LIKE '%" + search.getText() + "%' or ? LIKE '%" + search.getText() + "%' or ? LIKE '%" + search.getText() + "%'");
+
+  //                  pst.setString(1, c1.getText().replaceAll("\\s", ""));
+//                    pst.setString(2, c2.getText().replaceAll("\\s", ""));
+//                    pst.setString(3, c3.getText().replaceAll("\\s", ""));
+//                    pst.setString(4, c4.getText().replaceAll("\\s", ""));
+//                    pst.setString(5, c5.getText().replaceAll("\\s", ""));
+                    //pst.setString(6, category.getValue().toString().replaceAll("\\s", ""));
+                    //pst.setString(7, c1.getText().replaceAll("\\s", ""));
+//                    pst.setString(8, c2.getText());
+//                    pst.setString(9, c3.getText());
+                    

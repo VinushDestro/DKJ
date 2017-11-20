@@ -23,11 +23,11 @@
     <RowConstraints minHeight="10.0" percentHeight="90.0" prefHeight="30.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
-      <AnchorPane prefHeight="40.0" prefWidth="526.0" style="-fx-background-color: #EEEEF3;">
+      <AnchorPane prefHeight="64.0" prefWidth="777.0" style="-fx-background-color: #EEEEF3;" GridPane.columnSpan="2">
          <children>
-            <Label alignment="CENTER" layoutX="41.0" layoutY="18.0" prefHeight="27.0" prefWidth="548.0" text="Requirements">
+            <Label alignment="CENTER" layoutX="77.0" layoutY="14.0" prefHeight="27.0" prefWidth="548.0" text="Requirements">
                <font>
-                  <Font size="31.0" />
+                  <Font name="Raleway-Bold" size="31.0" />
                </font>
             </Label>
          </children>
@@ -75,7 +75,7 @@
       </AnchorPane>
       <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1">
          <children>
-            <Button fx:id="previousButton" layoutX="20.0" layoutY="12.0" mnemonicParsing="false" onAction="#previousClicked" prefHeight="40.0" prefWidth="170.0" text="Previous page" textFill="WHITE">
+            <Button fx:id="previousButton" layoutX="21.0" layoutY="15.0" mnemonicParsing="false" onAction="#previousClicked" prefHeight="40.0" prefWidth="170.0" text="Previous page" textFill="WHITE">
                <font>
                   <Font size="15.0" />
                </font>

@@ -33,7 +33,7 @@
                   <content>
                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
-                              <JFXButton layoutX="450.0" layoutY="450.0" onAction="#hrex" text="Export to Excel" textFill="WHITE" />
+                              <JFXButton layoutX="472.0" layoutY="467.0" onAction="#hrex" prefHeight="40.0" prefWidth="107.0" text="Export to Excel" textFill="WHITE" />
                               <TableView fx:id="hrtab" layoutX="33.0" layoutY="25.0" prefHeight="404.0" prefWidth="547.0">
                                 <columns>
                                   <TableColumn fx:id="hrdatecol" prefWidth="172.0" text="Date" />
@@ -41,7 +41,7 @@
                                     <TableColumn fx:id="hramountcol" prefWidth="208.0" text="Amount" />
                                 </columns>
                               </TableView>
-                              <JFXButton layoutX="341.0" layoutY="450.0" onAction="#hrrep" text="Report" textFill="WHITE" />
+                              <JFXButton layoutX="403.0" layoutY="467.0" onAction="#hrrep" prefHeight="40.0" prefWidth="60.0" text="Report" textFill="WHITE" />
                            </children>
                         </AnchorPane>
                   </content>
@@ -50,7 +50,7 @@
                      <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
-                              <JFXButton fx:id="matreport" layoutX="450.0" layoutY="450.0" onAction="#matex" text="Export to Excel" textFill="WHITE" />
+                              <JFXButton fx:id="matreport" layoutX="473.0" layoutY="467.0" onAction="#matex" prefHeight="40.0" text="Export to Excel" textFill="WHITE" />
                               <TableView fx:id="mattab" layoutX="33.0" layoutY="25.0" prefHeight="404.0" prefWidth="547.0">
                                  <columns>
                                     <TableColumn fx:id="matdatecol" prefWidth="172.0" text="Date" />
@@ -58,7 +58,7 @@
                                     <TableColumn fx:id="matamountcol" prefWidth="208.0" text="Amount" />
                                  </columns>
                               </TableView>
-                              <JFXButton layoutX="341.0" layoutY="450.0" onAction="#assrawrep" text="Report" textFill="WHITE" />
+                              <JFXButton layoutX="403.0" layoutY="467.0" onAction="#assrawrep" prefHeight="40.0" text="Report" textFill="WHITE" />
                            </children>
                         </AnchorPane>
                      </content>
@@ -67,7 +67,7 @@
                      <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
-                              <JFXButton layoutX="450.0" layoutY="450.0" onAction="#transex" text="Export to Excel" textFill="WHITE" />
+                              <JFXButton layoutX="473.0" layoutY="467.0" onAction="#transex" prefHeight="40.0" text="Export to Excel" textFill="WHITE" />
                               <TableView fx:id="transtab" layoutX="33.0" layoutY="25.0" prefHeight="404.0" prefWidth="547.0">
                                  <columns>
                                     <TableColumn fx:id="tdate" prefWidth="172.0" text="Date" />
@@ -75,7 +75,7 @@
                                     <TableColumn fx:id="tamount" prefWidth="208.0" text="Amount" />
                                  </columns>
                               </TableView>
-                              <JFXButton layoutX="341.0" layoutY="450.0" onAction="#transrep" text="Report" textFill="WHITE" />
+                              <JFXButton layoutX="403.0" layoutY="467.0" onAction="#transrep" prefHeight="40.0" text="Report" textFill="WHITE" />
                            </children>
                         </AnchorPane>
                      </content>
@@ -143,21 +143,23 @@
             </TabPane>
          </children>
       </AnchorPane>
-      <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+      <AnchorPane prefHeight="40.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
          <children>
-            <Button layoutX="14.0" layoutY="98.0" mnemonicParsing="false" onAction="#ca" prefHeight="55.0" prefWidth="179.0" text="Company Acc" textFill="WHITE">
-               <font>
-                  <Font name="Raleway Bold" size="20.0" />
-               </font>
-            </Button>
-            <Button layoutX="14.0" layoutY="299.0" mnemonicParsing="false" onAction="#refresh_tender" prefHeight="55.0" prefWidth="179.0" text="REFRESH" textFill="WHITE">
+            <Button layoutX="18.0" layoutY="498.0" mnemonicParsing="false" onAction="#refresh_tender" prefHeight="40.0" prefWidth="170.0" text="REFRESH" textFill="WHITE">
                <font>
                   <Font name="Raleway Bold" size="20.0" />
                </font>
             </Button>
          </children></AnchorPane>
       <AnchorPane prefHeight="200.0" prefWidth="200.0" />
-      <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" />
+      <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1">
+         <children>
+            <Button layoutX="20.0" layoutY="7.0" mnemonicParsing="false" onAction="#ca" prefHeight="40.0" prefWidth="170.0" text="Company Accounts" textFill="WHITE">
+               <font>
+                  <Font name="Raleway Bold" size="20.0" />
+               </font>
+            </Button>
+         </children></AnchorPane>
       <AnchorPane layoutX="10.0" layoutY="10.0" prefHeight="200.0" prefWidth="200.0">
          <children>
             <Label layoutX="173.0" layoutY="11.0" text="TENDER ACCOUNTS">

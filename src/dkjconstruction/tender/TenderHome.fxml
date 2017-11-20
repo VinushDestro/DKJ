@@ -55,7 +55,7 @@
                   </ImageView>
                </graphic>
             </JFXButton>
-            <JFXButton alignment="CENTER" contentDisplay="TOP" layoutX="641.0" layoutY="224.0" onAction="#SummeryClicked" prefHeight="160.0" prefWidth="180.0" style="-fx-border-color: #2c3e50; -fx-border-radius: 10;" text="Summery" textAlignment="CENTER">
+            <JFXButton alignment="CENTER" contentDisplay="TOP" layoutX="641.0" layoutY="224.0" onAction="#SummeryClicked" prefHeight="160.0" prefWidth="180.0" style="-fx-border-color: #2c3e50; -fx-border-radius: 10;" text="Summary" textAlignment="CENTER">
                <font>
                   <Font name="System Italic" size="17.0" />
                </font>

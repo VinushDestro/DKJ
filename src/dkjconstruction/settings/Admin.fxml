@@ -108,15 +108,15 @@
                         <Font name="Raleway-Bold" size="10.0" />
                      </font>
                      <VBox.margin>
-                        <Insets bottom="5.0" left="30.0" right="30.0" top="5.0" />
+                        <Insets bottom="5.0" left="25.0" right="25.0" top="5.0" />
                      </VBox.margin>
                   </Button>
-                  <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#doUpdateUser" prefHeight="40.0" prefWidth="250.0" text="UPDATE INFO" textAlignment="CENTER" textFill="WHITE">
+                  <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#doUpdateUser" prefHeight="40.0" prefWidth="250.0" text="CHANGE PASSWORD" textAlignment="CENTER" textFill="WHITE">
                      <font>
                         <Font name="Raleway-Bold" size="10.0" />
                      </font>
                      <VBox.margin>
-                        <Insets bottom="5.0" left="30.0" right="30.0" top="5.0" />
+                        <Insets bottom="5.0" left="25.0" right="25.0" top="5.0" />
                      </VBox.margin>
                   </Button>
                   <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#doDeleteUser" prefHeight="40.0" prefWidth="250.0" text="DELETE RECORD" textAlignment="CENTER" textFill="WHITE">
@@ -124,7 +124,7 @@
                         <Font name="Raleway-Bold" size="10.0" />
                      </font>
                      <VBox.margin>
-                        <Insets bottom="5.0" left="30.0" right="30.0" top="5.0" />
+                        <Insets bottom="5.0" left="25.0" right="25.0" top="5.0" />
                      </VBox.margin>
                   </Button>
                   <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#doReport" prefHeight="40.0" prefWidth="250.0" text="REPORT" textAlignment="CENTER" textFill="WHITE">
@@ -132,7 +132,7 @@
                         <Font name="Raleway-Bold" size="10.0" />
                      </font>
                      <VBox.margin>
-                        <Insets bottom="5.0" left="30.0" right="30.0" top="320.0" />
+                        <Insets bottom="5.0" left="25.0" right="25.0" top="320.0" />
                      </VBox.margin>
                   </Button>
                   <Button alignment="CENTER" contentDisplay="CENTER" layoutX="40.0" layoutY="165.0" mnemonicParsing="false" onAction="#clearFields" prefHeight="40.0" prefWidth="250.0" text="CLEAR FIELDS" textAlignment="CENTER" textFill="WHITE">
@@ -140,7 +140,7 @@
                         <Font name="Raleway-Bold" size="10.0" />
                      </font>
                      <VBox.margin>
-                        <Insets left="30.0" right="30.0" top="5.0" />
+                        <Insets left="25.0" right="25.0" top="5.0" />
                      </VBox.margin>
                   </Button>
                </children>

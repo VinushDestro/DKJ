@@ -56,7 +56,7 @@ public class MainController {
             type=rs.getString(1);
         }               
         System.out.println(type+"main");
-        //homeBtn.setDefaultButton(true);    fire()
+        homeBtn.pressedProperty(); //  fire()
         
     }
     

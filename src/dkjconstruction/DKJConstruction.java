@@ -54,22 +54,30 @@ public class DKJConstruction extends Application {
         loader.setLocation(DKJConstruction.class.getResource("main/Main.fxml"));
         mainLayout = loader.load();
         
-
-        mainLayout.setOnMousePressed((MouseEvent event) -> {
-            final double xOffset = event.getSceneX();
-            final double yOffset = event.getSceneY();
+                final Delta dragDelta = new Delta();
+        mainLayout.setOnMousePressed(new EventHandler<MouseEvent>() {
+          @Override public void handle(MouseEvent mouseEvent) {
+            dragDelta.x = primaryStage.getX() - mouseEvent.getScreenX();
+            dragDelta.y = primaryStage.getY() - mouseEvent.getScreenY();
+          }
         });
-        mainLayout.setOnMouseDragged((MouseEvent event) -> {
-            final double xOffset = event.getSceneX();
-            final double yOffset = event.getSceneY();
-            primaryStage.setX(event.getScreenX() - xOffset);
-            primaryStage.setY(event.getScreenY() - yOffset);
+        mainLayout.setOnMouseDragged(new EventHandler<MouseEvent>() {
+          @Override public void handle(MouseEvent mouseEvent) {
+            primaryStage.setX(mouseEvent.getScreenX() + dragDelta.x);
+            primaryStage.setY(mouseEvent.getScreenY() + dragDelta.y);
+          }
         });
 
         Scene scene = new Scene(mainLayout, 1200, 700);
         primaryStage.setScene(scene);
         primaryStage.show();
         System.out.println("homepage method");
+//        
+//        loader = new FXMLLoader();
+//        loader.setLocation(DKJConstruction.class.getResource("home/Home.fxml"));
+//        GridPane Pane = loader.load();
+//        mainLayout.add(Pane, 1, 1);
+//        
                 
     }
     

@@ -304,6 +304,7 @@ public class AdminController {
         userId.clear();
         assignDate.getEditor().setText(null);
         username.clear();
+        username.setDisable(false);
         assignDate.setDisable(false);
         search.clear();
         password.clear();
