@@ -166,8 +166,7 @@ body {
         
        
       $(document).ready(function(){
-    const socket = io('http://localhost:8001',{transports:['websocket']});
-        const USER = "peter"
+    const socket = io('http://192.168.8.101:8001',{transports:['websocket']});
         
         socket.emit('join',USER);
 

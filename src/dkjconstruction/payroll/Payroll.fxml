@@ -45,9 +45,9 @@
                                   <TableColumn fx:id="A_overtime" prefWidth="93.0" text="Over Time" />
                                     <TableColumn fx:id="A_rate" prefWidth="71.0" text="Rate" />
                                     <TableColumn fx:id="A_salary" prefWidth="103.0" text="Salary" />
-                                    <TableColumn fx:id="A_total" prefWidth="83.0" text="Total" />
-                                    <TableColumn fx:id="A_allowance" prefWidth="85.0" text="Allowance" />
-                                    <TableColumn fx:id="A_deduction" prefWidth="93.0" text="Deduction" />
+                                    <TableColumn fx:id="A_allowance" prefWidth="87.0" text="Allowance" />
+                                    <TableColumn fx:id="A_deduction" prefWidth="90.0" text="Deduction" />
+                                    <TableColumn fx:id="A_total" prefWidth="79.0" text="Total" />
                                 </columns>
                               </TableView>
                               <Button layoutX="658.0" layoutY="88.0" mnemonicParsing="false" onAction="#P_Save" prefHeight="40.0" prefWidth="150.0" text="Save" textFill="WHITE">

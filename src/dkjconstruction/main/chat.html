@@ -29,15 +29,11 @@ body {
   margin: 0 auto;
 }
 
-.phone-containter {
-  width: 340px;
-  height: 100%;
-}
 .phone {
-  height: 60%;
+  height: 600px;
   border: 1px solid #dcdcdc;
-  overflow-y: auto;
-  overflow-x: hidden;
+  overflow : scroll;
+  position: relative;
 }
 .button {
   background-color: none;
@@ -138,6 +134,10 @@ body {
   border: 1px solid #dcdcdc;
   margin-top: -1px;
   padding: 10px;
+  position: fixed;
+  bottom : 0;
+  width:100%;
+  left : 0;
 }
 .send-input {
   border-radius: 5px;

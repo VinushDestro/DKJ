@@ -18,6 +18,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -173,7 +174,6 @@ public class PayrollController implements Initializable {
         c_daysalary.setDisable(true);
        
        
-    
         
        
     }  
@@ -202,7 +202,7 @@ public class PayrollController implements Initializable {
     c_allowance.setDisable(false);
     c_totalDays.setDisable(false);
     c_bonus.setDisable(false);
-    c_daysalary.setDisable(false);
+    c_daysalary.setDisable(true);
    
   //outputTextArea.appendText("ComboBox Action (selected: " + selectedPerson + ")\n");
   //System.out.println("selected id is " + id);
@@ -261,7 +261,7 @@ public class PayrollController implements Initializable {
                  
                  c_employeeid.setText(rs.getString(1));
                  c_employeename.setText(rs.getString(2));
-                 //c_daysalary.setText(rs.getString(10));
+                 c_daysalary.setText(rs.getString("daySalary"));
               }
              
             } catch (Exception ex) {
@@ -393,6 +393,7 @@ public class PayrollController implements Initializable {
        int deduction = Integer.parseInt(a_deduction.getText()); 
        int rph = Integer.parseInt(a_rateperhour.getText()); 
        int tothours = Integer.parseInt(a_totalovertime.getText());
+       
        double ot =  rph * tothours ; 
        float alowance = Float.parseFloat(a_allowance.getText());
        int bonus= Integer.parseInt(p_bonus.getText());
@@ -408,29 +409,32 @@ public class PayrollController implements Initializable {
           
     @FXML
     private void c_calculate(){
-Alert alert = new Alert(Alert.AlertType.INFORMATION);
+    Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Add Transport");
         alert.setHeaderText(null);
+        
        if(c_daysalary.getText().isEmpty() ||c_deduction.getText().isEmpty() ||c_totalDays.getText().isEmpty() ||c_allowance.getText().isEmpty() )
        {
-       alert.setContentText("All fields should be filled");
+            alert.setContentText("All fields should be filled");
+           
        }
-     
        
-       else{
+       
+       
        int daysalary = Integer.parseInt(c_daysalary.getText()); 
        int deduction = Integer.parseInt(c_deduction.getText());
        int tod=Integer.parseInt(c_totalDays.getText());
      
         
-       int totalsalary=daysalary * tod; 
-       int alowance = (int)(Float.parseFloat(c_allowance.getText()) * tod );
-       int bonus=Integer.parseInt(c_bonus.getText());
-       int finalsalary=alowance+totalsalary-deduction + bonus;
+       int totalsalary = daysalary * tod; 
+       float alowance = Float.parseFloat(c_allowance.getText());
+       alowance = alowance * tod;
+       int bonus = Integer.parseInt(c_bonus.getText());
+       double  finalsalary = alowance + totalsalary -deduction + bonus;
        
-       c_totalamountlabel.setText(Integer.toString(finalsalary));
+       c_totalamountlabel.setText(Double.toString(finalsalary));
        
-    }
+    
     }
     
      
@@ -452,24 +456,25 @@ Alert alert = new Alert(Alert.AlertType.INFORMATION);
        int deduction = Integer.parseInt(a_deduction.getText()); 
        int rph = Integer.parseInt(a_rateperhour.getText()); 
        int tothours = Integer.parseInt(a_totalovertime.getText());
-       double tot =  rph * tothours ; 
+       double ot =  rph * tothours ; 
        float alowance = Float.parseFloat(a_allowance.getText());
-       int bonus= Integer.parseInt(p_bonus.getText());
+       int bonus= Integer.parseInt(p_bonus.getText()); 
+       double totalamount = alowance + basicsalary - deduction + bonus +ot ;
        
-       double totalamount = alowance + basicsalary - deduction + bonus +tot ;
-       
-       
-          try{
  
+      
+          try{
+            System.out.println("date " );
+            System.out.println("date " +LocalDate.now());
             DbConnection.openConnection();
             Connection con = DbConnection.getConnection();
-            PreparedStatement stmt = con.prepareStatement("Insert into payroll(empId,allowance,deduction,salary,attendance,overTime,hourlyRate,finalSalary) values (?,?,?,?,?,?,?,?)");
+            PreparedStatement stmt = con.prepareStatement("Insert into payroll(date,empId,allowance,deduction,salary,attendance,overTime,hourlyRate,finalSalary) values ('"+ LocalDate.now()+"',?,?,?,?,?,?,?,?)");
             stmt.setString(1, a_employeeid.getText());
             stmt.setString(2,Double.toString(alowance));
             stmt.setString(3,a_deduction.getText());
             stmt.setString(4, Integer.toString(basicsalary));
             stmt.setString(5,""+2);
-            stmt.setString(6, Double.toString(tot));
+            stmt.setString(6, Double.toString(ot));
             stmt.setString(7, Integer.toString(rph));
             stmt.setString(8, Double.toString(totalamount));
             
@@ -483,9 +488,11 @@ Alert alert = new Alert(Alert.AlertType.INFORMATION);
             
         } catch (Exception e) {
             System.out.println(" Error"+ e);
-         //   System.err.println(e);
-
         }
+          finally {
+             getDB();
+              p_setTable();
+          }
        
        }
     }
@@ -494,48 +501,47 @@ Alert alert = new Alert(Alert.AlertType.INFORMATION);
     
     @FXML
     private void C_Save(ActionEvent event) { 
-  int daysalary = Integer.parseInt(c_daysalary.getText()); 
-       int deduction = Integer.parseInt(c_deduction.getText());
-       int tod=Integer.parseInt(c_totalDays.getText());
-     
-        
-       int totalsalary=daysalary * tod; 
-       int alowance = (int)(Float.parseFloat(c_allowance.getText()) * tod );
-       int bonus=Integer.parseInt(c_bonus.getText());
-       int finalsalary=alowance+totalsalary-deduction + bonus;
-      
-       c_totalamountlabel.setText(Integer.toString(finalsalary));
        
+       int daysalary = Integer.parseInt(c_daysalary.getText()); 
+       int deduction = Integer.parseInt(c_deduction.getText());
+       int tod = Integer.parseInt(c_totalDays.getText());      
+       int totalsalary = daysalary * tod; 
+       float alowance = Float.parseFloat(c_allowance.getText());
+       alowance = alowance * tod;
+       int bonus = Integer.parseInt(c_bonus.getText());
+       double finalsalary = alowance + totalsalary - deduction + bonus;
+       
+       c_totalamountlabel.setText(Double.toString(finalsalary));
           try{
+              
             DbConnection.openConnection();
             Connection con = DbConnection.getConnection();
-            PreparedStatement stmt = con.prepareStatement("Insert into payroll(empId,allowance,deduction,attendance,salary,finalSalary) values (?,?,?,?,?,?)");
+            PreparedStatement stmt = con.prepareStatement("Insert into payroll(empId,allowance,deduction,attendance,salary,finalSalary,date) values (?,?,?,?,?,?,'"+ LocalDate.now()+"')");
             stmt.setString(1, c_employeeid.getText());
-            String alown=Integer.toString(alowance);
             String deduc=Integer.toString(deduction);
-            stmt.setString(2,alown);
+            stmt.setDouble(2,alowance);
             stmt.setString(3,deduc);
             stmt.setString(4,Integer.toString(tod));
             stmt.setString(5, Integer.toString(totalsalary));
-            stmt.setString(6,Integer.toString(finalsalary));
+            stmt.setDouble(6,finalsalary);
             
             stmt.executeUpdate();
             System.out.println("success");
-          //  p_setTable();
-            getDB();
-           p_setTable();
+        
             } 
-          catch (SQLIntegrityConstraintViolationException r) {
-            System.out.println("payroll for employeeid already exist");
+            catch (SQLIntegrityConstraintViolationException r) {
+                System.out.println("payroll for employeeid already exist");
             
             } 
           catch (Exception e) {
             System.out.println(" Error");
             System.err.println(e);
 
-        }
-          getDB();
-           p_setTable();
+        } finally {
+              C_getDB();
+              c_setTable();
+          }
+          
      
     }
     
@@ -593,7 +599,7 @@ Alert alert = new Alert(Alert.AlertType.INFORMATION);
             DbConnection.openConnection();
             Connection con = DbConnection.getConnection();
 
-            ResultSet rs = con.createStatement().executeQuery("SELECT * from Payroll ");
+            ResultSet rs = con.createStatement().executeQuery("SELECT * from Payroll where empId in (select empId from employee where empType = 'permanent')");
 
             while (rs.next()) {
                 
@@ -614,7 +620,7 @@ Alert alert = new Alert(Alert.AlertType.INFORMATION);
             DbConnection.openConnection();
             Connection con = DbConnection.getConnection();
 
-            ResultSet rs = con.createStatement().executeQuery("SELECT * from Payroll ");
+            ResultSet rs = con.createStatement().executeQuery("SELECT * from Payroll  where empId in (select empId from employee where empType = 'Contract based')");
 
             while (rs.next()) {
              //   System.out.println(rs.getString("allowance"));
@@ -768,16 +774,7 @@ Alert alert = new Alert(Alert.AlertType.INFORMATION);
         }
 
     }
-    
-    
-    
-    
-    
-    
-    
-    
 
-    
     
 
     @FXML

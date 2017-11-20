@@ -120,7 +120,7 @@ public class EquipmentAllocationController implements Initializable {
 
             Connection con = DbConnection.getConnection();
 
-            pst = con.prepareStatement("select tenderId,equipName,count,assignCount from equiptender where tenderId IN(select tederId from tender where status ='on progress')");
+            pst = con.prepareStatement("select tenderId,equipName,count,assignCount from equiptender where tenderId IN(select tenderId from tender where status ='On progress')");
             rs = pst.executeQuery();
 
             while (rs.next()) {

@@ -127,7 +127,7 @@ public class MaterialAllocationController implements Initializable {
 
             Connection con = DbConnection.getConnection();
 
-            pst = con.prepareStatement("select tenderId,materialType,materialcount,assignCount from materialtender where tenderId IN(select tenderId from tender where ststus='on progress')");
+            pst = con.prepareStatement("select tenderId,materialType,materialcount,assignCount from materialtender where tenderId IN(select tenderId from tender where status='On progress')");
             rs = pst.executeQuery();
 
             while (rs.next()) {
