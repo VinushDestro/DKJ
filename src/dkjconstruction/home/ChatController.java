@@ -12,6 +12,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.layout.GridPane;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
+import static dkjconstruction.main.LoginController.currentUser;
 
 /**
  * FXML Controller class
@@ -34,6 +35,7 @@ public class ChatController implements Initializable {
         final String chatUrl = getClass().getResource("chat.html").toExternalForm();
         engine.setUserAgent("Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.36");       
         engine.load(chatUrl);
+        engine.executeScript("USER = '"+currentUser+"'");
         pane.getChildren().add(view);
         
         
