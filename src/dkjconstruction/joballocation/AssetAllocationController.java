@@ -21,6 +21,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperFillManager;
@@ -64,10 +65,15 @@ public class AssetAllocationController implements Initializable {
     private TableColumn assName;
     @FXML
     private TableColumn assType;
+    
     @FXML
     private JFXTextField assetType;
     @FXML
-    private JFXTextField searchfield;
+    private TextField searchfield;
+    
+  
+    
+   
 
     /**
      * Initializes the controller class.
@@ -84,7 +90,9 @@ public class AssetAllocationController implements Initializable {
         loadFromJobAssetADB();
         RowclickEvent2();
         RowclickEvent3();
-
+        vRegNo.setDisable(true);
+        assetType.setDisable(true);
+        aTenderId.setDisable(true);
     }
 
     private void setJobAssetTable() {
@@ -187,7 +195,6 @@ public class AssetAllocationController implements Initializable {
             String addTender = aTenderId.getText();
             String addAsset = vRegNo.getText();
             String addAssetType = assetType.getText();
-            
             
             if (addTender.isEmpty() || addAsset.isEmpty()) {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);

@@ -5,6 +5,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -23,22 +24,22 @@
          <children>
             <AnchorPane layoutX="606.0" layoutY="4.0" prefHeight="659.0" prefWidth="238.0">
                <children>
-                  <Button layoutX="32.0" layoutY="350.0" mnemonicParsing="false" onAction="#pendingaddTenderEmployee" prefHeight="43.0" prefWidth="164.0" stylesheets="@../style2.css" text="Submit Employee" textFill="WHITE">
+                  <Button layoutX="31.0" layoutY="389.0" mnemonicParsing="false" onAction="#pendingaddTenderEmployee" prefHeight="50.0" prefWidth="166.0" stylesheets="@../style2.css" text="Submit Employee" textFill="WHITE">
                      <font>
                         <Font name="Raleway-Bold" size="14.0" />
                      </font>
                   </Button>
-                  <Button layoutX="33.0" layoutY="407.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="163.0" stylesheets="@../style2.css" text="iReport" textFill="WHITE">
+                  <Button layoutX="30.0" layoutY="554.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="163.0" stylesheets="@../style2.css" text="iReport" textFill="WHITE">
                      <font>
                         <Font name="Raleway-Bold" size="14.0" />
                      </font>
                   </Button>
-                  <Button layoutX="33.0" layoutY="471.0" mnemonicParsing="false" onAction="#nextClicked" prefHeight="43.0" prefWidth="164.0" stylesheets="@../style2.css" text="Next" textFill="WHITE">
+                  <Button layoutX="31.0" layoutY="501.0" mnemonicParsing="false" onAction="#nextClicked" prefHeight="45.0" prefWidth="162.0" stylesheets="@../style2.css" text="Next" textFill="WHITE">
                      <font>
                         <Font name="Raleway-Bold" size="14.0" />
                      </font>
                   </Button>
-                  <Button layoutX="31.0" layoutY="540.0" mnemonicParsing="false" onAction="#backClicked" prefHeight="43.0" prefWidth="170.0" stylesheets="@../style2.css" text="Back" textFill="WHITE">
+                  <Button layoutX="29.0" layoutY="446.0" mnemonicParsing="false" onAction="#backClicked" prefHeight="46.0" prefWidth="166.0" stylesheets="@../style2.css" text="Back" textFill="WHITE">
                      <font>
                         <Font name="Raleway-Bold" size="14.0" />
                      </font>
@@ -56,21 +57,31 @@
                   <Font name="Raleway-Regular" size="14.0" />
                </font>
             </JFXTextField>
-            <TableView fx:id="pendingkishtbl" layoutX="22.0" layoutY="87.0" prefHeight="144.0" prefWidth="545.0">
+            <TableView fx:id="pendingkishtbl" layoutX="17.0" layoutY="110.0" prefHeight="144.0" prefWidth="545.0">
                <columns>
                   <TableColumn fx:id="pendingkTenderID" prefWidth="128.0" text="TenderId" />
                   <TableColumn fx:id="pendingreqEmpCount" prefWidth="236.0" text="Required Employee Count" />
                   <TableColumn fx:id="pendingassignedEmpCount" prefWidth="208.0" text="Assigned Count" />
                </columns>
             </TableView>
-            <TableView fx:id="pendingemployeeTable" layoutX="37.0" layoutY="274.0" prefHeight="225.0" prefWidth="503.0">
+            <TableView fx:id="pendingemployeeTable" layoutX="45.0" layoutY="312.0" prefHeight="225.0" prefWidth="503.0">
                <columns>
                   <TableColumn fx:id="pendingemployeeId" prefWidth="158.0" text="Employee ID" />
                   <TableColumn fx:id="pendingemployeeName" prefWidth="175.0" text="Employee Name" />
                   <TableColumn fx:id="pendingemployeeType" prefWidth="161.0" text="Employee Type" />
                </columns>
             </TableView>
-            <JFXTextField fx:id="searchfield" layoutX="46.0" layoutY="40.0" prefHeight="25.0" prefWidth="512.0" promptText="Search" />
+            <Label alignment="CENTER" layoutX="187.0" layoutY="277.0" prefHeight="32.0" prefWidth="143.0" stylesheets="@../../../../dkjconstruction/src/dkjconstruction/style2.css" text="Employee">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER" layoutX="164.0" layoutY="67.0" prefHeight="34.0" prefWidth="223.0" stylesheets="@../../../../dkjconstruction/src/dkjconstruction/style2.css" text="Tender Requirement">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+            <TextField fx:id="searchfield" layoutX="70.0" layoutY="18.0" prefHeight="45.0" prefWidth="591.0" promptText="search" />
          </children>
       </AnchorPane>
    </children>

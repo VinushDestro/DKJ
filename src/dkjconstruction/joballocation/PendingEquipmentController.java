@@ -26,6 +26,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
@@ -55,8 +56,7 @@ public class PendingEquipmentController implements Initializable {
     private JFXTextField pendingtenderEquipId;
     @FXML
     private JFXTextField pendingEqCount;
-    @FXML
-    private JFXTextField searchfield;
+    
     @FXML
     private TableView pendingequipTable;
     @FXML
@@ -67,6 +67,8 @@ public class PendingEquipmentController implements Initializable {
     private TableColumn pendingeqReq;
     @FXML
     private TableColumn pendingeqAssign;
+    @FXML
+    private TextField searchfield;
    
 
     /**

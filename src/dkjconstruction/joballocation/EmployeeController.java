@@ -22,6 +22,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperFillManager;
@@ -47,8 +48,7 @@ public class EmployeeController implements Initializable {
     private JFXTextField tenderEmployeeId;
     @FXML
     private JFXTextField KTid;
-    @FXML
-    private JFXTextField searchfield;
+   
     @FXML
     private TableView kishtbl;
     @FXML
@@ -65,6 +65,8 @@ public class EmployeeController implements Initializable {
     private TableColumn employeeName;
     @FXML
     private TableColumn employeeType;
+    @FXML
+    private TextField searchfield;
 
     /**
      * Initializes the controller class.
@@ -82,6 +84,9 @@ public class EmployeeController implements Initializable {
          RowclickEvent();
         RowclickEvent1();
         search();
+        tenderEmployeeId.setDisable(true);
+        KTid.setDisable(true);
+        
         
     }    
 

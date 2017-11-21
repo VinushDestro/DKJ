@@ -5,6 +5,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -23,17 +24,12 @@
          <children>
             <AnchorPane layoutX="602.0" layoutY="3.0" prefHeight="661.0" prefWidth="237.0" stylesheets="@../style2.css">
                <children>
-                  <Button layoutX="28.0" layoutY="463.0" mnemonicParsing="false" onAction="#addTenderEmployee" prefHeight="43.0" prefWidth="178.0" stylesheets="@../style2.css" text="Submit Employee" textFill="WHITE">
+                  <Button layoutX="26.0" layoutY="475.0" mnemonicParsing="false" onAction="#addTenderEmployee" prefHeight="43.0" prefWidth="178.0" stylesheets="@../style2.css" text="Submit Employee" textFill="WHITE">
                      <font>
                         <Font name="Raleway-Bold" size="14.0" />
                      </font>
                   </Button>
                   <Button layoutX="28.0" layoutY="525.0" mnemonicParsing="false" onAction="#tender_reportEmployee" prefHeight="43.0" prefWidth="178.0" text="iReport" textFill="WHITE">
-                     <font>
-                        <Font name="Raleway-Bold" size="14.0" />
-                     </font>
-                  </Button>
-                  <Button layoutX="32.0" layoutY="400.0" mnemonicParsing="false" onAction="#search" prefHeight="43.0" prefWidth="178.0" stylesheets="@../style2.css" text="Search" textFill="WHITE">
                      <font>
                         <Font name="Raleway-Bold" size="14.0" />
                      </font>
@@ -58,14 +54,24 @@
                   <TableColumn fx:id="assignedEmpCount" prefWidth="208.0" text="Assigned Count" />
                </columns>
             </TableView>
-            <TableView fx:id="employeeTable" layoutX="39.0" layoutY="277.0" prefHeight="253.0" prefWidth="503.0">
+            <TableView fx:id="employeeTable" layoutX="47.0" layoutY="312.0" prefHeight="234.0" prefWidth="503.0">
                <columns>
                   <TableColumn fx:id="employeeId" prefWidth="158.0" text="Employee ID" />
                   <TableColumn fx:id="employeeName" prefWidth="175.0" text="Employee Name" />
                   <TableColumn fx:id="employeeType" prefWidth="161.0" text="Employee Type" />
                </columns>
             </TableView>
-            <JFXTextField fx:id="searchfield" layoutX="21.0" layoutY="24.0" prefHeight="45.0" prefWidth="567.0" promptText="Search" />
+            <TextField fx:id="searchfield" layoutX="71.0" layoutY="13.0" prefHeight="32.0" prefWidth="570.0" promptText="search" />
+            <Label layoutX="250.0" layoutY="292.0" text="Employee Table">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+            <Label layoutX="217.0" layoutY="57.0" prefHeight="21.0" prefWidth="186.0" text="Tender Requirement Table">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
          </children>
       </AnchorPane>
    </children>

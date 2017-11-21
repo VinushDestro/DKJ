@@ -25,6 +25,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
@@ -47,8 +48,7 @@ public class PendingEmployeeController implements Initializable {
     private JFXTextField pendingtenderEmployeeId;
     @FXML
     private  JFXTextField pendingKTid;
-    @FXML
-    private  JFXTextField searchfield;
+   
     @FXML
     private TableView pendingkishtbl;
     @FXML
@@ -66,6 +66,8 @@ public class PendingEmployeeController implements Initializable {
     @FXML
     private TableColumn pendingemployeeType;
     public static String tender; 
+    @FXML
+    private TextField searchfield;
     
     
 

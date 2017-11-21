@@ -26,6 +26,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
@@ -68,7 +69,7 @@ public class PendingAssetController implements Initializable {
     @FXML
     private JFXTextField pendingassetType;
     @FXML
-    private JFXTextField searchfield;
+    private TextField searchfield;
 
     /**
      * Initializes the controller class.
@@ -80,7 +81,7 @@ public class PendingAssetController implements Initializable {
         dataassetpending = FXCollections.observableArrayList();
         pendingaTenderId.setDisable(true);
          pendingvRegNo.setDisable(true);
-      
+         pendingassetType.setDisable(true);
         
         setpendingJobAssetTable();
         loadFrompendingJobAssetADB();
@@ -239,6 +240,7 @@ public class PendingAssetController implements Initializable {
             String addTender = pendingaTenderId.getText();
             String addAsset = pendingvRegNo.getText();
             String addAssetType = pendingassetType.getText();
+            
             
             if (addTender.isEmpty() || addAsset.isEmpty()) {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);

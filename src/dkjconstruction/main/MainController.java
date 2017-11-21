@@ -56,7 +56,8 @@ public class MainController {
             type=rs.getString(1);
         }               
         System.out.println(type+"main");
-        homeBtn.pressedProperty(); //  fire()
+        //homeBtn.pressedProperty(); //  fire()
+        //doHome();
         
     }
     

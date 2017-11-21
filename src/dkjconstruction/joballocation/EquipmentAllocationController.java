@@ -21,6 +21,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperFillManager;
@@ -54,7 +55,7 @@ public class EquipmentAllocationController implements Initializable {
     @FXML
     private JFXTextField  matCount;
     @FXML
-    private JFXTextField  searchfield;
+    private TextField  searchfield;
     @FXML
     private TableView equipTable;
     @FXML
@@ -79,7 +80,8 @@ public class EquipmentAllocationController implements Initializable {
           loadFromEquipDB();
           RowclickEvent4();
           search();
-          //RowclickEvent5();
+           equipTender.setDisable(true);
+           tenderEquipId.setDisable(true);
     } 
     
      public void alerboxInfo(String title, String message) {

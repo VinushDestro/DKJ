@@ -11,6 +11,7 @@ import com.jfoenix.controls.JFXDatePicker;
 import dkjconstruction.DbConnection;
 
 import com.jfoenix.controls.JFXTextField;
+import dkjconstruction.tendermanagement.TenderReport.Report;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
@@ -39,6 +40,11 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.view.JasperViewer;
 
 /**
  * FXML Controller class
@@ -661,10 +667,7 @@ public class PayrollController implements Initializable {
               
     }
 
-    @FXML
-    private void P_Report(ActionEvent event) {
     
-    }
 
     
     @FXML
@@ -775,13 +778,34 @@ public class PayrollController implements Initializable {
 
     }
 
-    
+    @FXML
+    private void P_Report(ActionEvent event) {
+        
+        Report.gen_Normal_report("C:\\Users\\Mahesh\\Documents\\NetBeansProjects\\dkjconstructions\\src\\dkjconstruction\\payroll\\payroll.jrxml");
+
+    }
 
     @FXML
     private void C_Report(ActionEvent event) {
+        
+        Report.gen_Normal_report("C:\\Users\\Mahesh\\Documents\\NetBeansProjects\\dkjconstructions\\src\\dkjconstruction\\payroll\\p_payroll.jrxml");
+
     }
    
+public  void gen_Normal_report(String report) {
+        try {
+            DbConnection.openConnection();
+            Connection con = DbConnection.getConnection();
+            JasperReport jr = JasperCompileManager.compileReport(report);
+            JasperPrint jp = JasperFillManager.fillReport(jr, null, con);
+            JasperViewer.viewReport(jp,false);
+        
+        } catch (Exception e) {
+            System.out.println("error in j report" + e);
+        }
 
+
+    }
 }
 
 

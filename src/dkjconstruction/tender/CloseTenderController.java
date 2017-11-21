@@ -402,7 +402,7 @@ public class CloseTenderController implements Initializable {
                         
                 try {
 
-                    PreparedStatement pst1 = con.prepareStatement("UPDATE equipment set assignedCount = '"+ (eqAssignedcount - eqpTenderAssignedcount ) +"' availableCount ='"+ (eqAvailablecount + eqpTenderAssignedcount ) +"'   "
+                    PreparedStatement pst1 = con.prepareStatement("UPDATE equipment set assignedCount = '"+ (eqAssignedcount - eqpTenderAssignedcount ) +"', availableCount ='"+ (eqAvailablecount + eqpTenderAssignedcount ) +"'   "
                             + "where name ='"+ rs.getString(2)+"' ");
                     pst1.execute();
 
@@ -436,7 +436,7 @@ public class CloseTenderController implements Initializable {
             
 
             while (rs.next()) {
-                int regno = rs.getInt(2);
+                String regno = rs.getString(2);
                 
                         
                 try {

@@ -25,7 +25,9 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperFillManager;
@@ -60,8 +62,6 @@ public class MaterialAllocationController implements Initializable {
     private JFXTextField tendermaterialtype;
     @FXML
     private JFXTextField matCount;
-    @FXML
-    private JFXTextField searchfield;
     
     @FXML
     private TableView tendMatTbl;
@@ -73,6 +73,11 @@ public class MaterialAllocationController implements Initializable {
     private TableColumn matReq;
     @FXML
     private TableColumn matAssign;
+    @FXML
+    private AnchorPane pendingmCount;
+    @FXML
+    private TextField searchfield;
+   
 
     
     
@@ -88,6 +93,10 @@ public class MaterialAllocationController implements Initializable {
          RowclickEvent6();
         RowclickEvent7();
         search();
+        
+        materialtender.setDisable(true);
+        tendermaterialtype.setDisable(true);
+       
         
     }    
     
@@ -249,11 +258,12 @@ public class MaterialAllocationController implements Initializable {
         } catch (Exception e) {
 
             System.out.println("error" + e);
-            alerboxInfo("Operation Failed","error adding Material"+e);
+            alerboxInfo("Operation Failed","error adding Material");
           
         }
         materialtender.clear();
         tendermaterialtype.clear();
+        matCount.clear();
 
     }
     
@@ -298,7 +308,6 @@ public class MaterialAllocationController implements Initializable {
     }
     
     
-     @FXML
      private void nextClicked(ActionEvent event) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("pendingMaterial.fxml"));
         Parent root1 = (Parent) fxmlLoader.load();

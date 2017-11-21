@@ -201,10 +201,8 @@ public class TenderController implements Initializable {
 
     //rowclick for tendertable
     private void RowclickEvent() {
-       
-        
-            
-            ttable.setOnMouseClicked((e) -> {
+
+        ttable.setOnMouseClicked((e) -> {
             TenderDetails t1 = ttable.getItems().get(ttable.getSelectionModel().getSelectedIndex());
 
             tenderId.setText(t1.getTenderId());
@@ -219,9 +217,6 @@ public class TenderController implements Initializable {
             tdate.setValue(LocalDate.parse(t1.getTdate()));
 
         });
-            
-        
-        
 
     }
 
@@ -254,19 +249,22 @@ public class TenderController implements Initializable {
     @FXML
     private void deleteClicked(ActionEvent event) {
 
-        
-        
-        if (TenderManagement.checkClosedCancelOngoing(tenderId.getText(),"Closed")) {
+        if (tenderId.getText().isEmpty() || (tenderId.getText() == null)) {
+            alertboxWarn("Add Tender", "Tender id cannot be empty. Choose any tender from table");
+            return;
+        }
+
+        if (TenderManagement.checkClosedCancelOngoing(tenderId.getText(), "Closed")) {
             alertboxWarn("Alert", "Can not delete Closed Tender..!!");
             return;
         }
-        
-        if (TenderManagement.checkClosedCancelOngoing(tenderId.getText(),"Cancelled")) {
+
+        if (TenderManagement.checkClosedCancelOngoing(tenderId.getText(), "Cancelled")) {
             alertboxWarn("Alert", "Can not delete Cancelled Tender..!!");
             return;
         }
-        
-        if (TenderManagement.checkClosedCancelOngoing(tenderId.getText(),"On progress")) {
+
+        if (TenderManagement.checkClosedCancelOngoing(tenderId.getText(), "On progress")) {
             alertboxWarn("Alert", "Can not delete Ongoing Tender..!!");
             return;
         }
@@ -500,8 +498,7 @@ public class TenderController implements Initializable {
     }
 
     //report
-
-    public void tender_report() {        
+    public void tender_report() {
 
         Report.gen_Normal_report("C:\\Users\\Mahesh\\Documents\\NetBeansProjects\\dkjconstructions\\src\\dkjconstruction\\tendermanagement\\TenderReport\\AllTender.jrxml");
 
@@ -522,10 +519,8 @@ public class TenderController implements Initializable {
          Stage stage = new Stage();
          stage.setScene(new Scene(root1));
          stage.show();*/
-        
         dkjconstruction.DKJConstruction.showTender_TenderHome();
-        
-        
+
     }
 
     @FXML
@@ -533,13 +528,12 @@ public class TenderController implements Initializable {
 
 //        Stage s = (Stage) previousButton.getScene().getWindow();
 //        s.close();
-
 //        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Requirement.fxml"));
 //        Parent root1 = (Parent) fxmlLoader.load();
 //        Stage stage = new Stage();
 //        stage.setScene(new Scene(root1));
 //        stage.show();
-dkjconstruction.DKJConstruction.showTender_requirement();
+        dkjconstruction.DKJConstruction.showTender_requirement();
 
     }
 

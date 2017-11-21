@@ -109,7 +109,7 @@ public class TransportController implements Initializable {
             
             PreparedStatement ps;
         try {
-            ps = con.prepareStatement("select tenderId from tender");
+            ps = con.prepareStatement("select tenderId from tender where status='On progress'");
         
             ResultSet rs = ps.executeQuery();
             myList= FXCollections.observableArrayList();

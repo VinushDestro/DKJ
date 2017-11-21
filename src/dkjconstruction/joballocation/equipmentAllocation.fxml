@@ -2,8 +2,10 @@
 
 <?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -38,12 +40,12 @@
             </TableView>
             <AnchorPane layoutX="592.0" layoutY="3.0" prefHeight="662.0" prefWidth="249.0">
                <children>
-                  <Button layoutX="47.0" layoutY="448.0" mnemonicParsing="false" onAction="#addTenderEquipment" prefHeight="43.0" prefWidth="177.0" stylesheets="@../style2.css" text="Submit Equipment" textFill="WHITE">
+                  <Button layoutX="46.0" layoutY="449.0" mnemonicParsing="false" onAction="#addTenderEquipment" prefHeight="43.0" prefWidth="177.0" stylesheets="@../style2.css" text="Submit Equipment" textFill="WHITE">
                      <font>
                         <Font name="Raleway-Bold" size="14.0" />
                      </font>
                   </Button>
-                  <Button layoutX="46.0" layoutY="511.0" mnemonicParsing="false" onAction="#tender_reportEquip" prefHeight="43.0" prefWidth="177.0" stylesheets="@../style2.css" text="Report" textFill="WHITE">
+                  <Button layoutX="44.0" layoutY="504.0" mnemonicParsing="false" onAction="#tender_reportEquip" prefHeight="43.0" prefWidth="177.0" stylesheets="@../style2.css" text="Report" textFill="WHITE">
                      <font>
                         <Font name="Raleway-Bold" size="14.0" />
                      </font>
@@ -51,7 +53,17 @@
                </children>
             </AnchorPane>
             <JFXTextField fx:id="matCount" layoutX="427.0" layoutY="533.0" promptText="count" />
-            <JFXTextField fx:id="searchfield" layoutX="58.0" layoutY="26.0" prefHeight="44.0" prefWidth="447.0" />
+            <Label alignment="CENTER" layoutX="196.0" layoutY="64.0" prefHeight="17.0" prefWidth="149.0" stylesheets="@../../../../dkjconstruction/src/dkjconstruction/style2.css" text="Tender Requirement">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER" layoutX="208.0" layoutY="296.0" prefHeight="17.0" prefWidth="149.0" stylesheets="@../../../../dkjconstruction/src/dkjconstruction/style2.css" text="Equipment Table">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+            <TextField fx:id="searchfield" layoutX="72.0" layoutY="18.0" prefHeight="41.0" prefWidth="589.0" promptText="search" />
          </children>
       </AnchorPane>
    </children>

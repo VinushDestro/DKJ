@@ -25,8 +25,11 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import java.time.LocalDate;
+
 
 /**
  * FXML Controller class
@@ -54,8 +57,9 @@ public class PendingMaterialController implements Initializable {
     private JFXTextField pendingtendermaterialtype;
     @FXML
     private JFXTextField pendingMatCount;
-    @FXML
-    private JFXTextField searchfield;
+     @FXML
+    private TextField searchfield;
+   
     @FXML
     private TableView pendingtendMatTbl;
     @FXML
@@ -104,7 +108,7 @@ public class PendingMaterialController implements Initializable {
         try {
             DbConnection.openConnection();
             con = DbConnection.getConnection();
-
+             pendingmatTendID.setCellValueFactory(new PropertyValueFactory<>("matTender"));
             pendingmatTendType.setCellValueFactory(new PropertyValueFactory<>("matType"));
             pendingmatReq.setCellValueFactory(new PropertyValueFactory<>("reqCount"));
             pendingmatAssign.setCellValueFactory(new PropertyValueFactory<>("assignCount"));
@@ -221,7 +225,7 @@ public class PendingMaterialController implements Initializable {
 
                 else{
             Connection con4 = DbConnection.getConnection();
-            PreparedStatement stmt = con4.prepareStatement("UPDATE materialtender SET assignCount=assignCount+? where tenderId=? and materialType=?");
+            PreparedStatement stmt = con4.prepareStatement("UPDATE materialtender SET assignCount=assignCount+? , date = '"+LocalDate.now()+"' where tenderId=? and materialType=?");
             stmt.setInt(1, addMatcount);
             stmt.setString(2, addMatTender);
             stmt.setString(3, addMaterial);
@@ -239,8 +243,12 @@ public class PendingMaterialController implements Initializable {
             PreparedStatement stmt3 = con4.prepareStatement("UPDATE tender SET status ='On progress' WHERE tenderId =?");
             stmt3.setString(1, addMatTender);
             stmt3.executeUpdate();
+           
+          /* PreparedStatement stmt3 = con4.prepareStatement("UPDATE tender SET status ='On progress' WHERE tenderId IN(select tenderId from tender where tenderId IN(select tenderId from materialTender where assignCount>0 and tenderId IN (select tenderId from jobemployee where assignCount>0 and tenderId IN(select tenderId from assettender where assignCount>0 and tenderId IN(select tenderId from equiptender where assignCount>0)))))");
+            //stmt3.setString(1, addMatTender);
+            stmt3.executeUpdate();*/
             
-
+          //  select tenderId from tender where tenderId IN(select tenderId from materialTender where assignCount>0 and tenderId IN (select tenderId from jobemployee where assignCount>0 and tenderId IN(select tenderId from assettender where assignCount>0 and tenderId IN(select tenderId from equiptender where assignCount>0)))) 
            
                 
             }
